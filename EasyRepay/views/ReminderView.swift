@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  ReminderView.swift
 //  EasyRepay
 //
 //  Created by Fabio Codiglioni on 04/09/2019.
@@ -8,14 +8,15 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct ReminderView: View {
+    var person: Person
     var body: some View {
-        Text("Hello World")
+        Text("ReminderView")
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct ReminderView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ReminderView(person: peopleStore.people[0])
     }
 }

@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+message PeopleStore {
+    repeated Person people = 1;
+}
+
+message Person {
+    string id = 1;
+    string name = 2;
+    repeated Transaction transactions = 3;
+}
+
+enum TransactionType {
+    CREDIT = 0;
+    DEBT = 1;
+    SETTLE_CREDIT = 2;
+    SETTLE_DEBT = 3;
+}
+
+message Transaction {
+    string id = 1;
+    double amount = 2;
+    TransactionType type = 3;
+    string reason = 4;
+    bool completed = 5;
+    uint64 timestamp = 6;
+}

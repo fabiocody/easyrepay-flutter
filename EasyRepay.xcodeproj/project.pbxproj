@@ -3,27 +3,55 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		E50ABF17231FE58900B20CB4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50ABF16231FE58900B20CB4 /* AppDelegate.swift */; };
 		E50ABF19231FE58900B20CB4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50ABF18231FE58900B20CB4 /* SceneDelegate.swift */; };
-		E50ABF1B231FE58900B20CB4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50ABF1A231FE58900B20CB4 /* ContentView.swift */; };
 		E50ABF1D231FE59200B20CB4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E50ABF1C231FE59200B20CB4 /* Assets.xcassets */; };
 		E50ABF20231FE59200B20CB4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E50ABF1F231FE59200B20CB4 /* Preview Assets.xcassets */; };
 		E50ABF23231FE59200B20CB4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E50ABF21231FE59200B20CB4 /* LaunchScreen.storyboard */; };
+		E50ABF2C231FE69E00B20CB4 /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = E50ABF2B231FE69E00B20CB4 /* SwiftProtobuf */; };
+		E50ABF2E231FE69E00B20CB4 /* SwiftProtobufPluginLibrary in Frameworks */ = {isa = PBXBuildFile; productRef = E50ABF2D231FE69E00B20CB4 /* SwiftProtobufPluginLibrary */; };
+		E50ABF33231FE8B800B20CB4 /* easyrepay.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50ABF32231FE8B800B20CB4 /* easyrepay.pb.swift */; };
+		E50ABF39231FED5500B20CB4 /* PersonRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50ABF38231FED5500B20CB4 /* PersonRow.swift */; };
+		E50ABF3B231FEE3F00B20CB4 /* PeopleList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50ABF3A231FEE3F00B20CB4 /* PeopleList.swift */; };
+		E50ABF3D231FEEC300B20CB4 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50ABF3C231FEEC300B20CB4 /* Global.swift */; };
+		E50ABF3F232006EC00B20CB4 /* TransactionsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50ABF3E232006EC00B20CB4 /* TransactionsList.swift */; };
+		E50ABF41232006FB00B20CB4 /* TransactionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50ABF40232006FB00B20CB4 /* TransactionRow.swift */; };
+		E50ABF4323200F2600B20CB4 /* PBFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50ABF4223200F2600B20CB4 /* PBFactory.swift */; };
+		E50ABF452320116100B20CB4 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50ABF442320116100B20CB4 /* Colors.swift */; };
+		E50ABF47232011CA00B20CB4 /* TransactionDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50ABF46232011CA00B20CB4 /* TransactionDetail.swift */; };
+		E50ABF4923201C1C00B20CB4 /* ReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50ABF4823201C1C00B20CB4 /* ReminderView.swift */; };
+		E50ABF4B2320239400B20CB4 /* NewPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50ABF4A2320239400B20CB4 /* NewPersonView.swift */; };
+		E57C31852322C6530015243A /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E57C31842322C6530015243A /* CloudKit.framework */; };
+		E5F23F882322D917004F98DE /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F23F872322D917004F98DE /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		E50ABF13231FE58900B20CB4 /* EasyRepay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EasyRepay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E50ABF16231FE58900B20CB4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E50ABF18231FE58900B20CB4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		E50ABF1A231FE58900B20CB4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E50ABF1C231FE59200B20CB4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E50ABF1F231FE59200B20CB4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E50ABF22231FE59200B20CB4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E50ABF24231FE59200B20CB4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E50ABF2F231FE6F000B20CB4 /* easyrepay.proto */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.protobuf; path = easyrepay.proto; sourceTree = "<group>"; };
+		E50ABF32231FE8B800B20CB4 /* easyrepay.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = easyrepay.pb.swift; path = EasyRepay/proto/easyrepay.pb.swift; sourceTree = SOURCE_ROOT; };
+		E50ABF38231FED5500B20CB4 /* PersonRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonRow.swift; sourceTree = "<group>"; };
+		E50ABF3A231FEE3F00B20CB4 /* PeopleList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleList.swift; sourceTree = "<group>"; };
+		E50ABF3C231FEEC300B20CB4 /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
+		E50ABF3E232006EC00B20CB4 /* TransactionsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsList.swift; sourceTree = "<group>"; };
+		E50ABF40232006FB00B20CB4 /* TransactionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionRow.swift; sourceTree = "<group>"; };
+		E50ABF4223200F2600B20CB4 /* PBFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PBFactory.swift; sourceTree = "<group>"; };
+		E50ABF442320116100B20CB4 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		E50ABF46232011CA00B20CB4 /* TransactionDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetail.swift; sourceTree = "<group>"; };
+		E50ABF4823201C1C00B20CB4 /* ReminderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderView.swift; sourceTree = "<group>"; };
+		E50ABF4A2320239400B20CB4 /* NewPersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPersonView.swift; sourceTree = "<group>"; };
+		E57C31822322C60C0015243A /* EasyRepay.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EasyRepay.entitlements; sourceTree = "<group>"; };
+		E57C31842322C6530015243A /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		E5F23F872322D917004F98DE /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +59,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E57C31852322C6530015243A /* CloudKit.framework in Frameworks */,
+				E50ABF2E231FE69E00B20CB4 /* SwiftProtobufPluginLibrary in Frameworks */,
+				E50ABF2C231FE69E00B20CB4 /* SwiftProtobuf in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +73,7 @@
 			children = (
 				E50ABF15231FE58900B20CB4 /* EasyRepay */,
 				E50ABF14231FE58900B20CB4 /* Products */,
+				E57C31832322C6530015243A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,9 +88,13 @@
 		E50ABF15231FE58900B20CB4 /* EasyRepay */ = {
 			isa = PBXGroup;
 			children = (
+				E57C31822322C60C0015243A /* EasyRepay.entitlements */,
+				E50ABF37231FED4000B20CB4 /* views */,
+				E50ABF31231FE89800B20CB4 /* proto */,
 				E50ABF16231FE58900B20CB4 /* AppDelegate.swift */,
 				E50ABF18231FE58900B20CB4 /* SceneDelegate.swift */,
-				E50ABF1A231FE58900B20CB4 /* ContentView.swift */,
+				E50ABF3C231FEEC300B20CB4 /* Global.swift */,
+				E50ABF442320116100B20CB4 /* Colors.swift */,
 				E50ABF1C231FE59200B20CB4 /* Assets.xcassets */,
 				E50ABF21231FE59200B20CB4 /* LaunchScreen.storyboard */,
 				E50ABF24231FE59200B20CB4 /* Info.plist */,
@@ -73,6 +109,39 @@
 				E50ABF1F231FE59200B20CB4 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		E50ABF31231FE89800B20CB4 /* proto */ = {
+			isa = PBXGroup;
+			children = (
+				E50ABF2F231FE6F000B20CB4 /* easyrepay.proto */,
+				E50ABF32231FE8B800B20CB4 /* easyrepay.pb.swift */,
+				E50ABF4223200F2600B20CB4 /* PBFactory.swift */,
+			);
+			path = proto;
+			sourceTree = "<group>";
+		};
+		E50ABF37231FED4000B20CB4 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				E50ABF3A231FEE3F00B20CB4 /* PeopleList.swift */,
+				E50ABF38231FED5500B20CB4 /* PersonRow.swift */,
+				E50ABF3E232006EC00B20CB4 /* TransactionsList.swift */,
+				E50ABF40232006FB00B20CB4 /* TransactionRow.swift */,
+				E50ABF46232011CA00B20CB4 /* TransactionDetail.swift */,
+				E50ABF4823201C1C00B20CB4 /* ReminderView.swift */,
+				E50ABF4A2320239400B20CB4 /* NewPersonView.swift */,
+				E5F23F872322D917004F98DE /* SettingsView.swift */,
+			);
+			path = views;
+			sourceTree = "<group>";
+		};
+		E57C31832322C6530015243A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E57C31842322C6530015243A /* CloudKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -91,6 +160,10 @@
 			dependencies = (
 			);
 			name = EasyRepay;
+			packageProductDependencies = (
+				E50ABF2B231FE69E00B20CB4 /* SwiftProtobuf */,
+				E50ABF2D231FE69E00B20CB4 /* SwiftProtobufPluginLibrary */,
+			);
 			productName = EasyRepay;
 			productReference = E50ABF13231FE58900B20CB4 /* EasyRepay.app */;
 			productType = "com.apple.product-type.application";
@@ -119,6 +192,9 @@
 				Base,
 			);
 			mainGroup = E50ABF0A231FE58900B20CB4;
+			packageReferences = (
+				E50ABF2A231FE69E00B20CB4 /* XCRemoteSwiftPackageReference "swift-protobuf" */,
+			);
 			productRefGroup = E50ABF14231FE58900B20CB4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -146,9 +222,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E50ABF4B2320239400B20CB4 /* NewPersonView.swift in Sources */,
+				E50ABF4323200F2600B20CB4 /* PBFactory.swift in Sources */,
+				E50ABF452320116100B20CB4 /* Colors.swift in Sources */,
+				E50ABF4923201C1C00B20CB4 /* ReminderView.swift in Sources */,
+				E50ABF41232006FB00B20CB4 /* TransactionRow.swift in Sources */,
+				E50ABF3B231FEE3F00B20CB4 /* PeopleList.swift in Sources */,
 				E50ABF17231FE58900B20CB4 /* AppDelegate.swift in Sources */,
+				E5F23F882322D917004F98DE /* SettingsView.swift in Sources */,
 				E50ABF19231FE58900B20CB4 /* SceneDelegate.swift in Sources */,
-				E50ABF1B231FE58900B20CB4 /* ContentView.swift in Sources */,
+				E50ABF33231FE8B800B20CB4 /* easyrepay.pb.swift in Sources */,
+				E50ABF39231FED5500B20CB4 /* PersonRow.swift in Sources */,
+				E50ABF3F232006EC00B20CB4 /* TransactionsList.swift in Sources */,
+				E50ABF3D231FEEC300B20CB4 /* Global.swift in Sources */,
+				E50ABF47232011CA00B20CB4 /* TransactionDetail.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,6 +371,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = EasyRepay/EasyRepay.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"EasyRepay/Preview Content\"";
 				DEVELOPMENT_TEAM = SM32T6M59X;
@@ -293,7 +381,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.fabiocodiglioni.EasyRepay;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fabiocodiglioni.EasyRepay13;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -304,6 +392,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = EasyRepay/EasyRepay.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"EasyRepay/Preview Content\"";
 				DEVELOPMENT_TEAM = SM32T6M59X;
@@ -313,7 +402,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.fabiocodiglioni.EasyRepay;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fabiocodiglioni.EasyRepay13;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -342,6 +431,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E50ABF2A231FE69E00B20CB4 /* XCRemoteSwiftPackageReference "swift-protobuf" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:apple/swift-protobuf.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E50ABF2B231FE69E00B20CB4 /* SwiftProtobuf */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E50ABF2A231FE69E00B20CB4 /* XCRemoteSwiftPackageReference "swift-protobuf" */;
+			productName = SwiftProtobuf;
+		};
+		E50ABF2D231FE69E00B20CB4 /* SwiftProtobufPluginLibrary */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E50ABF2A231FE69E00B20CB4 /* XCRemoteSwiftPackageReference "swift-protobuf" */;
+			productName = SwiftProtobufPluginLibrary;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E50ABF0B231FE58900B20CB4 /* Project object */;
 }
