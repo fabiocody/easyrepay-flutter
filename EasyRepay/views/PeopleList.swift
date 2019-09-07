@@ -8,7 +8,9 @@
 
 import SwiftUI
 
+
 struct PeopleList: View {
+    
     @State private var showAdd = false
     @State private var showSettings = false
     @State private var showActions = true
@@ -53,7 +55,9 @@ struct PeopleList: View {
         //UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.white]
         //UINavigationBar.appearance().backgroundColor = .systemGreen
     }
+    
 }
+
 
 struct PeopleList_Previews: PreviewProvider {
     static var previews: some View {

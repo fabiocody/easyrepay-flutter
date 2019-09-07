@@ -20,12 +20,14 @@
 		E50ABF3D231FEEC300B20CB4 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50ABF3C231FEEC300B20CB4 /* Global.swift */; };
 		E50ABF3F232006EC00B20CB4 /* TransactionsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50ABF3E232006EC00B20CB4 /* TransactionsList.swift */; };
 		E50ABF41232006FB00B20CB4 /* TransactionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50ABF40232006FB00B20CB4 /* TransactionRow.swift */; };
-		E50ABF4323200F2600B20CB4 /* PBFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50ABF4223200F2600B20CB4 /* PBFactory.swift */; };
 		E50ABF452320116100B20CB4 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50ABF442320116100B20CB4 /* Colors.swift */; };
 		E50ABF47232011CA00B20CB4 /* TransactionDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50ABF46232011CA00B20CB4 /* TransactionDetail.swift */; };
 		E50ABF4923201C1C00B20CB4 /* ReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50ABF4823201C1C00B20CB4 /* ReminderView.swift */; };
 		E50ABF4B2320239400B20CB4 /* NewPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50ABF4A2320239400B20CB4 /* NewPersonView.swift */; };
 		E57C31852322C6530015243A /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E57C31842322C6530015243A /* CloudKit.framework */; };
+		E5D22FAE23239217007ABA75 /* ModelHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50ABF4223200F2600B20CB4 /* ModelHelper.swift */; };
+		E5D22FB023239CCC007ABA75 /* NewTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D22FAF23239CCC007ABA75 /* NewTransactionView.swift */; };
+		E5D22FB223239CD7007ABA75 /* TransactionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D22FB123239CD7007ABA75 /* TransactionDetailView.swift */; };
 		E5F23F882322D917004F98DE /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F23F872322D917004F98DE /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
@@ -44,13 +46,15 @@
 		E50ABF3C231FEEC300B20CB4 /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		E50ABF3E232006EC00B20CB4 /* TransactionsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsList.swift; sourceTree = "<group>"; };
 		E50ABF40232006FB00B20CB4 /* TransactionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionRow.swift; sourceTree = "<group>"; };
-		E50ABF4223200F2600B20CB4 /* PBFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PBFactory.swift; sourceTree = "<group>"; };
+		E50ABF4223200F2600B20CB4 /* ModelHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelHelper.swift; sourceTree = "<group>"; };
 		E50ABF442320116100B20CB4 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		E50ABF46232011CA00B20CB4 /* TransactionDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetail.swift; sourceTree = "<group>"; };
 		E50ABF4823201C1C00B20CB4 /* ReminderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderView.swift; sourceTree = "<group>"; };
 		E50ABF4A2320239400B20CB4 /* NewPersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPersonView.swift; sourceTree = "<group>"; };
 		E57C31822322C60C0015243A /* EasyRepay.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EasyRepay.entitlements; sourceTree = "<group>"; };
 		E57C31842322C6530015243A /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		E5D22FAF23239CCC007ABA75 /* NewTransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTransactionView.swift; sourceTree = "<group>"; };
+		E5D22FB123239CD7007ABA75 /* TransactionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailView.swift; sourceTree = "<group>"; };
 		E5F23F872322D917004F98DE /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -95,6 +99,7 @@
 				E50ABF18231FE58900B20CB4 /* SceneDelegate.swift */,
 				E50ABF3C231FEEC300B20CB4 /* Global.swift */,
 				E50ABF442320116100B20CB4 /* Colors.swift */,
+				E50ABF4223200F2600B20CB4 /* ModelHelper.swift */,
 				E50ABF1C231FE59200B20CB4 /* Assets.xcassets */,
 				E50ABF21231FE59200B20CB4 /* LaunchScreen.storyboard */,
 				E50ABF24231FE59200B20CB4 /* Info.plist */,
@@ -116,7 +121,6 @@
 			children = (
 				E50ABF2F231FE6F000B20CB4 /* easyrepay.proto */,
 				E50ABF32231FE8B800B20CB4 /* easyrepay.pb.swift */,
-				E50ABF4223200F2600B20CB4 /* PBFactory.swift */,
 			);
 			path = proto;
 			sourceTree = "<group>";
@@ -126,12 +130,14 @@
 			children = (
 				E50ABF3A231FEE3F00B20CB4 /* PeopleList.swift */,
 				E50ABF38231FED5500B20CB4 /* PersonRow.swift */,
-				E50ABF3E232006EC00B20CB4 /* TransactionsList.swift */,
-				E50ABF40232006FB00B20CB4 /* TransactionRow.swift */,
-				E50ABF46232011CA00B20CB4 /* TransactionDetail.swift */,
-				E50ABF4823201C1C00B20CB4 /* ReminderView.swift */,
 				E50ABF4A2320239400B20CB4 /* NewPersonView.swift */,
 				E5F23F872322D917004F98DE /* SettingsView.swift */,
+				E50ABF3E232006EC00B20CB4 /* TransactionsList.swift */,
+				E50ABF40232006FB00B20CB4 /* TransactionRow.swift */,
+				E50ABF4823201C1C00B20CB4 /* ReminderView.swift */,
+				E50ABF46232011CA00B20CB4 /* TransactionDetail.swift */,
+				E5D22FB123239CD7007ABA75 /* TransactionDetailView.swift */,
+				E5D22FAF23239CCC007ABA75 /* NewTransactionView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -223,7 +229,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E50ABF4B2320239400B20CB4 /* NewPersonView.swift in Sources */,
-				E50ABF4323200F2600B20CB4 /* PBFactory.swift in Sources */,
 				E50ABF452320116100B20CB4 /* Colors.swift in Sources */,
 				E50ABF4923201C1C00B20CB4 /* ReminderView.swift in Sources */,
 				E50ABF41232006FB00B20CB4 /* TransactionRow.swift in Sources */,
@@ -233,7 +238,10 @@
 				E50ABF19231FE58900B20CB4 /* SceneDelegate.swift in Sources */,
 				E50ABF33231FE8B800B20CB4 /* easyrepay.pb.swift in Sources */,
 				E50ABF39231FED5500B20CB4 /* PersonRow.swift in Sources */,
+				E5D22FB223239CD7007ABA75 /* TransactionDetailView.swift in Sources */,
 				E50ABF3F232006EC00B20CB4 /* TransactionsList.swift in Sources */,
+				E5D22FAE23239217007ABA75 /* ModelHelper.swift in Sources */,
+				E5D22FB023239CCC007ABA75 /* NewTransactionView.swift in Sources */,
 				E50ABF3D231FEEC300B20CB4 /* Global.swift in Sources */,
 				E50ABF47232011CA00B20CB4 /* TransactionDetail.swift in Sources */,
 			);

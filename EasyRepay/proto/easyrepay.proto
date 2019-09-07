@@ -1,3 +1,7 @@
+// easyrepay.proto
+//
+// Compile with protoc --swift_out=. easyrepay.proto
+
 syntax = "proto3";
 
 message PeopleStore {
@@ -11,10 +15,11 @@ message Person {
 }
 
 enum TransactionType {
-    CREDIT = 0;
-    DEBT = 1;
-    SETTLE_CREDIT = 2;
-    SETTLE_DEBT = 3;
+    UNDEF = 0;
+    CREDIT = 1;
+    DEBT = 2;
+    SETTLE_CREDIT = 3;
+    SETTLE_DEBT = 4;
 }
 
 message Transaction {

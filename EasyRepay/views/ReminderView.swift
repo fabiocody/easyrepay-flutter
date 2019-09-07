@@ -8,12 +8,14 @@
 
 import SwiftUI
 
+
 struct ReminderView: View {
     var person: Person
     var body: some View {
         Text("ReminderView")
     }
 }
+
 
 struct ReminderView_Previews: PreviewProvider {
     static var previews: some View {

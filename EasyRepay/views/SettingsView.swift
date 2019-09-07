@@ -8,8 +8,11 @@
 
 import SwiftUI
 
+
 struct SettingsView: View {
+    
     @Environment(\.presentationMode) var presentationMode
+    
     var body: some View {
         NavigationView {
             List {
@@ -26,7 +29,9 @@ struct SettingsView: View {
             .accentColor(.green)
         }
     }
+    
 }
+
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {

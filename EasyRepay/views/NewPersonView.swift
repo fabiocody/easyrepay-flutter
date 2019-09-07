@@ -8,9 +8,12 @@
 
 import SwiftUI
 
+
 struct NewPersonView: View {
+    
     @Environment(\.presentationMode) var presentationMode
     @State var name: String = ""
+    
     var body: some View {
         NavigationView {
             VStack(alignment: .center) {
@@ -22,16 +25,14 @@ struct NewPersonView: View {
                     .padding(.bottom, 20)
                 TextField("Enter name", text: $name)
                     .padding()
-                    .background(Color.secondary.opacity(0.5))
+                    .background(Color.secondary.opacity(0.45))
                     .cornerRadius(5.0)
                     .padding(.bottom, 20)
                     .padding(.leading, 20)
                     .padding(.trailing, 20)
                 Button("Insert", action: {
-                    let p = PBFactory.newPerson(name: self.name)
-                    peopleStore.people.append(p)
+                    ModelHelper.insertPerson(name: self.name)
                     self.name = ""
-                    print(peopleStore)
                     self.presentationMode.wrappedValue.dismiss()
                 })
                     .font(.headline)
@@ -50,7 +51,9 @@ struct NewPersonView: View {
             }).accentColor(.green))
         }
     }
+    
 }
+
 
 struct NewPersonView_Previews: PreviewProvider {
     static var previews: some View {

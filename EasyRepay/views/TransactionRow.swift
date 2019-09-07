@@ -8,8 +8,11 @@
 
 import SwiftUI
 
+
 struct TransactionRow: View {
+    
     var transaction: Transaction
+    
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
@@ -26,7 +29,9 @@ struct TransactionRow: View {
                 .foregroundColor(Colors.amountColor(transaction: transaction))
         }
     }
+    
 }
+
 
 struct TransactionRow_Previews: PreviewProvider {
     static var previews: some View {

@@ -8,7 +8,9 @@
 
 import SwiftUI
 
+
 struct PersonRow: View {
+    
     var person: Person
     
     var totalAmount: Double {
@@ -30,6 +32,7 @@ struct PersonRow: View {
                 .foregroundColor(Colors.amountColor(person: person))
         }
     }
+    
 }
 
 

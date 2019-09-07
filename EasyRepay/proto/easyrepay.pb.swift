@@ -6,6 +6,10 @@
 // For information on using the generated types, please see the documenation:
 //   https://github.com/apple/swift-protobuf/
 
+// easyrepay.proto
+//
+// Compile with protoc --swift_out=. easyrepay.proto
+
 import Foundation
 import SwiftProtobuf
 
@@ -21,32 +25,35 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
 
 enum TransactionType: SwiftProtobuf.Enum {
   typealias RawValue = Int
-  case credit // = 0
-  case debt // = 1
-  case settleCredit // = 2
-  case settleDebt // = 3
+  case undef // = 0
+  case credit // = 1
+  case debt // = 2
+  case settleCredit // = 3
+  case settleDebt // = 4
   case UNRECOGNIZED(Int)
 
   init() {
-    self = .credit
+    self = .undef
   }
 
   init?(rawValue: Int) {
     switch rawValue {
-    case 0: self = .credit
-    case 1: self = .debt
-    case 2: self = .settleCredit
-    case 3: self = .settleDebt
+    case 0: self = .undef
+    case 1: self = .credit
+    case 2: self = .debt
+    case 3: self = .settleCredit
+    case 4: self = .settleDebt
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
 
   var rawValue: Int {
     switch self {
-    case .credit: return 0
-    case .debt: return 1
-    case .settleCredit: return 2
-    case .settleDebt: return 3
+    case .undef: return 0
+    case .credit: return 1
+    case .debt: return 2
+    case .settleCredit: return 3
+    case .settleDebt: return 4
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -58,6 +65,7 @@ enum TransactionType: SwiftProtobuf.Enum {
 extension TransactionType: CaseIterable {
   // The compiler won't synthesize support with the UNRECOGNIZED case.
   static var allCases: [TransactionType] = [
+    .undef,
     .credit,
     .debt,
     .settleCredit,
@@ -102,9 +110,9 @@ struct Transaction {
 
   var id: String = String()
 
-  var type: TransactionType = .credit
-
   var amount: Double = 0
+
+  var type: TransactionType = .undef
 
   var reason: String = String()
 
@@ -121,10 +129,11 @@ struct Transaction {
 
 extension TransactionType: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "CREDIT"),
-    1: .same(proto: "DEBT"),
-    2: .same(proto: "SETTLE_CREDIT"),
-    3: .same(proto: "SETTLE_DEBT"),
+    0: .same(proto: "UNDEF"),
+    1: .same(proto: "CREDIT"),
+    2: .same(proto: "DEBT"),
+    3: .same(proto: "SETTLE_CREDIT"),
+    4: .same(proto: "SETTLE_DEBT"),
   ]
 }
 
@@ -202,8 +211,8 @@ extension Transaction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementati
   static let protoMessageName: String = "Transaction"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "id"),
-    2: .same(proto: "type"),
-    3: .same(proto: "amount"),
+    2: .same(proto: "amount"),
+    3: .same(proto: "type"),
     4: .same(proto: "reason"),
     5: .same(proto: "completed"),
     6: .same(proto: "timestamp"),
@@ -213,8 +222,8 @@ extension Transaction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementati
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
       case 1: try decoder.decodeSingularStringField(value: &self.id)
-      case 2: try decoder.decodeSingularEnumField(value: &self.type)
-      case 3: try decoder.decodeSingularDoubleField(value: &self.amount)
+      case 2: try decoder.decodeSingularDoubleField(value: &self.amount)
+      case 3: try decoder.decodeSingularEnumField(value: &self.type)
       case 4: try decoder.decodeSingularStringField(value: &self.reason)
       case 5: try decoder.decodeSingularBoolField(value: &self.completed)
       case 6: try decoder.decodeSingularUInt64Field(value: &self.timestamp)
@@ -227,11 +236,11 @@ extension Transaction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementati
     if !self.id.isEmpty {
       try visitor.visitSingularStringField(value: self.id, fieldNumber: 1)
     }
-    if self.type != .credit {
-      try visitor.visitSingularEnumField(value: self.type, fieldNumber: 2)
-    }
     if self.amount != 0 {
-      try visitor.visitSingularDoubleField(value: self.amount, fieldNumber: 3)
+      try visitor.visitSingularDoubleField(value: self.amount, fieldNumber: 2)
+    }
+    if self.type != .undef {
+      try visitor.visitSingularEnumField(value: self.type, fieldNumber: 3)
     }
     if !self.reason.isEmpty {
       try visitor.visitSingularStringField(value: self.reason, fieldNumber: 4)
@@ -247,8 +256,8 @@ extension Transaction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementati
 
   static func ==(lhs: Transaction, rhs: Transaction) -> Bool {
     if lhs.id != rhs.id {return false}
-    if lhs.type != rhs.type {return false}
     if lhs.amount != rhs.amount {return false}
+    if lhs.type != rhs.type {return false}
     if lhs.reason != rhs.reason {return false}
     if lhs.completed != rhs.completed {return false}
     if lhs.timestamp != rhs.timestamp {return false}
