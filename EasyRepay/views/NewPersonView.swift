@@ -25,7 +25,7 @@ struct NewPersonView: View {
                     .padding(.bottom, 20)
                 TextField("Enter name", text: $name)
                     .padding()
-                    .background(Color.secondary.opacity(0.45))
+                    .background(Color.secondary.opacity(0.35))
                     .cornerRadius(5.0)
                     .padding(.bottom, 20)
                     .padding(.leading, 20)

@@ -24,9 +24,9 @@
 		E50ABF47232011CA00B20CB4 /* TransactionDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50ABF46232011CA00B20CB4 /* TransactionDetail.swift */; };
 		E50ABF4923201C1C00B20CB4 /* ReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50ABF4823201C1C00B20CB4 /* ReminderView.swift */; };
 		E50ABF4B2320239400B20CB4 /* NewPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50ABF4A2320239400B20CB4 /* NewPersonView.swift */; };
+		E52C0DEA2323BF2F005F8C15 /* NewTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52C0DE92323BF2F005F8C15 /* NewTransactionView.swift */; };
 		E57C31852322C6530015243A /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E57C31842322C6530015243A /* CloudKit.framework */; };
 		E5D22FAE23239217007ABA75 /* ModelHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50ABF4223200F2600B20CB4 /* ModelHelper.swift */; };
-		E5D22FB023239CCC007ABA75 /* NewTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D22FAF23239CCC007ABA75 /* NewTransactionView.swift */; };
 		E5D22FB223239CD7007ABA75 /* TransactionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D22FB123239CD7007ABA75 /* TransactionDetailView.swift */; };
 		E5F23F882322D917004F98DE /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F23F872322D917004F98DE /* SettingsView.swift */; };
 /* End PBXBuildFile section */
@@ -51,9 +51,9 @@
 		E50ABF46232011CA00B20CB4 /* TransactionDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetail.swift; sourceTree = "<group>"; };
 		E50ABF4823201C1C00B20CB4 /* ReminderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderView.swift; sourceTree = "<group>"; };
 		E50ABF4A2320239400B20CB4 /* NewPersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPersonView.swift; sourceTree = "<group>"; };
+		E52C0DE92323BF2F005F8C15 /* NewTransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTransactionView.swift; sourceTree = "<group>"; };
 		E57C31822322C60C0015243A /* EasyRepay.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EasyRepay.entitlements; sourceTree = "<group>"; };
 		E57C31842322C6530015243A /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
-		E5D22FAF23239CCC007ABA75 /* NewTransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTransactionView.swift; sourceTree = "<group>"; };
 		E5D22FB123239CD7007ABA75 /* TransactionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailView.swift; sourceTree = "<group>"; };
 		E5F23F872322D917004F98DE /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -137,7 +137,7 @@
 				E50ABF4823201C1C00B20CB4 /* ReminderView.swift */,
 				E50ABF46232011CA00B20CB4 /* TransactionDetail.swift */,
 				E5D22FB123239CD7007ABA75 /* TransactionDetailView.swift */,
-				E5D22FAF23239CCC007ABA75 /* NewTransactionView.swift */,
+				E52C0DE92323BF2F005F8C15 /* NewTransactionView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -240,8 +240,8 @@
 				E50ABF39231FED5500B20CB4 /* PersonRow.swift in Sources */,
 				E5D22FB223239CD7007ABA75 /* TransactionDetailView.swift in Sources */,
 				E50ABF3F232006EC00B20CB4 /* TransactionsList.swift in Sources */,
+				E52C0DEA2323BF2F005F8C15 /* NewTransactionView.swift in Sources */,
 				E5D22FAE23239217007ABA75 /* ModelHelper.swift in Sources */,
-				E5D22FB023239CCC007ABA75 /* NewTransactionView.swift in Sources */,
 				E50ABF3D231FEEC300B20CB4 /* Global.swift in Sources */,
 				E50ABF47232011CA00B20CB4 /* TransactionDetail.swift in Sources */,
 			);

@@ -21,9 +21,9 @@ struct TransactionsList: View {
             if person.transactions.count > 0 {
                 List {
                     Section() {
-                        ForEach(person.transactions, id: \.id) { t in
-                            NavigationLink(destination: TransactionDetailView(transaction: t)) {
-                                TransactionRow(transaction: t)
+                        ForEach(0..<person.transactions.count) { i in
+                            NavigationLink(destination: TransactionDetailView(person: self.person, transactionIndex: i)) {
+                                TransactionRow(transaction: self.person.transactions[i])
                             }
                         }
                     }
@@ -53,7 +53,7 @@ struct TransactionsList: View {
                     .imageScale(.large)
             }
         })
-        .sheet(isPresented: self.$showAdd, content: {NewTransactionView()})
+        .sheet(isPresented: self.$showAdd, content: {NewTransactionView(person: self.person)})
     }
     
 }

@@ -52,4 +52,36 @@ class ModelHelper {
         return -1
     }
     
+    static func enum2string(type: TransactionType) -> String {
+        switch type {
+        case .credit:
+            return "Credit"
+        case .debt:
+            return "Debt"
+        case .settleCredit:
+            return "Settle credit"
+        case .settleDebt:
+            return "Settle debt"
+        case .undef:
+            return "---"
+        default:
+            return ""
+        }
+    }
+    
+    static func enum2index(type: TransactionType) -> Int {
+        switch type {
+        case .credit:
+            return 1
+        case .debt:
+            return 2
+        case .settleCredit:
+            return 3
+        case .settleDebt:
+            return 4
+        default:
+            return 0
+        }
+    }
+    
 }

@@ -10,30 +10,33 @@ import SwiftUI
 
 struct NewTransactionView: View {
     
+    var person: Person
+    
     @Environment(\.presentationMode) var presentationMode
+    
+    @State var typeSelection: Int = 0
+    @State var amount: Double = 0
+    @State var reason: String = ""
+    @State var date: Date = Date()
     
     var body: some View {
         NavigationView {
-            VStack(alignment: .center) {
-                TransactionDetail(transaction: Transaction())
-                Button("Insert", action: {
-                    //ModelHelper.insertPerson(name: self.name)
-                    self.presentationMode.wrappedValue.dismiss()
-                })
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .padding()
-                    .frame(width: 200, height: 55)
-                    .background(Color.green)
-                    .cornerRadius(15.0)
-                Spacer()
-            }
-            .padding()
-            .navigationBarTitle("New transaction")
-            .navigationBarItems(leading: Button("Cancel", action: {
-                //self.name = ""
-                self.presentationMode.wrappedValue.dismiss()
-            }).accentColor(.green))
+            TransactionDetail(typeSelection: $typeSelection, amount: $amount, reason: $reason, date: $date)
+                .padding()
+                .navigationBarTitle("New transaction")
+                .navigationBarItems(
+                    leading: Button("Cancel") {
+                        // TODO Erase state
+                        self.presentationMode.wrappedValue.dismiss()
+                    }
+                    .accentColor(.green)
+                    , trailing: Button("Save") {
+                        // TODO Save
+                        self.presentationMode.wrappedValue.dismiss()
+                    }
+                    .accentColor(.green)
+                )
+                .accentColor(.green)
         }
     }
     
@@ -41,6 +44,9 @@ struct NewTransactionView: View {
 
 struct NewTransactionView_Previews: PreviewProvider {
     static var previews: some View {
-        NewTransactionView().environment(\.colorScheme, .light)
+        Group {
+            NewTransactionView(person: peopleStore.people[0]).environment(\.colorScheme, .dark)
+            NewTransactionView(person: peopleStore.people[0]).environment(\.colorScheme, .light)
+        }
     }
 }

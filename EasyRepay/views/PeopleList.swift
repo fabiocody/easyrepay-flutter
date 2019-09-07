@@ -19,7 +19,7 @@ struct PeopleList: View {
     
     var body: some View {
         NavigationView {
-            List(peopleStore.people, id: \.id) { person in
+            List(peopleStore.people, id: \.id) { person in      // TODO Editable
                 NavigationLink(destination: TransactionsList(person: person)) {
                     PersonRow(person: person)
                 }
