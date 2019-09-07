@@ -10,12 +10,10 @@ import SwiftUI
 
 
 struct TransactionDetail: View {
-    
-    var newTransaction = false
-        
+            
     @Binding var typeSelection: Int
     @Binding var amount: Double
-    @Binding var reason: String
+    @Binding var note: String
     @Binding var date: Date
     
     var body: some View {
@@ -25,7 +23,7 @@ struct TransactionDetail: View {
                     Text("Type")
                         .font(.headline)
                         .padding(.leading, 20)
-                    Picker(selection: $typeSelection, label: Text("")) {    // TODO: Does not inizialize
+                    Picker(selection: $typeSelection, label: Text("")) {
                         ForEach(0..<TransactionType.allCases.count) {
                             Text(ModelHelper.enum2string(type: TransactionType.allCases[$0])).tag($0)
                         }
@@ -44,7 +42,8 @@ struct TransactionDetail: View {
                     Text("Amount")
                         .font(.headline)
                         .padding(.leading, 20)
-                    TextField("Enter amount", value: $amount, formatter: currencyFormatter)
+                    TextField("Enter amount", value: $amount, formatter: currencyFormatter)     // TODO: Not working
+                        .keyboardType(.decimalPad)
                         .padding()
                         .background(Color.secondary.opacity(0.35))
                         .cornerRadius(5.0)
@@ -52,10 +51,10 @@ struct TransactionDetail: View {
                         .padding(.horizontal, 20)
                 }
                 VStack(alignment: .leading) {
-                    Text("Reason")
+                    Text("Note")
                         .font(.headline)
                         .padding(.leading, 20)
-                    TextField("Enter reason", text: $reason)
+                    TextField("Enter note", text: $note)
                         .padding()
                         .background(Color.secondary.opacity(0.35))
                         .cornerRadius(5.0)
@@ -84,9 +83,9 @@ struct TransactionDetail: View {
 struct TransactionDetail_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            TransactionDetail(typeSelection: .constant(0), amount: .constant(0), reason: .constant(""), date: .constant(Date()))
+            TransactionDetail(typeSelection: .constant(0), amount: .constant(0), note: .constant(""), date: .constant(Date()))
                 .environment(\.colorScheme, .light)
-            TransactionDetail(typeSelection: .constant(0), amount: .constant(0), reason: .constant(""), date: .constant(Date()))
+            TransactionDetail(typeSelection: .constant(0), amount: .constant(0), note: .constant(""), date: .constant(Date()))
                 .environment(\.colorScheme, .dark)
         }
     }

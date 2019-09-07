@@ -11,13 +11,14 @@ import SwiftUI
 
 struct NewPersonView: View {
     
+    @EnvironmentObject var data: UserData
     @Environment(\.presentationMode) var presentationMode
     @State var name: String = ""
     
     var body: some View {
         NavigationView {
             VStack(alignment: .center) {
-                Image(systemName: "person.fill")
+                Image(systemName: "person.fill")    // TODO: Make bigger
                     .padding()
                     .foregroundColor(.secondary)
                     .imageScale(.large)
@@ -31,7 +32,10 @@ struct NewPersonView: View {
                     .padding(.leading, 20)
                     .padding(.trailing, 20)
                 Button("Insert", action: {
-                    ModelHelper.insertPerson(name: self.name)
+                    let p = Person(name: self.name == "" ? "New person" : self.name)
+                    self.data.store.people.append(p)
+                    self.data.store.people.sort(by: {$0.name < $1.name})
+                    self.data.store.save()
                     self.name = ""
                     self.presentationMode.wrappedValue.dismiss()
                 })
@@ -57,9 +61,6 @@ struct NewPersonView: View {
 
 struct NewPersonView_Previews: PreviewProvider {
     static var previews: some View {
-        Group {
-            NewPersonView().environment(\.colorScheme, .light)
-            NewPersonView().environment(\.colorScheme, .dark)
-        }
+        NewPersonView().environment(\.colorScheme, .light)
     }
 }

@@ -15,16 +15,16 @@ var peopleStore: PeopleStore = {
     var p: Person
     var t: Transaction
     
-    p = ModelHelper.newPerson(name: "Clay Jensen")
-    p.transactions.append(ModelHelper.newTransaction(amount: 12.99, type: .debt, reason: "Pizza"))
-    p.transactions.append(ModelHelper.newTransaction(amount: 15, type: .credit, reason: "Bike helmet"))
+    p = Person(name: "Clay Jensen")
+    p.transactions.append(Transaction(type: .debt, amount: 12.99, note: "Pizza"))
+    p.transactions.append(Transaction(type: .credit, amount: 15, note: "Bike helmet"))
     ppl.people.append(p)
     
-    p = ModelHelper.newPerson(name: "Justin Fooley")
+    p = Person(name: "Justin Fooley")
     ppl.people.append(p)
     
-    p = ModelHelper.newPerson(name: "Hannah Baker")
-    p.transactions.append(ModelHelper.newTransaction(amount: 17.49, type: .debt, reason: "Tapes"))
+    p = Person(name: "Hannah Baker")
+    p.transactions.append(Transaction(type: .debt, amount: 17.49, note: "Tapes"))
     ppl.people.append(p)
     
     ppl.people.sort(by: {$0.name < $1.name})

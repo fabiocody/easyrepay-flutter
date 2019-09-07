@@ -98,6 +98,10 @@ struct Person {
 
   var transactions: [Transaction] = []
 
+  var reminderActive: Bool = false
+
+  var reminderTimestamp: UInt64 = 0
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -110,11 +114,11 @@ struct Transaction {
 
   var id: String = String()
 
-  var amount: Double = 0
-
   var type: TransactionType = .undef
 
-  var reason: String = String()
+  var amount: Double = 0
+
+  var note: String = String()
 
   var completed: Bool = false
 
@@ -172,6 +176,8 @@ extension Person: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBas
     1: .same(proto: "id"),
     2: .same(proto: "name"),
     3: .same(proto: "transactions"),
+    4: .same(proto: "reminderActive"),
+    5: .same(proto: "reminderTimestamp"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -180,6 +186,8 @@ extension Person: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBas
       case 1: try decoder.decodeSingularStringField(value: &self.id)
       case 2: try decoder.decodeSingularStringField(value: &self.name)
       case 3: try decoder.decodeRepeatedMessageField(value: &self.transactions)
+      case 4: try decoder.decodeSingularBoolField(value: &self.reminderActive)
+      case 5: try decoder.decodeSingularUInt64Field(value: &self.reminderTimestamp)
       default: break
       }
     }
@@ -195,6 +203,12 @@ extension Person: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBas
     if !self.transactions.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.transactions, fieldNumber: 3)
     }
+    if self.reminderActive != false {
+      try visitor.visitSingularBoolField(value: self.reminderActive, fieldNumber: 4)
+    }
+    if self.reminderTimestamp != 0 {
+      try visitor.visitSingularUInt64Field(value: self.reminderTimestamp, fieldNumber: 5)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -202,6 +216,8 @@ extension Person: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBas
     if lhs.id != rhs.id {return false}
     if lhs.name != rhs.name {return false}
     if lhs.transactions != rhs.transactions {return false}
+    if lhs.reminderActive != rhs.reminderActive {return false}
+    if lhs.reminderTimestamp != rhs.reminderTimestamp {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -211,9 +227,9 @@ extension Transaction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementati
   static let protoMessageName: String = "Transaction"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "id"),
-    2: .same(proto: "amount"),
-    3: .same(proto: "type"),
-    4: .same(proto: "reason"),
+    2: .same(proto: "type"),
+    3: .same(proto: "amount"),
+    4: .same(proto: "note"),
     5: .same(proto: "completed"),
     6: .same(proto: "timestamp"),
   ]
@@ -222,9 +238,9 @@ extension Transaction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementati
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
       case 1: try decoder.decodeSingularStringField(value: &self.id)
-      case 2: try decoder.decodeSingularDoubleField(value: &self.amount)
-      case 3: try decoder.decodeSingularEnumField(value: &self.type)
-      case 4: try decoder.decodeSingularStringField(value: &self.reason)
+      case 2: try decoder.decodeSingularEnumField(value: &self.type)
+      case 3: try decoder.decodeSingularDoubleField(value: &self.amount)
+      case 4: try decoder.decodeSingularStringField(value: &self.note)
       case 5: try decoder.decodeSingularBoolField(value: &self.completed)
       case 6: try decoder.decodeSingularUInt64Field(value: &self.timestamp)
       default: break
@@ -236,14 +252,14 @@ extension Transaction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementati
     if !self.id.isEmpty {
       try visitor.visitSingularStringField(value: self.id, fieldNumber: 1)
     }
-    if self.amount != 0 {
-      try visitor.visitSingularDoubleField(value: self.amount, fieldNumber: 2)
-    }
     if self.type != .undef {
-      try visitor.visitSingularEnumField(value: self.type, fieldNumber: 3)
+      try visitor.visitSingularEnumField(value: self.type, fieldNumber: 2)
     }
-    if !self.reason.isEmpty {
-      try visitor.visitSingularStringField(value: self.reason, fieldNumber: 4)
+    if self.amount != 0 {
+      try visitor.visitSingularDoubleField(value: self.amount, fieldNumber: 3)
+    }
+    if !self.note.isEmpty {
+      try visitor.visitSingularStringField(value: self.note, fieldNumber: 4)
     }
     if self.completed != false {
       try visitor.visitSingularBoolField(value: self.completed, fieldNumber: 5)
@@ -256,9 +272,9 @@ extension Transaction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementati
 
   static func ==(lhs: Transaction, rhs: Transaction) -> Bool {
     if lhs.id != rhs.id {return false}
-    if lhs.amount != rhs.amount {return false}
     if lhs.type != rhs.type {return false}
-    if lhs.reason != rhs.reason {return false}
+    if lhs.amount != rhs.amount {return false}
+    if lhs.note != rhs.note {return false}
     if lhs.completed != rhs.completed {return false}
     if lhs.timestamp != rhs.timestamp {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}

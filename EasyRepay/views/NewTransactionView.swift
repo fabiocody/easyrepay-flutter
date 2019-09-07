@@ -10,28 +10,38 @@ import SwiftUI
 
 struct NewTransactionView: View {
     
-    var person: Person
-    
+    @EnvironmentObject var data: UserData
     @Environment(\.presentationMode) var presentationMode
     
-    @State var typeSelection: Int = 0
-    @State var amount: Double = 0
-    @State var reason: String = ""
-    @State var date: Date = Date()
+    var person: Person
+    
+    var pIdx: Int {
+        data.store.index(of: person)
+    }
+    
+    @State private var typeSelection: Int = 0
+    @State private var amount: Double = 0
+    @State private var note: String = ""
+    @State private var date: Date = Date()
     
     var body: some View {
         NavigationView {
-            TransactionDetail(typeSelection: $typeSelection, amount: $amount, reason: $reason, date: $date)
+            TransactionDetail(typeSelection: $typeSelection, amount: $amount, note: $note, date: $date)
                 .padding()
                 .navigationBarTitle("New transaction")
                 .navigationBarItems(
                     leading: Button("Cancel") {
-                        // TODO Erase state
+                        self.typeSelection = 0
+                        self.amount = 0
+                        self.note = ""
+                        self.date = Date()
                         self.presentationMode.wrappedValue.dismiss()
                     }
                     .accentColor(.green)
                     , trailing: Button("Save") {
-                        // TODO Save
+                        let t = Transaction(type: TransactionType.allCases[self.typeSelection], amount: self.amount, note: self.note)
+                        self.data.store.people[self.pIdx].transactions.append(t)
+                        self.data.store.save()
                         self.presentationMode.wrappedValue.dismiss()
                     }
                     .accentColor(.green)
@@ -44,9 +54,8 @@ struct NewTransactionView: View {
 
 struct NewTransactionView_Previews: PreviewProvider {
     static var previews: some View {
-        Group {
-            NewTransactionView(person: peopleStore.people[0]).environment(\.colorScheme, .dark)
-            NewTransactionView(person: peopleStore.people[0]).environment(\.colorScheme, .light)
-        }
+        NewTransactionView(person: peopleStore.people[0])
+            .environment(\.colorScheme, .light)
+            .environmentObject(UserData())
     }
 }

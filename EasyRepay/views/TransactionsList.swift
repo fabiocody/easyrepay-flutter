@@ -11,39 +11,37 @@ import SwiftUI
 
 struct TransactionsList: View {
     
-    @State private var reminderActive = false
-    @State private var showAdd = false
+    @EnvironmentObject var data: UserData
     
     var person: Person
     
+    var pIdx: Int {
+        data.store.index(of: person)
+    }
+    
+    @State private var reminderActive = false
+    @State private var showAdd = false
+    @State private var showCompleted = false        // TODO Show completed
+        
     var body: some View {
-        Group {
-            if person.transactions.count > 0 {
-                List {
-                    Section() {
-                        ForEach(0..<person.transactions.count) { i in
-                            NavigationLink(destination: TransactionDetailView(person: self.person, transactionIndex: i)) {
-                                TransactionRow(transaction: self.person.transactions[i])
-                            }
-                        }
-                    }
-                    Section(header: Text("Reminder")) {
-                        Toggle(isOn: $reminderActive) {
-                            Text("Activate reminder")
-                        }
-                        if reminderActive {
-                            Text("Ciao")
-                            Text("Ciao ciao")
-                        }
-                    }
-
+        List {
+            Section {
+                Toggle(isOn: $showCompleted, label: {Text("Show completed")})
+                Toggle(isOn: $reminderActive, label: {Text("Activate reminder")})
+                if reminderActive {
+                    Text("This should only appear when the reminder is active.")
                 }
-                .listStyle(GroupedListStyle())
-            } else {
-                Text("No data")
+            }
+            Section {
+                ForEach(data.store.people[pIdx].transactions) { transaction in
+                    NavigationLink(destination: TransactionDetailView(person: self.person, transaction: transaction)) {
+                        TransactionRow(person: self.person, transaction: transaction)
+                    }
+                }
             }
         }
-        .navigationBarTitle(person.name)
+        .listStyle(GroupedListStyle())
+        .navigationBarTitle(data.store.people[pIdx].name)
         .navigationBarItems(trailing: Button(action: {
             self.showAdd = true
         }) {
@@ -53,7 +51,8 @@ struct TransactionsList: View {
                     .imageScale(.large)
             }
         })
-        .sheet(isPresented: self.$showAdd, content: {NewTransactionView(person: self.person)})
+        //.sheet(isPresented: self.$showAdd, content: {NewTransactionView(pIdx: self.pIdx)})
+        .sheet(isPresented: self.$showAdd, content: {NewTransactionView(person: self.person).environmentObject(self.data)})
     }
     
 }
@@ -61,11 +60,8 @@ struct TransactionsList: View {
 
 struct TransactionsList_Previews: PreviewProvider {
     static var previews: some View {
-        Group {
-            TransactionsList(person: peopleStore.people[0])
-                .environment(\.colorScheme, .dark)
-            TransactionsList(person: peopleStore.people[1])
-                .environment(\.colorScheme, .light)
-        }
+        TransactionsList(person: peopleStore.people[0])
+            .environment(\.colorScheme, .dark)
+            .environmentObject(UserData())
     }
 }

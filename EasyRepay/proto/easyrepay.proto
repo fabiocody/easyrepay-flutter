@@ -12,6 +12,8 @@ message Person {
     string id = 1;
     string name = 2;
     repeated Transaction transactions = 3;
+    bool reminderActive = 4;
+    uint64 reminderTimestamp = 5;
 }
 
 enum TransactionType {
@@ -24,9 +26,9 @@ enum TransactionType {
 
 message Transaction {
     string id = 1;
-    double amount = 2;
-    TransactionType type = 3;
-    string reason = 4;
+    TransactionType type = 2;
+    double amount = 3;
+    string note = 4;
     bool completed = 5;
     uint64 timestamp = 6;
 }
