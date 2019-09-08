@@ -82,11 +82,7 @@ struct TransactionDetail: View {
 
 struct TransactionDetail_Previews: PreviewProvider {
     static var previews: some View {
-        Group {
-            TransactionDetail(typeSelection: .constant(0), amount: .constant(0), note: .constant(""), date: .constant(Date()))
-                .environment(\.colorScheme, .light)
-            TransactionDetail(typeSelection: .constant(0), amount: .constant(0), note: .constant(""), date: .constant(Date()))
-                .environment(\.colorScheme, .dark)
-        }
+        TransactionDetail(typeSelection: .constant(0), amount: .constant(0), note: .constant(""), date: .constant(Date()))
+            .environment(\.colorScheme, .light)
     }
 }

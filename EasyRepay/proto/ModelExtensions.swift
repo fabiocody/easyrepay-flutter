@@ -17,8 +17,30 @@ final class UserData: ObservableObject {
 
 extension PeopleStore {
     
+    private var fileURL: URL {
+        let documentsDirectories = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentDirectory = documentsDirectories.first!
+        return documentDirectory.appendingPathComponent("people.bin")
+    }
+    
     func save() {
-        
+        do {
+            try self.serializedData().write(to: fileURL)
+            print("Save successful")
+        } catch {
+            print("ERROR: save")
+            print(error)
+        }
+    }
+    
+    mutating func read() {
+        do {
+            try self.merge(serializedData: Data(contentsOf: fileURL))
+            print("Read successful")
+        } catch {
+            print("ERROR: read")
+            print(error)
+        }
     }
     
     func index(of person: Person) -> Int {
@@ -38,6 +60,11 @@ extension Person: Identifiable {
     init(name: String) {
         self.id = UUID().description
         self.name = name
+    }
+    
+    var totalAmount: Double {
+        let amounts = transactions.map({$0.amount})
+        return amounts.reduce(0, +)
     }
     
     func index(of transaction: Transaction) -> Int {

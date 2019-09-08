@@ -13,8 +13,8 @@ struct TransactionRow: View {
     
     @EnvironmentObject var data: UserData
     
-    var person: Person
-    var transaction: Transaction
+    let person: Person
+    let transaction: Transaction
     
     var pIdx: Int {
         data.store.index(of: person)
@@ -27,17 +27,17 @@ struct TransactionRow: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                Text(transaction.note)
+                Text(data.store.people[pIdx].transactions[tIdx].note)
                     .allowsTightening(true)
-                Text("\(dateFormatter.string(for: Date(timeIntervalSince1970: TimeInterval(transaction.timestamp))) ?? "")")
+                Text("\(dateFormatter.string(for: Date(timeIntervalSince1970: TimeInterval(data.store.people[pIdx].transactions[tIdx].timestamp))) ?? "")")
                     .font(.footnote)
                     .foregroundColor(.secondary)
                     .lineLimit(1)
                     .allowsTightening(true)
             }
             Spacer()
-            Text("\(currencyFormatter.string(for: transaction.amount) ?? "")")
-                .foregroundColor(Colors.amountColor(transaction: transaction))
+            Text("\(currencyFormatter.string(for: data.store.people[pIdx].transactions[tIdx].amount) ?? "")")
+                .foregroundColor(Colors.amountColor(transaction: data.store.people[pIdx].transactions[tIdx]))
         }
     }
     

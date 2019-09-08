@@ -19,6 +19,7 @@ struct NewPersonView: View {
         NavigationView {
             VStack(alignment: .center) {
                 Image(systemName: "person.fill")    // TODO: Make bigger
+                    .font(.largeTitle)
                     .padding()
                     .foregroundColor(.secondary)
                     .imageScale(.large)
@@ -61,6 +62,8 @@ struct NewPersonView: View {
 
 struct NewPersonView_Previews: PreviewProvider {
     static var previews: some View {
-        NewPersonView().environment(\.colorScheme, .light)
+        NewPersonView()
+            .environment(\.colorScheme, .light)
+            .environmentObject(UserData())
     }
 }

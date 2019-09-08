@@ -13,7 +13,7 @@ struct TransactionsList: View {
     
     @EnvironmentObject var data: UserData
     
-    var person: Person
+    let person: Person
     
     var pIdx: Int {
         data.store.index(of: person)
@@ -26,8 +26,8 @@ struct TransactionsList: View {
     var body: some View {
         List {
             Section {
-                Toggle(isOn: $showCompleted, label: {Text("Show completed")})
-                Toggle(isOn: $reminderActive, label: {Text("Activate reminder")})
+                Toggle(isOn: $showCompleted.animation(), label: {Text("Show completed")})
+                Toggle(isOn: $reminderActive.animation(), label: {Text("Activate reminder")})
                 if reminderActive {
                     Text("This should only appear when the reminder is active.")
                 }
@@ -38,6 +38,7 @@ struct TransactionsList: View {
                         TransactionRow(person: self.person, transaction: transaction)
                     }
                 }
+                .onDelete(perform: delete)
             }
         }
         .listStyle(GroupedListStyle())
@@ -53,6 +54,11 @@ struct TransactionsList: View {
         })
         //.sheet(isPresented: self.$showAdd, content: {NewTransactionView(pIdx: self.pIdx)})
         .sheet(isPresented: self.$showAdd, content: {NewTransactionView(person: self.person).environmentObject(self.data)})
+    }
+    
+    func delete(at offsets: IndexSet) {
+        data.store.people[pIdx].transactions.remove(atOffsets: offsets)
+        print(data.store)
     }
     
 }

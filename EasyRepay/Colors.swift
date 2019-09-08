@@ -33,14 +33,14 @@ class Colors {
         }
     }
     
-    static func amountColor(transaction: Transaction) -> Color {
+    static func amountColor(transaction: Transaction) -> Color {    // TODO: Change color code
         switch transaction.type {
             case .credit, .settleDebt:
                 return .green
             case .debt, .settleCredit:
                 return .red
             default:
-                return .purple
+                return .secondary
         }
     }
     

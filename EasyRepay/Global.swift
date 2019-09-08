@@ -11,25 +11,30 @@ import Foundation
 
 #if DEBUG
 var peopleStore: PeopleStore = {
-    var ppl = PeopleStore()
+    var store = PeopleStore()
     var p: Person
-    var t: Transaction
     
     p = Person(name: "Clay Jensen")
     p.transactions.append(Transaction(type: .debt, amount: 12.99, note: "Pizza"))
     p.transactions.append(Transaction(type: .credit, amount: 15, note: "Bike helmet"))
-    ppl.people.append(p)
+    store.people.append(p)
     
     p = Person(name: "Justin Fooley")
-    ppl.people.append(p)
+    store.people.append(p)
     
     p = Person(name: "Hannah Baker")
     p.transactions.append(Transaction(type: .debt, amount: 17.49, note: "Tapes"))
-    ppl.people.append(p)
+    store.people.append(p)
     
-    ppl.people.sort(by: {$0.name < $1.name})
+    store.people.sort(by: {$0.name < $1.name})
     
-    return ppl
+    return store
+}()
+#else
+var peopleStore: PeopleStore = {
+    var store = PeopleStore()
+    store.read()
+    return store
 }()
 #endif
 

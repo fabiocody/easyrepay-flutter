@@ -18,11 +18,6 @@ struct PersonRow: View {
     var pIdx: Int {
         data.store.index(of: person)
     }
-    
-    var totalAmount: Double {
-        let amounts = data.store.people[pIdx].transactions.map({$0.amount})
-        return amounts.reduce(0, +)
-    }
         
     var body: some View {
         HStack(alignment: .center) {
@@ -34,7 +29,7 @@ struct PersonRow: View {
                     .foregroundColor(.secondary)
             }
             Spacer()
-            Text("\(currencyFormatter.string(for: totalAmount)!)")
+            Text("\(currencyFormatter.string(for: data.store.people[pIdx].totalAmount)!)")
                 .foregroundColor(Colors.amountColor(person: data.store.people[pIdx]))
         }
     }

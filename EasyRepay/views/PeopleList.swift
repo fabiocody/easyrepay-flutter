@@ -19,10 +19,13 @@ struct PeopleList: View {
         
     var body: some View {
         NavigationView {
-            List(data.store.people) { person in
-                NavigationLink(destination: TransactionsList(person: person)) {
-                    PersonRow(person: person)
+            List {
+                ForEach(data.store.people) { person in
+                    NavigationLink(destination: TransactionsList(person: person)) {
+                        PersonRow(person: person)
+                    }
                 }
+                .onDelete(perform: delete)
             }
             .listStyle(GroupedListStyle())
             .navigationBarTitle(Text("EasyRepay"))
@@ -46,13 +49,17 @@ struct PeopleList: View {
         UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.systemGreen]
     }
     
+    func delete(at offsets: IndexSet) {
+        data.store.people.remove(atOffsets: offsets)
+    }
+    
 }
 
 
 struct PeopleList_Previews: PreviewProvider {
     static var previews: some View {
         PeopleList()
-            .environment(\.colorScheme, .dark)
+            .environment(\.colorScheme, .light)
             .environmentObject(UserData())
     }
 }
