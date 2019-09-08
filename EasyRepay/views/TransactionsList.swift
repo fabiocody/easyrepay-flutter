@@ -35,6 +35,15 @@ struct TransactionsList: View {
                 }
                 .onDelete(perform: delete)
             }
+            Section {
+                HStack {
+                    Text("Total")
+                    Spacer()
+                    Text("\(currencyFormatter.string(for: person.totalAmount)!)")
+                        .foregroundColor(Colors.amountColor(person: person))
+                        .padding(.trailing, 17)
+                }
+            }
         }
         .listStyle(GroupedListStyle())
         .navigationBarTitle(person.name)
@@ -47,7 +56,6 @@ struct TransactionsList: View {
                     .font(.title)
             }
         })
-        //.sheet(isPresented: self.$showAdd, content: {NewTransactionView(pIdx: self.pIdx)})
         .sheet(isPresented: self.$showAdd, content: {NewTransactionView(person: self.person)})
     }
     
@@ -64,6 +72,6 @@ struct TransactionsList_Previews: PreviewProvider {
         NavigationView {
             TransactionsList(person: peopleStore.people[0])
         }
-        .environment(\.colorScheme, .dark)
+        .environment(\.colorScheme, .light)
     }
 }

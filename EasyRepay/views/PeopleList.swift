@@ -34,7 +34,6 @@ struct PeopleList: View {
                 }) {
                     HStack {
                         Image(systemName: "gear")
-                            //.imageScale(.large)
                             .font(.title)
                         Text("Settings")
                     }
@@ -45,7 +44,6 @@ struct PeopleList: View {
                     HStack {
                         Text("New person")
                         Image(systemName: "plus.circle.fill")
-                            //.imageScale(.large)
                             .font(.title)
                     }
                 }
