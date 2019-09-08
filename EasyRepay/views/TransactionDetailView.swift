@@ -10,19 +10,9 @@ import SwiftUI
 
 struct TransactionDetailView: View {
     
-    @EnvironmentObject var data: UserData
     @Environment(\.presentationMode) var presentationMode
         
-    var person: Person
-    var transaction: Transaction
-    
-    var pIdx: Int {
-        data.store.index(of: person)
-    }
-    
-    var tIdx: Int {
-        data.store.people[pIdx].index(of: transaction)
-    }
+    @ObservedObject var transaction: Transaction
     
     @State var typeSelection: Int = 0
     @State var amount: Double = 0
@@ -35,20 +25,20 @@ struct TransactionDetailView: View {
             .navigationBarTitle(Text("Transaction"), displayMode: .inline)
             .navigationBarItems(
                 trailing: Button("Save") {
-                    self.data.store.people[self.pIdx].transactions[self.tIdx].type = TransactionType.allCases[self.typeSelection]
-                    self.data.store.people[self.pIdx].transactions[self.tIdx].amount = self.amount
-                    self.data.store.people[self.pIdx].transactions[self.tIdx].note = self.note
-                    self.data.store.people[self.pIdx].transactions[self.tIdx].timestamp = UInt64(self.date.timeIntervalSince1970)
-                    self.data.store.save()
+                    self.transaction.type = TransactionType.allCases[self.typeSelection]
+                    self.transaction.amount = self.amount
+                    self.transaction.note = self.note
+                    self.transaction.date = self.date
+                    peopleStore.save()
                     self.presentationMode.wrappedValue.dismiss()
                 }
             )
             .onAppear {
                 let t = self.transaction
-                self.typeSelection = ModelHelper.enum2index(type: t.type)
+                self.typeSelection = t.type.index
                 self.amount = t.amount
                 self.note = t.note
-                self.date = Date(timeIntervalSince1970: Double(t.timestamp))
+                self.date = t.date
             }
     }
     
@@ -56,9 +46,8 @@ struct TransactionDetailView: View {
 
 struct TransactionDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        TransactionDetailView(person: peopleStore.people[0], transaction: peopleStore.people[0].transactions[0])
+        TransactionDetailView(transaction: peopleStore.people[0].transactions[0])
             .environment(\.colorScheme, .light)
-            .environmentObject(UserData())
     }
 }
 

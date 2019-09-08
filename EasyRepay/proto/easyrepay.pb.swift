@@ -23,7 +23,7 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
-enum TransactionType: SwiftProtobuf.Enum {
+enum PBTransactionType: SwiftProtobuf.Enum {
   typealias RawValue = Int
   case undef // = 0
   case credit // = 1
@@ -62,9 +62,9 @@ enum TransactionType: SwiftProtobuf.Enum {
 
 #if swift(>=4.2)
 
-extension TransactionType: CaseIterable {
+extension PBTransactionType: CaseIterable {
   // The compiler won't synthesize support with the UNRECOGNIZED case.
-  static var allCases: [TransactionType] = [
+  static var allCases: [PBTransactionType] = [
     .undef,
     .credit,
     .debt,
@@ -75,19 +75,19 @@ extension TransactionType: CaseIterable {
 
 #endif  // swift(>=4.2)
 
-struct PeopleStore {
+struct PBPeopleStore {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var people: [Person] = []
+  var people: [PBPerson] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 }
 
-struct Person {
+struct PBPerson {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -96,7 +96,7 @@ struct Person {
 
   var name: String = String()
 
-  var transactions: [Transaction] = []
+  var transactions: [PBTransaction] = []
 
   var reminderActive: Bool = false
 
@@ -107,14 +107,14 @@ struct Person {
   init() {}
 }
 
-struct Transaction {
+struct PBTransaction {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   var id: String = String()
 
-  var type: TransactionType = .undef
+  var type: PBTransactionType = .undef
 
   var amount: Double = 0
 
@@ -131,7 +131,7 @@ struct Transaction {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-extension TransactionType: SwiftProtobuf._ProtoNameProviding {
+extension PBTransactionType: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "UNDEF"),
     1: .same(proto: "CREDIT"),
@@ -141,8 +141,8 @@ extension TransactionType: SwiftProtobuf._ProtoNameProviding {
   ]
 }
 
-extension PeopleStore: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "PeopleStore"
+extension PBPeopleStore: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PBPeopleStore"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "people"),
   ]
@@ -163,15 +163,15 @@ extension PeopleStore: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementati
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: PeopleStore, rhs: PeopleStore) -> Bool {
+  static func ==(lhs: PBPeopleStore, rhs: PBPeopleStore) -> Bool {
     if lhs.people != rhs.people {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
-extension Person: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "Person"
+extension PBPerson: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PBPerson"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "id"),
     2: .same(proto: "name"),
@@ -212,7 +212,7 @@ extension Person: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBas
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: Person, rhs: Person) -> Bool {
+  static func ==(lhs: PBPerson, rhs: PBPerson) -> Bool {
     if lhs.id != rhs.id {return false}
     if lhs.name != rhs.name {return false}
     if lhs.transactions != rhs.transactions {return false}
@@ -223,8 +223,8 @@ extension Person: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBas
   }
 }
 
-extension Transaction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "Transaction"
+extension PBTransaction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PBTransaction"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "id"),
     2: .same(proto: "type"),
@@ -270,7 +270,7 @@ extension Transaction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementati
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: Transaction, rhs: Transaction) -> Bool {
+  static func ==(lhs: PBTransaction, rhs: PBTransaction) -> Bool {
     if lhs.id != rhs.id {return false}
     if lhs.type != rhs.type {return false}
     if lhs.amount != rhs.amount {return false}

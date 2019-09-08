@@ -4,19 +4,19 @@
 
 syntax = "proto3";
 
-message PeopleStore {
-    repeated Person people = 1;
+message PBPeopleStore {
+    repeated PBPerson people = 1;
 }
 
-message Person {
+message PBPerson {
     string id = 1;
     string name = 2;
-    repeated Transaction transactions = 3;
+    repeated PBTransaction transactions = 3;
     bool reminderActive = 4;
     uint64 reminderTimestamp = 5;
 }
 
-enum TransactionType {
+enum PBTransactionType {
     UNDEF = 0;
     CREDIT = 1;
     DEBT = 2;
@@ -24,9 +24,9 @@ enum TransactionType {
     SETTLE_DEBT = 4;
 }
 
-message Transaction {
+message PBTransaction {
     string id = 1;
-    TransactionType type = 2;
+    PBTransactionType type = 2;
     double amount = 3;
     string note = 4;
     bool completed = 5;

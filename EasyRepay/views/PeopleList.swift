@@ -11,16 +11,15 @@ import SwiftUI
 
 struct PeopleList: View {
     
-    @EnvironmentObject var data: UserData
-        
+    @ObservedObject var store = peopleStore
+    
     @State private var showAdd = false
     @State private var showSettings = false
-    @State private var showActions = true
-        
+    
     var body: some View {
         NavigationView {
             List {
-                ForEach(data.store.people) { person in
+                ForEach(store.people) { person in
                     NavigationLink(destination: TransactionsList(person: person)) {
                         PersonRow(person: person)
                     }
@@ -30,17 +29,28 @@ struct PeopleList: View {
             .listStyle(GroupedListStyle())
             .navigationBarTitle(Text("EasyRepay"))
             .navigationBarItems(
+                leading: Button(action: {
+                    self.showSettings = true
+                }) {
+                    HStack {
+                        Image(systemName: "gear")
+                            //.imageScale(.large)
+                            .font(.title)
+                        Text("Settings")
+                    }
+                },
                 trailing: Button(action: {
                     self.showAdd = true
                 }) {
                     HStack {
                         Text("New person")
                         Image(systemName: "plus.circle.fill")
-                            .imageScale(.large)
+                            //.imageScale(.large)
+                            .font(.title)
                     }
                 }
             )
-            .sheet(isPresented: self.$showAdd, content: {NewPersonView().environmentObject(self.data)})
+            .sheet(isPresented: self.$showAdd, content: {NewPersonView()})
         }
         .accentColor(.green)
     }
@@ -50,7 +60,7 @@ struct PeopleList: View {
     }
     
     func delete(at offsets: IndexSet) {
-        data.store.people.remove(atOffsets: offsets)
+        store.people.remove(atOffsets: offsets)
     }
     
 }
@@ -60,6 +70,5 @@ struct PeopleList_Previews: PreviewProvider {
     static var previews: some View {
         PeopleList()
             .environment(\.colorScheme, .light)
-            .environmentObject(UserData())
     }
 }

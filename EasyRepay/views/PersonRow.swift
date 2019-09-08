@@ -11,26 +11,20 @@ import SwiftUI
 
 struct PersonRow: View {
     
-    @EnvironmentObject var data: UserData
-    
-    var person: Person
-    
-    var pIdx: Int {
-        data.store.index(of: person)
-    }
+    @ObservedObject var person: Person
         
     var body: some View {
         HStack(alignment: .center) {
             VStack(alignment: .leading) {
-                Text(data.store.people[pIdx].name)
+                Text(person.name)
                     .allowsTightening(true)
-                Text("\(data.store.people[pIdx].transactions.count) " + (data.store.people[pIdx].transactions.count == 1 ? "transaction" : "transactions"))
+                Text("\(person.transactions.count) " + (person.transactions.count == 1 ? "transaction" : "transactions"))
                     .font(.footnote)
                     .foregroundColor(.secondary)
             }
             Spacer()
-            Text("\(currencyFormatter.string(for: data.store.people[pIdx].totalAmount)!)")
-                .foregroundColor(Colors.amountColor(person: data.store.people[pIdx]))
+            Text("\(currencyFormatter.string(for: person.totalAmount)!)")
+                .foregroundColor(Colors.amountColor(person: person))
         }
     }
     
@@ -44,6 +38,5 @@ struct PersonRow_Previews: PreviewProvider {
             PersonRow(person: peopleStore.people[1])
         }
         .previewLayout(.fixed(width: 300, height: 70))
-        .environmentObject(UserData())
     }
 }

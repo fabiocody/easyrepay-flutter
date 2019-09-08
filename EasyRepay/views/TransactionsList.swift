@@ -11,13 +11,8 @@ import SwiftUI
 
 struct TransactionsList: View {
     
-    @EnvironmentObject var data: UserData
     
-    let person: Person
-    
-    var pIdx: Int {
-        data.store.index(of: person)
-    }
+    @ObservedObject var person: Person
     
     @State private var reminderActive = false
     @State private var showAdd = false
@@ -33,32 +28,32 @@ struct TransactionsList: View {
                 }
             }
             Section {
-                ForEach(data.store.people[pIdx].transactions) { transaction in
-                    NavigationLink(destination: TransactionDetailView(person: self.person, transaction: transaction)) {
-                        TransactionRow(person: self.person, transaction: transaction)
+                ForEach(person.transactions) { transaction in
+                    NavigationLink(destination: TransactionDetailView(transaction: transaction)) {
+                        TransactionRow(transaction: transaction)
                     }
                 }
                 .onDelete(perform: delete)
             }
         }
         .listStyle(GroupedListStyle())
-        .navigationBarTitle(data.store.people[pIdx].name)
+        .navigationBarTitle(person.name)
         .navigationBarItems(trailing: Button(action: {
             self.showAdd = true
         }) {
             HStack {
                 Text("New transaction")
                 Image(systemName: "plus.circle.fill")
-                    .imageScale(.large)
+                    .font(.title)
             }
         })
         //.sheet(isPresented: self.$showAdd, content: {NewTransactionView(pIdx: self.pIdx)})
-        .sheet(isPresented: self.$showAdd, content: {NewTransactionView(person: self.person).environmentObject(self.data)})
+        .sheet(isPresented: self.$showAdd, content: {NewTransactionView(person: self.person)})
     }
     
     func delete(at offsets: IndexSet) {
-        data.store.people[pIdx].transactions.remove(atOffsets: offsets)
-        print(data.store)
+        person.transactions.remove(atOffsets: offsets)
+        print(peopleStore)
     }
     
 }
@@ -66,8 +61,9 @@ struct TransactionsList: View {
 
 struct TransactionsList_Previews: PreviewProvider {
     static var previews: some View {
-        TransactionsList(person: peopleStore.people[0])
-            .environment(\.colorScheme, .dark)
-            .environmentObject(UserData())
+        NavigationView {
+            TransactionsList(person: peopleStore.people[0])
+        }
+        .environment(\.colorScheme, .dark)
     }
 }

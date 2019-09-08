@@ -10,14 +10,9 @@ import SwiftUI
 
 struct NewTransactionView: View {
     
-    @EnvironmentObject var data: UserData
     @Environment(\.presentationMode) var presentationMode
     
-    var person: Person
-    
-    var pIdx: Int {
-        data.store.index(of: person)
-    }
+    @ObservedObject var person: Person
     
     @State private var typeSelection: Int = 0
     @State private var amount: Double = 0
@@ -40,8 +35,9 @@ struct NewTransactionView: View {
                     .accentColor(.green)
                     , trailing: Button("Save") {
                         let t = Transaction(type: TransactionType.allCases[self.typeSelection], amount: self.amount, note: self.note)
-                        self.data.store.people[self.pIdx].transactions.append(t)
-                        self.data.store.save()
+                        self.person.transactions.append(t)
+                        self.person.transactions.sort(by: {$0.date < $1.date})
+                        peopleStore.save()
                         self.presentationMode.wrappedValue.dismiss()
                     }
                     .accentColor(.green)
@@ -56,6 +52,5 @@ struct NewTransactionView_Previews: PreviewProvider {
     static var previews: some View {
         NewTransactionView(person: peopleStore.people[0])
             .environment(\.colorScheme, .light)
-            .environmentObject(UserData())
     }
 }

@@ -41,11 +41,19 @@ var peopleStore: PeopleStore = {
 
 let currencyFormatter: NumberFormatter = {
     let formatter = NumberFormatter()
+    formatter.isLenient = true
     formatter.numberStyle = .currency
     formatter.minimumFractionDigits = 2
     formatter.maximumFractionDigits = 2
     //formatter.positiveFormat = "¤ #,##0.00"
     //formatter.negativeFormat = "¤ -#,##0.00"
+    return formatter
+}()
+
+
+let numberFormatter: NumberFormatter = {
+    let formatter = NumberFormatter()
+    formatter.numberStyle = .decimal
     return formatter
 }()
 

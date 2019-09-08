@@ -25,7 +25,7 @@ struct TransactionDetail: View {
                         .padding(.leading, 20)
                     Picker(selection: $typeSelection, label: Text("")) {
                         ForEach(0..<TransactionType.allCases.count) {
-                            Text(ModelHelper.enum2string(type: TransactionType.allCases[$0])).tag($0)
+                            Text(TransactionType.allCases[$0].rawValue).tag($0)
                         }
                     }
                     .foregroundColor(Color.primary)
@@ -42,8 +42,8 @@ struct TransactionDetail: View {
                     Text("Amount")
                         .font(.headline)
                         .padding(.leading, 20)
-                    TextField("Enter amount", value: $amount, formatter: currencyFormatter)     // TODO: Not working
-                        .keyboardType(.decimalPad)
+                    TextField("Enter amount", value: $amount, formatter: numberFormatter)
+                        .keyboardType(.numbersAndPunctuation)
                         .padding()
                         .background(Color.secondary.opacity(0.35))
                         .cornerRadius(5.0)

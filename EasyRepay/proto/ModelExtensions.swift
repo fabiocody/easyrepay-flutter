@@ -10,7 +10,7 @@ import Foundation
 import Combine
 
 
-final class UserData: ObservableObject {
+/*final class UserData: ObservableObject {
     @Published var store: PeopleStore = peopleStore
 }
 
@@ -90,4 +90,4 @@ extension Transaction: Identifiable {
         self.timestamp = UInt64(Date().timeIntervalSince1970)
     }
     
-}
+}*/

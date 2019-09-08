@@ -11,7 +11,6 @@ import SwiftUI
 
 struct NewPersonView: View {
     
-    @EnvironmentObject var data: UserData
     @Environment(\.presentationMode) var presentationMode
     @State var name: String = ""
     
@@ -34,9 +33,9 @@ struct NewPersonView: View {
                     .padding(.trailing, 20)
                 Button("Insert", action: {
                     let p = Person(name: self.name == "" ? "New person" : self.name)
-                    self.data.store.people.append(p)
-                    self.data.store.people.sort(by: {$0.name < $1.name})
-                    self.data.store.save()
+                    peopleStore.people.append(p)
+                    peopleStore.people.sort(by: {$0.name < $1.name})
+                    peopleStore.save()
                     self.name = ""
                     self.presentationMode.wrappedValue.dismiss()
                 })
@@ -64,6 +63,5 @@ struct NewPersonView_Previews: PreviewProvider {
     static var previews: some View {
         NewPersonView()
             .environment(\.colorScheme, .light)
-            .environmentObject(UserData())
     }
 }
