@@ -12,6 +12,7 @@ struct TransactionDetailView: View {
     
     @Environment(\.presentationMode) var presentationMode
         
+    @ObservedObject var person: Person
     @ObservedObject var transaction: Transaction
     
     @State var typeSelection: Int = 0
@@ -30,6 +31,7 @@ struct TransactionDetailView: View {
                     self.transaction.note = self.note
                     self.transaction.date = self.date
                     peopleStore.save()
+                    self.person.updateTotalAmount()
                     self.presentationMode.wrappedValue.dismiss()
                 }
             )
@@ -46,7 +48,7 @@ struct TransactionDetailView: View {
 
 struct TransactionDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        TransactionDetailView(transaction: peopleStore.people[0].transactions[0])
+        TransactionDetailView(person: peopleStore.people[0], transaction: peopleStore.people[0].transactions[0])
             .environment(\.colorScheme, .light)
     }
 }

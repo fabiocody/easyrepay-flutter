@@ -29,7 +29,7 @@ struct TransactionsList: View {
             }
             Section {
                 ForEach(person.transactions) { transaction in
-                    NavigationLink(destination: TransactionDetailView(transaction: transaction)) {
+                    NavigationLink(destination: TransactionDetailView(person: self.person, transaction: transaction)) {
                         TransactionRow(transaction: transaction)
                     }
                 }
@@ -39,7 +39,7 @@ struct TransactionsList: View {
                 HStack {
                     Text("Total")
                     Spacer()
-                    Text("\(currencyFormatter.string(for: person.totalAmount)!)")
+                    Text("\(currencyFormatter.string(for: abs(person.totalAmount))!)")
                         .foregroundColor(Colors.amountColor(person: person))
                         .padding(.trailing, 17)
                 }
@@ -61,7 +61,6 @@ struct TransactionsList: View {
     
     func delete(at offsets: IndexSet) {
         person.transactions.remove(atOffsets: offsets)
-        print(peopleStore)
     }
     
 }

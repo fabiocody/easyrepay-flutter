@@ -38,6 +38,7 @@ struct NewTransactionView: View {
                         self.person.transactions.append(t)
                         self.person.transactions.sort(by: {$0.date < $1.date})
                         peopleStore.save()
+                        self.person.updateTotalAmount()
                         self.presentationMode.wrappedValue.dismiss()
                     }
                     .accentColor(.green)

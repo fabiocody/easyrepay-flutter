@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 
 class PeopleStore: ObservableObject {
@@ -43,21 +44,42 @@ class PeopleStore: ObservableObject {
 class Person: Identifiable, ObservableObject {
     let id = UUID()
     @Published var name: String
-    @Published var transactions: [Transaction] = []
+    @Published var transactions: [Transaction] = [] {
+        didSet { updateTotalAmount() }
+    }
     @Published var reminderActive = false
     @Published var reminderDate: Date?
+    
+    @Published var totalAmount = 0.0
+
     
     init(name: String) {
         self.name = name
     }
     
-    var totalAmount: Double {
-        transactions.map({$0.amount}).reduce(0, +)
-    }
-    
     var protobuf: PBPerson {
         // TODO
         PBPerson()
+    }
+    
+    static func == (lhs: Person, rhs: Person) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    func updateTotalAmount() {
+        //print("UPDATING TOTAL AMOUNT")
+        var sum = 0.0
+        for t in transactions {
+            switch t.type {
+            case .credit, .settleDebt:
+                sum += t.amount
+            case .debt, .settleCredit:
+                sum -= t.amount
+            default:
+                sum += 0
+            }
+        }
+        totalAmount = sum
     }
 }
 
@@ -80,6 +102,10 @@ class Transaction: Identifiable, ObservableObject {
     var protobuf: PBTransaction {
         // TODO
         PBTransaction()
+    }
+    
+    static func == (lhs: Transaction, rhs: Transaction) -> Bool {
+        return lhs.id == rhs.id
     }
 }
 

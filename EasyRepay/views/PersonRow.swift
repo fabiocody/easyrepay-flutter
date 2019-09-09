@@ -23,7 +23,7 @@ struct PersonRow: View {
                     .foregroundColor(.secondary)
             }
             Spacer()
-            Text("\(currencyFormatter.string(for: person.totalAmount)!)")
+            Text("\(currencyFormatter.string(for: abs(person.totalAmount))!)")
                 .foregroundColor(Colors.amountColor(person: person))
         }
     }

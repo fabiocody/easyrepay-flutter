@@ -27,7 +27,6 @@
 		E5487CAA23257D5A00B96195 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5487CA923257D5A00B96195 /* Model.swift */; };
 		E5487CAC23257FF500B96195 /* easyrepay.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5487CAB23257FF500B96195 /* easyrepay.pb.swift */; };
 		E57C31852322C6530015243A /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E57C31842322C6530015243A /* CloudKit.framework */; };
-		E5C62DC82323DB9C0059FF4D /* ModelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C62DC72323DB9C0059FF4D /* ModelExtensions.swift */; };
 		E5D22FB223239CD7007ABA75 /* TransactionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D22FB123239CD7007ABA75 /* TransactionDetailView.swift */; };
 /* End PBXBuildFile section */
 
@@ -54,7 +53,6 @@
 		E5487CAB23257FF500B96195 /* easyrepay.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = easyrepay.pb.swift; sourceTree = "<group>"; };
 		E57C31822322C60C0015243A /* EasyRepay.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EasyRepay.entitlements; sourceTree = "<group>"; };
 		E57C31842322C6530015243A /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
-		E5C62DC72323DB9C0059FF4D /* ModelExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelExtensions.swift; sourceTree = "<group>"; };
 		E5D22FB123239CD7007ABA75 /* TransactionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -121,7 +119,6 @@
 			children = (
 				E50ABF2F231FE6F000B20CB4 /* easyrepay.proto */,
 				E5487CAB23257FF500B96195 /* easyrepay.pb.swift */,
-				E5C62DC72323DB9C0059FF4D /* ModelExtensions.swift */,
 			);
 			path = proto;
 			sourceTree = "<group>";
@@ -233,7 +230,6 @@
 				E50ABF4923201C1C00B20CB4 /* ReminderView.swift in Sources */,
 				E50ABF41232006FB00B20CB4 /* TransactionRow.swift in Sources */,
 				E50ABF3B231FEE3F00B20CB4 /* PeopleList.swift in Sources */,
-				E5C62DC82323DB9C0059FF4D /* ModelExtensions.swift in Sources */,
 				E50ABF17231FE58900B20CB4 /* AppDelegate.swift in Sources */,
 				E50ABF19231FE58900B20CB4 /* SceneDelegate.swift in Sources */,
 				E5487CAC23257FF500B96195 /* easyrepay.pb.swift in Sources */,

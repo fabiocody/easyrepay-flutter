@@ -15,22 +15,7 @@ class Colors {
     static let secondaryGray = Color(red: 0.3, green: 0.3, blue: 0.3, opacity: 1.0)
     
     static func amountColor(person: Person) -> Color {
-        var sum = Double()
-        for t in person.transactions {
-            switch t.type {
-                case .credit, .settleDebt:
-                    sum += t.amount
-                case .debt, .settleCredit:
-                    sum -= t.amount
-                default:
-                    sum += 0.0
-            }
-        }
-        if sum >= 0 {
-            return .green
-        } else {
-            return .red
-        }
+        return person.totalAmount >= 0 ? .green : .red
     }
     
     static func amountColor(transaction: Transaction) -> Color {    // TODO: Change color code
