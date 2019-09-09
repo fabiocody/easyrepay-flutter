@@ -34,14 +34,24 @@ struct TransactionsList: View {
                     }
                 }
                 .onDelete(perform: delete)
+                if person.transactions.isEmpty {
+                    HStack {
+                        Spacer()
+                        Text("Nothing to show here")
+                            .foregroundColor(.secondary)
+                        Spacer()
+                    }
+                }
             }
-            Section {
-                HStack {
-                    Text("Total")
-                    Spacer()
-                    Text("\(currencyFormatter.string(for: abs(person.totalAmount))!)")
-                        .foregroundColor(Colors.amountColor(person: person))
-                        .padding(.trailing, 17)
+            if !person.transactions.isEmpty {
+                Section {
+                    HStack {
+                        Text("Total")
+                        Spacer()
+                        Text("\(currencyFormatter.string(for: abs(person.totalAmount))!)")
+                            .foregroundColor(Colors.amountColor(person: person))
+                            .padding(.trailing, 17)
+                    }
                 }
             }
         }

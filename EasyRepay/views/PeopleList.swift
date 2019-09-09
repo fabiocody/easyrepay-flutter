@@ -18,15 +18,22 @@ struct PeopleList: View {
     
     var body: some View {
         NavigationView {
-            List {
-                ForEach(store.people) { person in
-                    NavigationLink(destination: TransactionsList(store: self.store, person: person)) {
-                        PersonRow(person: person)
+            Group {
+                if store.people.isEmpty {
+                    Text("Nothing to show here")    // TODO: Make alternative with List
+                        .foregroundColor(.secondary)
+                } else {
+                    List {
+                        ForEach(store.people) { person in
+                            NavigationLink(destination: TransactionsList(store: self.store, person: person)) {
+                                PersonRow(person: person)
+                            }
+                        }
+                        .onDelete(perform: delete)
                     }
+                    .listStyle(GroupedListStyle())
                 }
-                .onDelete(perform: delete)
             }
-            .listStyle(GroupedListStyle())
             .navigationBarTitle(Text("EasyRepay"))
             .navigationBarItems(
                 leading: Button(action: {
