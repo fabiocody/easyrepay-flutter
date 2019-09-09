@@ -15,7 +15,7 @@ var peopleStore: PeopleStore = {
     var p: Person
     
     p = Person(name: "Clay Jensen")
-    p.transactions.append(Transaction(type: .debt, amount: 12.99, note: "Pizza"))
+    p.transactions.append(Transaction(type: .debt, amount: 4.5, note: "Comics"))
     p.transactions.append(Transaction(type: .credit, amount: 15, note: "Bike helmet"))
     store.people.append(p)
     
@@ -23,7 +23,7 @@ var peopleStore: PeopleStore = {
     store.people.append(p)
     
     p = Person(name: "Hannah Baker")
-    p.transactions.append(Transaction(type: .debt, amount: 17.49, note: "Tapes"))
+    p.transactions.append(Transaction(type: .debt, amount: 7.8, note: "Tapes"))
     store.people.append(p)
     
     store.people.sort(by: {$0.name < $1.name})

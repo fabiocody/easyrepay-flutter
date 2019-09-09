@@ -12,7 +12,7 @@ import SwiftUI
 struct TransactionDetail: View {
             
     @Binding var typeSelection: Int
-    @Binding var amount: Double
+    @Binding var amount: Double?
     @Binding var note: String
     @Binding var date: Date
     
@@ -42,7 +42,11 @@ struct TransactionDetail: View {
                     Text("Amount")
                         .font(.headline)
                         .padding(.leading, 20)
-                    TextField("Enter amount", value: $amount, formatter: numberFormatter)
+                    TextField("Enter amount", value: $amount, formatter: currencyFormatter, onEditingChanged: {
+                        if $0 && self.amount == 0 {
+                            self.amount = nil
+                        }
+                    })
                         .keyboardType(.numbersAndPunctuation)
                         .padding()
                         .background(Color.secondary.opacity(0.35))

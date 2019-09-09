@@ -16,7 +16,7 @@ struct TransactionDetailView: View {
     @ObservedObject var transaction: Transaction
     
     @State var typeSelection: Int = 0
-    @State var amount: Double = 0
+    @State var amount: Double? = nil
     @State var note: String = ""
     @State var date: Date = Date()
     
@@ -27,7 +27,7 @@ struct TransactionDetailView: View {
             .navigationBarItems(
                 trailing: Button("Save") {
                     self.transaction.type = TransactionType.allCases[self.typeSelection]
-                    self.transaction.amount = self.amount
+                    self.transaction.amount = self.amount ?? 0.0
                     self.transaction.note = self.note
                     self.transaction.date = self.date
                     peopleStore.save()

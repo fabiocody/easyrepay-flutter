@@ -15,7 +15,7 @@ struct NewTransactionView: View {
     @ObservedObject var person: Person
     
     @State private var typeSelection: Int = 0
-    @State private var amount: Double = 0
+    @State private var amount: Double? = nil
     @State private var note: String = ""
     @State private var date: Date = Date()
     
@@ -34,7 +34,7 @@ struct NewTransactionView: View {
                     }
                     .accentColor(.green)
                     , trailing: Button("Save") {
-                        let t = Transaction(type: TransactionType.allCases[self.typeSelection], amount: self.amount, note: self.note)
+                        let t = Transaction(type: TransactionType.allCases[self.typeSelection], amount: self.amount ?? 0.0, note: self.note)
                         self.person.transactions.append(t)
                         self.person.transactions.sort(by: {$0.date < $1.date})
                         peopleStore.save()
