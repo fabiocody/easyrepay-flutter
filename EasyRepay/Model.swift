@@ -16,33 +16,42 @@ class PeopleStore: ObservableObject {
     private var fileURL: URL {
         let documentsDirectories = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let documentDirectory = documentsDirectories.first!
-        return documentDirectory.appendingPathComponent("people.bin")
+        return documentDirectory.appendingPathComponent("people.pb")
     }
     
     func save() {
-        /*do {
-            try self.serializedData().write(to: fileURL)
+        var pbstore = PBPeopleStore()
+        for p in people {
+            pbstore.people.append(p.protobuf)
+        }
+        print(pbstore)
+        do {
+            try pbstore.serializedData().write(to: fileURL)
             print("Save successful")
         } catch {
             print("ERROR: save")
             print(error)
-        }*/
+        }
     }
     
     func read() {
-        /*do {
-            try self.merge(serializedData: Data(contentsOf: fileURL))
+        var pbstore = PBPeopleStore()
+        do {
+            try pbstore.merge(serializedData: Data(contentsOf: fileURL))
             print("Read successful")
+            for p in pbstore.people {
+                people.append(Person(pbperson: p))
+            }
         } catch {
             print("ERROR: read")
             print(error)
-        }*/
+        }
     }
 }
 
 
 class Person: Identifiable, ObservableObject {
-    let id = UUID()
+    var id = UUID()
     @Published var name: String
     @Published var transactions: [Transaction] = [] {
         didSet { updateTotalAmount() }
@@ -57,9 +66,30 @@ class Person: Identifiable, ObservableObject {
         self.name = name
     }
     
+    init(pbperson: PBPerson) {
+        id = UUID(uuidString: pbperson.id)!
+        name = pbperson.name
+        reminderActive = pbperson.reminderActive
+        reminderDate = Date(timeIntervalSince1970: TimeInterval(pbperson.reminderTimestamp))
+        transactions = []
+        for t in pbperson.transactions {
+            transactions.append(Transaction(pbtransaction: t))
+        }
+        updateTotalAmount()
+    }
+
     var protobuf: PBPerson {
-        // TODO
-        PBPerson()
+        var p = PBPerson()
+        p.id = id.description
+        p.name = name
+        p.reminderActive = reminderActive
+        if let date = reminderDate {
+            p.reminderTimestamp = UInt64(date.timeIntervalSince1970)
+        }
+        for t in transactions {
+            p.transactions.append(t.protobuf)
+        }
+        return p
     }
     
     static func == (lhs: Person, rhs: Person) -> Bool {
@@ -85,7 +115,7 @@ class Person: Identifiable, ObservableObject {
 
 
 class Transaction: Identifiable, ObservableObject {
-    let id = UUID()
+    var id = UUID()
     @Published var type: TransactionType
     @Published var amount: Double
     @Published var note: String
@@ -99,9 +129,24 @@ class Transaction: Identifiable, ObservableObject {
         self.date = date
     }
     
+    init(pbtransaction: PBTransaction) {
+        id = UUID(uuidString: pbtransaction.id)!
+        type = pbtransaction.type.native
+        amount = pbtransaction.amount
+        note = pbtransaction.note
+        completed = pbtransaction.completed
+        date = Date(timeIntervalSince1970: TimeInterval(pbtransaction.timestamp))
+    }
+
     var protobuf: PBTransaction {
-        // TODO
-        PBTransaction()
+        var t = PBTransaction()
+        t.id = id.description
+        t.type = type.protobuf
+        t.amount = amount
+        t.note = note
+        t.completed = completed
+        t.timestamp = UInt64(date.timeIntervalSince1970)
+        return t
     }
     
     static func == (lhs: Transaction, rhs: Transaction) -> Bool {
@@ -127,7 +172,35 @@ enum TransactionType: String, CaseIterable {
     }
     
     var protobuf: PBTransactionType {
-        // TODO
-        .undef
+        switch self {
+        case .credit:
+            return .credit
+        case .debt:
+            return .debt
+        case .settleCredit:
+            return .settleCredit
+        case .settleDebt:
+            return .settleDebt
+        default:
+            return .undef
+        }
+    }
+}
+
+
+extension PBTransactionType {
+    var native: TransactionType {
+        switch self {
+        case .credit:
+            return .credit
+        case .debt:
+            return .debt
+        case .settleCredit:
+            return .settleCredit
+        case .settleDebt:
+            return .settleDebt
+        default:
+            return .undef
+        }
     }
 }

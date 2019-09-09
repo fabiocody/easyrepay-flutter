@@ -11,7 +11,7 @@ import SwiftUI
 
 struct TransactionsList: View {
     
-    
+    @ObservedObject var store = peopleStore
     @ObservedObject var person: Person
     
     @State private var reminderActive = false
@@ -61,6 +61,7 @@ struct TransactionsList: View {
     
     func delete(at offsets: IndexSet) {
         person.transactions.remove(atOffsets: offsets)
+        store.save()
     }
     
 }

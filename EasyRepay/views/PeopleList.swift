@@ -20,7 +20,7 @@ struct PeopleList: View {
         NavigationView {
             List {
                 ForEach(store.people) { person in
-                    NavigationLink(destination: TransactionsList(person: person)) {
+                    NavigationLink(destination: TransactionsList(store: self.store, person: person)) {
                         PersonRow(person: person)
                     }
                 }
@@ -59,6 +59,7 @@ struct PeopleList: View {
     
     func delete(at offsets: IndexSet) {
         store.people.remove(atOffsets: offsets)
+        store.save()
     }
     
 }
