@@ -22,29 +22,28 @@ struct NewTransactionView: View {
     var body: some View {
         NavigationView {
             TransactionDetail(typeSelection: $typeSelection, amount: $amount, note: $note, date: $date)
-                .padding()
-                .navigationBarTitle("New transaction")
-                .navigationBarItems(
-                    leading: Button("Cancel") {
-                        self.typeSelection = 0
-                        self.amount = 0
-                        self.note = ""
-                        self.date = Date()
-                        self.presentationMode.wrappedValue.dismiss()
-                    }
-                    .accentColor(.green)
-                    , trailing: Button("Save") {
-                        let t = Transaction(type: TransactionType.allCases[self.typeSelection], amount: self.amount ?? 0.0, note: self.note)
-                        self.person.transactions.append(t)
-                        self.person.transactions.sort(by: {$0.date < $1.date})
-                        peopleStore.save()
-                        self.person.updateTotalAmount()
-                        self.presentationMode.wrappedValue.dismiss()
-                    }
-                    .accentColor(.green)
-                )
+            .navigationBarTitle("New transaction")
+            .navigationBarItems(
+                leading: Button("Cancel") {
+                    self.typeSelection = 0
+                    self.amount = 0
+                    self.note = ""
+                    self.date = Date()
+                    self.presentationMode.wrappedValue.dismiss()
+                }
                 .accentColor(.green)
-        }
+                , trailing: Button("Save") {
+                    let t = Transaction(type: TransactionType.allCases[self.typeSelection], amount: self.amount ?? 0.0, note: self.note)
+                    self.person.transactions.append(t)
+                    self.person.transactions.sort(by: {$0.date < $1.date})
+                    peopleStore.save()
+                    self.person.updateTotalAmount()
+                    self.presentationMode.wrappedValue.dismiss()
+                }
+                .accentColor(.green)
+            )
+            .accentColor(.green)
+    }
     }
     
 }
