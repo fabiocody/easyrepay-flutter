@@ -13,8 +13,16 @@ struct TransactionRow: View {
         
     @ObservedObject var transaction: Transaction
     
+    @Binding var showCompleted: Bool
+    
     var body: some View {
         HStack {
+            if showCompleted {
+                Image(systemName: transaction.completed ? "checkmark" : "xmark")
+                    .padding(.leading, 5)
+                    .foregroundColor(transaction.completed ? .green : .red)
+                    .transition(.scale)
+            }
             VStack(alignment: .leading) {
                 Text(transaction.note)
                     .allowsTightening(true)
@@ -36,8 +44,8 @@ struct TransactionRow: View {
 struct TransactionRow_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            TransactionRow(transaction: peopleStore.people[0].transactions[0])
-            TransactionRow(transaction: peopleStore.people[0].transactions[1])
+            TransactionRow(transaction: peopleStore.people[0].transactions[0], showCompleted: .constant(true))
+            TransactionRow(transaction: peopleStore.people[0].transactions[1], showCompleted: .constant(true))
         }
         .previewLayout(.fixed(width: 300, height: 70))
     }

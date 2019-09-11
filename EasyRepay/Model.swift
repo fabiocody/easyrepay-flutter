@@ -105,8 +105,6 @@ class Person: Identifiable, ObservableObject {
                 sum += t.amount
             case .debt, .settleCredit:
                 sum -= t.amount
-            default:
-                sum += 0
             }
         }
         totalAmount = sum
@@ -122,11 +120,12 @@ class Transaction: Identifiable, ObservableObject {
     @Published var completed = false
     @Published var date: Date
     
-    init(type: TransactionType = .undef, amount: Double, note: String = "", date: Date = Date()) {
+    init(type: TransactionType = .credit, amount: Double, note: String = "", date: Date = Date(), completed: Bool = false) {
         self.type = type
         self.amount = amount
         self.note = note
         self.date = date
+        self.completed = completed
     }
     
     init(pbtransaction: PBTransaction) {
@@ -155,12 +154,13 @@ class Transaction: Identifiable, ObservableObject {
 }
 
 
-enum TransactionType: String, CaseIterable {
-    case undef = "---"
+enum TransactionType: String, CaseIterable, Identifiable {
     case credit = "Credit"
     case settleDebt = "Settle debt"
     case debt = "Debt"
     case settleCredit = "Settle credit"
+    
+    var id: Int { index }
     
     var index: Int {
         for i in 0..<TransactionType.allCases.count {
@@ -181,8 +181,6 @@ enum TransactionType: String, CaseIterable {
             return .settleCredit
         case .settleDebt:
             return .settleDebt
-        default:
-            return .undef
         }
     }
 }
@@ -200,7 +198,7 @@ extension PBTransactionType {
         case .settleDebt:
             return .settleDebt
         default:
-            return .undef
+            return .credit
         }
     }
 }

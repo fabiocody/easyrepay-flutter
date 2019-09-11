@@ -17,11 +17,10 @@ message PBPerson {
 }
 
 enum PBTransactionType {
-    UNDEF = 0;
-    CREDIT = 1;
-    DEBT = 2;
-    SETTLE_CREDIT = 3;
-    SETTLE_DEBT = 4;
+    CREDIT = 0;
+    DEBT = 1;
+    SETTLE_CREDIT = 2;
+    SETTLE_DEBT = 3;
 }
 
 message PBTransaction {

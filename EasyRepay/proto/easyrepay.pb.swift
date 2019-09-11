@@ -25,35 +25,32 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
 
 enum PBTransactionType: SwiftProtobuf.Enum {
   typealias RawValue = Int
-  case undef // = 0
-  case credit // = 1
-  case debt // = 2
-  case settleCredit // = 3
-  case settleDebt // = 4
+  case credit // = 0
+  case debt // = 1
+  case settleCredit // = 2
+  case settleDebt // = 3
   case UNRECOGNIZED(Int)
 
   init() {
-    self = .undef
+    self = .credit
   }
 
   init?(rawValue: Int) {
     switch rawValue {
-    case 0: self = .undef
-    case 1: self = .credit
-    case 2: self = .debt
-    case 3: self = .settleCredit
-    case 4: self = .settleDebt
+    case 0: self = .credit
+    case 1: self = .debt
+    case 2: self = .settleCredit
+    case 3: self = .settleDebt
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
 
   var rawValue: Int {
     switch self {
-    case .undef: return 0
-    case .credit: return 1
-    case .debt: return 2
-    case .settleCredit: return 3
-    case .settleDebt: return 4
+    case .credit: return 0
+    case .debt: return 1
+    case .settleCredit: return 2
+    case .settleDebt: return 3
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -65,7 +62,6 @@ enum PBTransactionType: SwiftProtobuf.Enum {
 extension PBTransactionType: CaseIterable {
   // The compiler won't synthesize support with the UNRECOGNIZED case.
   static var allCases: [PBTransactionType] = [
-    .undef,
     .credit,
     .debt,
     .settleCredit,
@@ -114,7 +110,7 @@ struct PBTransaction {
 
   var id: String = String()
 
-  var type: PBTransactionType = .undef
+  var type: PBTransactionType = .credit
 
   var amount: Double = 0
 
@@ -133,11 +129,10 @@ struct PBTransaction {
 
 extension PBTransactionType: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "UNDEF"),
-    1: .same(proto: "CREDIT"),
-    2: .same(proto: "DEBT"),
-    3: .same(proto: "SETTLE_CREDIT"),
-    4: .same(proto: "SETTLE_DEBT"),
+    0: .same(proto: "CREDIT"),
+    1: .same(proto: "DEBT"),
+    2: .same(proto: "SETTLE_CREDIT"),
+    3: .same(proto: "SETTLE_DEBT"),
   ]
 }
 
@@ -252,7 +247,7 @@ extension PBTransaction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
     if !self.id.isEmpty {
       try visitor.visitSingularStringField(value: self.id, fieldNumber: 1)
     }
-    if self.type != .undef {
+    if self.type != .credit {
       try visitor.visitSingularEnumField(value: self.type, fieldNumber: 2)
     }
     if self.amount != 0 {

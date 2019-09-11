@@ -15,9 +15,11 @@ struct TransactionDetail: View {
     @Binding var amount: Double?
     @Binding var note: String
     @Binding var date: Date
+    @Binding var completed: Bool
     
     var body: some View {
         Form {
+            Toggle("Completed", isOn: $completed)
             Picker(selection: $typeSelection, label: Text("Type")) {
                 ForEach(0..<TransactionType.allCases.count) {
                     Text(TransactionType.allCases[$0].rawValue).tag($0)
@@ -43,7 +45,7 @@ struct TransactionDetail: View {
                 TextField("Enter note", text: $note)
                     .multilineTextAlignment(.trailing)
             }
-            DatePicker(selection: $date, label: {Text("Date")})
+            DatePicker(selection: $date.animation(), label: {Text("Date")})
         }
     }
     
@@ -52,7 +54,7 @@ struct TransactionDetail: View {
 
 struct TransactionDetail_Previews: PreviewProvider {
     static var previews: some View {
-        TransactionDetail(typeSelection: .constant(0), amount: .constant(0), note: .constant(""), date: .constant(Date()))
+        TransactionDetail(typeSelection: .constant(0), amount: .constant(0), note: .constant(""), date: .constant(Date()), completed: .constant(false))
             .environment(\.colorScheme, .light)
     }
 }

@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+
 struct TransactionDetailView: View {
     
     @Environment(\.presentationMode) var presentationMode
@@ -19,28 +20,31 @@ struct TransactionDetailView: View {
     @State var amount: Double? = nil
     @State var note: String = ""
     @State var date: Date = Date()
+    @State var completed: Bool = false
     
     var body: some View {
-        TransactionDetail(typeSelection: $typeSelection, amount: $amount, note: $note, date: $date)
-        .navigationBarTitle(Text("Transaction"), displayMode: .inline)
-        .navigationBarItems(
-            trailing: Button("Save") {
-                self.transaction.type = TransactionType.allCases[self.typeSelection]
-                self.transaction.amount = self.amount ?? 0.0
-                self.transaction.note = self.note
-                self.transaction.date = self.date
-                peopleStore.save()
-                self.person.updateTotalAmount()
-                self.presentationMode.wrappedValue.dismiss()
+        TransactionDetail(typeSelection: $typeSelection, amount: $amount, note: $note, date: $date, completed: $completed)
+            .navigationBarTitle(Text("Transaction"), displayMode: .inline)
+            .navigationBarItems(
+                trailing: Button("Save") {
+                    self.transaction.type = TransactionType.allCases[self.typeSelection]
+                    self.transaction.amount = self.amount ?? 0.0
+                    self.transaction.note = self.note == "" ? "Transaction" : self.note
+                    self.transaction.date = self.date
+                    self.transaction.completed = self.completed
+                    peopleStore.save()
+                    self.person.updateTotalAmount()
+                    self.presentationMode.wrappedValue.dismiss()
+                }
+            )
+            .onAppear {
+                let t = self.transaction
+                self.typeSelection = t.type.index
+                self.amount = t.amount
+                self.note = t.note
+                self.date = t.date
+                self.completed = t.completed
             }
-        )
-        .onAppear {
-            let t = self.transaction
-            self.typeSelection = t.type.index
-            self.amount = t.amount
-            self.note = t.note
-            self.date = t.date
-        }
     }
     
 }

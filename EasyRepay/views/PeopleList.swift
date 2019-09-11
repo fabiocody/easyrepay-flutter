@@ -20,7 +20,7 @@ struct PeopleList: View {
         NavigationView {
             Group {
                 if store.people.isEmpty {
-                    Text("Nothing to show here")    // TODO: Make alternative with List
+                    Text("Nothing to show here")
                         .foregroundColor(.secondary)
                 } else {
                     List {

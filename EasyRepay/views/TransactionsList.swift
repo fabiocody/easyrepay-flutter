@@ -21,16 +21,18 @@ struct TransactionsList: View {
     var body: some View {
         List {
             Section {
-                Toggle(isOn: $showCompleted.animation(), label: {Text("Show completed")})
-                Toggle(isOn: $reminderActive.animation(), label: {Text("Activate reminder")})
+                Toggle("Show completed", isOn: $showCompleted.animation())
+                Toggle("Activate reminder", isOn: $reminderActive.animation())
                 if reminderActive {
                     Text("This should only appear when the reminder is active.")
                 }
             }
             Section {
                 ForEach(person.transactions) { transaction in
-                    NavigationLink(destination: TransactionDetailView(person: self.person, transaction: transaction)) {
-                        TransactionRow(transaction: transaction)
+                    if self.showCompleted || !transaction.completed {
+                        NavigationLink(destination: TransactionDetailView(person: self.person, transaction: transaction)) {
+                            TransactionRow(transaction: transaction, showCompleted: self.$showCompleted)
+                        }
                     }
                 }
                 .onDelete(perform: delete)
@@ -82,6 +84,7 @@ struct TransactionsList_Previews: PreviewProvider {
         NavigationView {
             TransactionsList(person: peopleStore.people[0])
         }
+        .accentColor(.green)
         .environment(\.colorScheme, .light)
     }
 }
