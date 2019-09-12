@@ -44,8 +44,8 @@ struct TransactionRow: View {
 struct TransactionRow_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            TransactionRow(transaction: peopleStore.people[0].transactions[0], showCompleted: .constant(true))
-            TransactionRow(transaction: peopleStore.people[0].transactions[1], showCompleted: .constant(true))
+            TransactionRow(transaction: dataStore.people[0].transactions[0], showCompleted: .constant(true))
+            TransactionRow(transaction: dataStore.people[0].transactions[1], showCompleted: .constant(true))
         }
         .previewLayout(.fixed(width: 300, height: 70))
     }

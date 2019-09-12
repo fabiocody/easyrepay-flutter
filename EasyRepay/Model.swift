@@ -10,8 +10,9 @@ import Foundation
 import Combine
 
 
-class PeopleStore: ObservableObject {
+class DataStore: ObservableObject {
     @Published var people: [Person] = []
+    @Published var settings: Settings = Settings()
     
     private var fileURL: URL {
         let documentsDirectories = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
@@ -20,7 +21,7 @@ class PeopleStore: ObservableObject {
     }
     
     func save() {
-        var pbstore = PBPeopleStore()
+        var pbstore = PBDataStore()
         for p in people {
             pbstore.people.append(p.protobuf)
         }
@@ -35,7 +36,7 @@ class PeopleStore: ObservableObject {
     }
     
     func read() {
-        var pbstore = PBPeopleStore()
+        var pbstore = PBDataStore()
         do {
             try pbstore.merge(serializedData: Data(contentsOf: fileURL))
             print("Read successful")

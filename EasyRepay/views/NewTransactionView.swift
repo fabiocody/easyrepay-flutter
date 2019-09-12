@@ -42,7 +42,7 @@ struct NewTransactionView: View {
                                             completed: self.completed)
                         self.person.transactions.append(t)
                         self.person.sortTransactions()
-                        peopleStore.save()
+                        dataStore.save()
                         self.person.updateTotalAmount()
                         self.presentationMode.wrappedValue.dismiss()
                     }
@@ -64,7 +64,7 @@ struct NewTransactionView: View {
 
 struct NewTransactionView_Previews: PreviewProvider {
     static var previews: some View {
-        NewTransactionView(person: peopleStore.people[0])
+        NewTransactionView(person: dataStore.people[0])
             .environment(\.colorScheme, .light)
     }
 }

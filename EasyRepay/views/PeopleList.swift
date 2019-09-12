@@ -11,7 +11,7 @@ import SwiftUI
 
 struct PeopleList: View {
     
-    @ObservedObject var store = peopleStore
+    @ObservedObject var store = dataStore
     
     @State private var showSettings = false
     
@@ -24,7 +24,7 @@ struct PeopleList: View {
                 } else {
                     List {
                         ForEach(store.people) { person in
-                            NavigationLink(destination: TransactionsList(store: self.store, person: person)) {
+                            NavigationLink(destination: TransactionsList(person: person)) {
                                 PersonRow(person: person)
                             }
                         }

@@ -11,7 +11,6 @@ import SwiftUI
 
 struct TransactionsList: View {
     
-    @ObservedObject var store = peopleStore
     @ObservedObject var person: Person
     
     @State private var reminderActive = false
@@ -73,7 +72,7 @@ struct TransactionsList: View {
     
     func delete(at offsets: IndexSet) {
         person.transactions.remove(atOffsets: offsets)
-        store.save()
+        dataStore.save()
     }
     
 }
@@ -82,7 +81,7 @@ struct TransactionsList: View {
 struct TransactionsList_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            TransactionsList(person: peopleStore.people[0])
+            TransactionsList(person: dataStore.people[0])
         }
         .accentColor(.green)
         .environment(\.colorScheme, .light)

@@ -32,7 +32,7 @@ struct TransactionDetailView: View {
                     self.transaction.note = self.note == "" ? "Transaction" : self.note
                     self.transaction.date = self.date
                     self.transaction.completed = self.completed
-                    peopleStore.save()
+                    dataStore.save()
                     self.person.updateTotalAmount()
                     self.presentationMode.wrappedValue.dismiss()
                 }
@@ -52,7 +52,7 @@ struct TransactionDetailView: View {
 struct TransactionDetailView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            TransactionDetailView(person: peopleStore.people[0], transaction: peopleStore.people[0].transactions[0])
+            TransactionDetailView(person: dataStore.people[0], transaction: dataStore.people[0].transactions[0])
                 .environment(\.colorScheme, .light)
         }
     }

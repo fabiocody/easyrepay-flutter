@@ -10,8 +10,8 @@ import Foundation
 
 
 #if DEBUG
-var peopleStore: PeopleStore = {
-    var store = PeopleStore()
+var dataStore: DataStore = {
+    var store = DataStore()
     var p: Person
     
     p = Person(name: "Clay Jensen")

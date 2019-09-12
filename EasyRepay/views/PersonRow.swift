@@ -11,7 +11,6 @@ import SwiftUI
 
 struct PersonRow: View {
     
-    @ObservedObject var store = peopleStore
     @ObservedObject var person: Person
         
     var body: some View {
@@ -32,8 +31,8 @@ struct PersonRow: View {
     }
     
     func commit() {
-        self.store.sortPeople()
-        self.store.save()
+        dataStore.sortPeople()
+        dataStore.save()
     }
     
 }
@@ -42,8 +41,8 @@ struct PersonRow: View {
 struct PersonRow_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            PersonRow(person: peopleStore.people[0])
-            PersonRow(person: peopleStore.people[1])
+            PersonRow(person: dataStore.people[0])
+            PersonRow(person: dataStore.people[1])
         }
         .previewLayout(.fixed(width: 300, height: 70))
     }

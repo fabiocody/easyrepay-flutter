@@ -4,13 +4,9 @@
 
 syntax = "proto3";
 
-message PBUserData {
+message PBDataStore {
     repeated PBPerson people = 1;
     PBSettings settings = 2;
-}
-
-message PBPeopleStore {     // TODO: remove
-    repeated PBPerson people = 1;
 }
 
 message PBPerson {

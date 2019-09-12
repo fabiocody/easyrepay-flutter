@@ -71,7 +71,7 @@ extension PBTransactionType: CaseIterable {
 
 #endif  // swift(>=4.2)
 
-struct PBUserData {
+struct PBDataStore {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -95,18 +95,6 @@ struct PBUserData {
   init() {}
 
   fileprivate var _storage = _StorageClass.defaultInstance
-}
-
-struct PBPeopleStore {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  var people: [PBPerson] = []
-
-  var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  init() {}
 }
 
 struct PBPerson {
@@ -174,8 +162,8 @@ extension PBTransactionType: SwiftProtobuf._ProtoNameProviding {
   ]
 }
 
-extension PBUserData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "PBUserData"
+extension PBDataStore: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PBDataStore"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "people"),
     2: .same(proto: "settings"),
@@ -227,7 +215,7 @@ extension PBUserData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementatio
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: PBUserData, rhs: PBUserData) -> Bool {
+  static func ==(lhs: PBDataStore, rhs: PBDataStore) -> Bool {
     if lhs._storage !== rhs._storage {
       let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
         let _storage = _args.0
@@ -238,35 +226,6 @@ extension PBUserData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementatio
       }
       if !storagesAreEqual {return false}
     }
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension PBPeopleStore: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "PBPeopleStore"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "people"),
-  ]
-
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      switch fieldNumber {
-      case 1: try decoder.decodeRepeatedMessageField(value: &self.people)
-      default: break
-      }
-    }
-  }
-
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.people.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.people, fieldNumber: 1)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  static func ==(lhs: PBPeopleStore, rhs: PBPeopleStore) -> Bool {
-    if lhs.people != rhs.people {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
