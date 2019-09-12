@@ -41,7 +41,7 @@ struct NewTransactionView: View {
                                             note: self.note == "" ? "New transaction" : self.note,
                                             completed: self.completed)
                         self.person.transactions.append(t)
-                        self.person.transactions.sort(by: {$0.date < $1.date})
+                        self.person.sortTransactions()
                         peopleStore.save()
                         self.person.updateTotalAmount()
                         self.presentationMode.wrappedValue.dismiss()

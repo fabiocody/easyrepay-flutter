@@ -22,10 +22,10 @@ struct TransactionsList: View {
         List {
             Section {
                 Toggle("Show completed", isOn: $showCompleted.animation())
-                Toggle("Activate reminder", isOn: $reminderActive.animation())
+                /*Toggle("Activate reminder", isOn: $reminderActive.animation())
                 if reminderActive {
                     Text("This should only appear when the reminder is active.")
-                }
+                }*/
             }
             Section {
                 ForEach(person.transactions) { transaction in

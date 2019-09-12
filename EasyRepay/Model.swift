@@ -47,6 +47,10 @@ class PeopleStore: ObservableObject {
             print(error)
         }
     }
+    
+    func sortPeople() {
+        people.sort(by: {$0.name < $1.name})
+    }
 }
 
 
@@ -108,6 +112,10 @@ class Person: Identifiable, ObservableObject {
             }
         }
         totalAmount = sum
+    }
+    
+    func sortTransactions() {
+        transactions.sort(by: {$0.date < $1.date})
     }
 }
 

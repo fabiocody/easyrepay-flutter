@@ -13,7 +13,6 @@ struct PeopleList: View {
     
     @ObservedObject var store = peopleStore
     
-    @State private var showAdd = false
     @State private var showSettings = false
     
     var body: some View {
@@ -46,7 +45,7 @@ struct PeopleList: View {
                     }
                 },
                 trailing: Button(action: {
-                    self.showAdd = true
+                    withAnimation { self.store.people.append(Person(name: "")) }
                 }) {
                     HStack {
                         Text("New person")
@@ -55,7 +54,7 @@ struct PeopleList: View {
                     }
                 }
             )
-            .sheet(isPresented: self.$showAdd, content: {NewPersonView()})
+            //.sheet(isPresented: self.$showAdd, content: {NewPersonView()})
         }
         .accentColor(.green)
     }

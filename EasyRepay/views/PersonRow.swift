@@ -11,12 +11,13 @@ import SwiftUI
 
 struct PersonRow: View {
     
+    @ObservedObject var store = peopleStore
     @ObservedObject var person: Person
         
     var body: some View {
         HStack(alignment: .center) {
             VStack(alignment: .leading) {
-                Text(person.name)
+                TextField("Enter name", text: $person.name, onCommit: commit)
                     .allowsTightening(true)
                 Text("\(person.transactions.count) " + (person.transactions.count == 1 ? "transaction" : "transactions"))
                     .font(.footnote)
@@ -26,6 +27,10 @@ struct PersonRow: View {
             Text("\(currencyFormatter.string(for: abs(person.totalAmount))!)")
                 .foregroundColor(Colors.amountColor(person: person))
         }
+    }
+    
+    func commit() {
+        self.store.sortPeople()
     }
     
 }

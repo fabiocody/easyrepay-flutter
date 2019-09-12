@@ -26,7 +26,7 @@ var peopleStore: PeopleStore = {
     p.transactions.append(Transaction(type: .debt, amount: 7.8, note: "Tapes"))
     store.people.append(p)
     
-    store.people.sort(by: {$0.name < $1.name})
+    store.sortPeople()
     
     return store
 }()
