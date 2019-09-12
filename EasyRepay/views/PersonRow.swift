@@ -19,6 +19,8 @@ struct PersonRow: View {
             VStack(alignment: .leading) {
                 TextField("Enter name", text: $person.name, onCommit: commit)
                     .allowsTightening(true)
+                    .padding(.top, 5)
+                    .padding(.bottom, -5)
                 Text("\(person.transactions.count) " + (person.transactions.count == 1 ? "transaction" : "transactions"))
                     .font(.footnote)
                     .foregroundColor(.secondary)
