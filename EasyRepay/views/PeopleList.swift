@@ -54,7 +54,7 @@ struct PeopleList: View {
                     }
                 }
             )
-            //.sheet(isPresented: self.$showAdd, content: {NewPersonView()})
+            .sheet(isPresented: self.$showSettings, content: {SettingsView()})
         }
         .accentColor(.green)
     }

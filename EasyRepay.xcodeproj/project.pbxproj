@@ -22,6 +22,7 @@
 		E50ABF452320116100B20CB4 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50ABF442320116100B20CB4 /* Colors.swift */; };
 		E50ABF47232011CA00B20CB4 /* TransactionDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50ABF46232011CA00B20CB4 /* TransactionDetail.swift */; };
 		E50ABF4923201C1C00B20CB4 /* ReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50ABF4823201C1C00B20CB4 /* ReminderView.swift */; };
+		E51935B4232A41240095F9BA /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51935B3232A41240095F9BA /* SettingsView.swift */; };
 		E52C0DEA2323BF2F005F8C15 /* NewTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52C0DE92323BF2F005F8C15 /* NewTransactionView.swift */; };
 		E5487CAA23257D5A00B96195 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5487CA923257D5A00B96195 /* Model.swift */; };
 		E5487CAC23257FF500B96195 /* easyrepay.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5487CAB23257FF500B96195 /* easyrepay.pb.swift */; };
@@ -46,6 +47,7 @@
 		E50ABF442320116100B20CB4 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		E50ABF46232011CA00B20CB4 /* TransactionDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetail.swift; sourceTree = "<group>"; };
 		E50ABF4823201C1C00B20CB4 /* ReminderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderView.swift; sourceTree = "<group>"; };
+		E51935B3232A41240095F9BA /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		E52C0DE92323BF2F005F8C15 /* NewTransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTransactionView.swift; sourceTree = "<group>"; };
 		E5487CA923257D5A00B96195 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		E5487CAB23257FF500B96195 /* easyrepay.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = easyrepay.pb.swift; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 				E50ABF46232011CA00B20CB4 /* TransactionDetail.swift */,
 				E5D22FB123239CD7007ABA75 /* TransactionDetailView.swift */,
 				E52C0DE92323BF2F005F8C15 /* NewTransactionView.swift */,
+				E51935B3232A41240095F9BA /* SettingsView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -222,6 +225,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E51935B4232A41240095F9BA /* SettingsView.swift in Sources */,
 				E50ABF452320116100B20CB4 /* Colors.swift in Sources */,
 				E50ABF4923201C1C00B20CB4 /* ReminderView.swift in Sources */,
 				E50ABF41232006FB00B20CB4 /* TransactionRow.swift in Sources */,

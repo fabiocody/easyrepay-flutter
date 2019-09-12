@@ -210,3 +210,10 @@ extension PBTransactionType {
         }
     }
 }
+
+
+class Settings: ObservableObject {
+    
+    @Published var icloud = false
+    
+}

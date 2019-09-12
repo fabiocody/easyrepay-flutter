@@ -4,7 +4,12 @@
 
 syntax = "proto3";
 
-message PBPeopleStore {
+message PBUserData {
+    repeated PBPerson people = 1;
+    PBSettings settings = 2;
+}
+
+message PBPeopleStore {     // TODO: remove
     repeated PBPerson people = 1;
 }
 
@@ -30,4 +35,8 @@ message PBTransaction {
     string note = 4;
     bool completed = 5;
     uint64 timestamp = 6;
+}
+
+message PBSettings {
+    bool icloud = 1;
 }

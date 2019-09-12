@@ -33,6 +33,7 @@ struct PersonRow: View {
     
     func commit() {
         self.store.sortPeople()
+        self.store.save()
     }
     
 }

@@ -71,6 +71,32 @@ extension PBTransactionType: CaseIterable {
 
 #endif  // swift(>=4.2)
 
+struct PBUserData {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var people: [PBPerson] {
+    get {return _storage._people}
+    set {_uniqueStorage()._people = newValue}
+  }
+
+  var settings: PBSettings {
+    get {return _storage._settings ?? PBSettings()}
+    set {_uniqueStorage()._settings = newValue}
+  }
+  /// Returns true if `settings` has been explicitly set.
+  var hasSettings: Bool {return _storage._settings != nil}
+  /// Clears the value of `settings`. Subsequent reads from it will return its default value.
+  mutating func clearSettings() {_uniqueStorage()._settings = nil}
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _storage = _StorageClass.defaultInstance
+}
+
 struct PBPeopleStore {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -125,6 +151,18 @@ struct PBTransaction {
   init() {}
 }
 
+struct PBSettings {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var icloud: Bool = false
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 extension PBTransactionType: SwiftProtobuf._ProtoNameProviding {
@@ -134,6 +172,75 @@ extension PBTransactionType: SwiftProtobuf._ProtoNameProviding {
     2: .same(proto: "SETTLE_CREDIT"),
     3: .same(proto: "SETTLE_DEBT"),
   ]
+}
+
+extension PBUserData: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PBUserData"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "people"),
+    2: .same(proto: "settings"),
+  ]
+
+  fileprivate class _StorageClass {
+    var _people: [PBPerson] = []
+    var _settings: PBSettings? = nil
+
+    static let defaultInstance = _StorageClass()
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _people = source._people
+      _settings = source._settings
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        switch fieldNumber {
+        case 1: try decoder.decodeRepeatedMessageField(value: &_storage._people)
+        case 2: try decoder.decodeSingularMessageField(value: &_storage._settings)
+        default: break
+        }
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      if !_storage._people.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._people, fieldNumber: 1)
+      }
+      if let v = _storage._settings {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+      }
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PBUserData, rhs: PBUserData) -> Bool {
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._people != rhs_storage._people {return false}
+        if _storage._settings != rhs_storage._settings {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
 }
 
 extension PBPeopleStore: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
@@ -272,6 +379,35 @@ extension PBTransaction: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
     if lhs.note != rhs.note {return false}
     if lhs.completed != rhs.completed {return false}
     if lhs.timestamp != rhs.timestamp {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension PBSettings: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = "PBSettings"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "icloud"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeSingularBoolField(value: &self.icloud)
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.icloud != false {
+      try visitor.visitSingularBoolField(value: self.icloud, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: PBSettings, rhs: PBSettings) -> Bool {
+    if lhs.icloud != rhs.icloud {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
