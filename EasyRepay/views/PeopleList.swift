@@ -45,7 +45,7 @@ struct PeopleList: View {
                     }
                 },
                 trailing: Button(action: {
-                    withAnimation { self.store.people.append(Person(name: "")) }
+                    withAnimation { self.store.people.append(Person()) }
                 }) {
                     HStack {
                         Text("New person")

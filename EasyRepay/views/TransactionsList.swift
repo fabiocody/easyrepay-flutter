@@ -13,7 +13,7 @@ struct TransactionsList: View {
     
     @ObservedObject var person: Person
     
-    @State private var showAdd = false
+    //@State private var showAdd = false
     @State private var showCompleted = false        // TODO Show completed
         
     var body: some View {
@@ -29,7 +29,7 @@ struct TransactionsList: View {
             Section {
                 ForEach(person.transactions) { transaction in
                     if self.showCompleted || !transaction.completed {
-                        NavigationLink(destination: TransactionDetailView(person: self.person, transaction: transaction)) {
+                        NavigationLink(destination: TransactionDetail(person: self.person, transaction: transaction)) {
                             TransactionRow(transaction: transaction, showCompleted: self.$showCompleted)
                         }
                     }
@@ -59,7 +59,7 @@ struct TransactionsList: View {
         .listStyle(GroupedListStyle())
         .navigationBarTitle(person.name)
         .navigationBarItems(trailing: Button(action: {
-            self.showAdd = true
+            withAnimation { self.person.transactions.append(Transaction()) }
         }) {
             HStack {
                 Text("New transaction")
@@ -67,7 +67,7 @@ struct TransactionsList: View {
                     .font(.title)
             }
         })
-        .sheet(isPresented: self.$showAdd, content: {NewTransactionView(person: self.person)})
+        //.sheet(isPresented: self.$showAdd, content: {NewTransactionView(person: self.person)})
     }
     
     func delete(at offsets: IndexSet) {

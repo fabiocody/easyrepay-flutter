@@ -26,6 +26,7 @@ class DataStore: ObservableObject {
             pbstore.people.append(p.protobuf)
         }
         print(pbstore)
+        print(fileURL)
         do {
             try pbstore.serializedData().write(to: fileURL)
             print("Save successful")
@@ -72,6 +73,9 @@ class Person: Identifiable, ObservableObject {
     
     @Published var totalAmount = 0.0
 
+    init() {
+        self.name = ""
+    }
     
     init(name: String) {
         self.name = name
@@ -135,7 +139,7 @@ class Transaction: Identifiable, ObservableObject {
     @Published var completed = false
     @Published var date: Date
     
-    init(type: TransactionType = .credit, amount: Double, note: String = "", date: Date = Date(), completed: Bool = false) {
+    init(type: TransactionType = .credit, amount: Double = 0.0, note: String = "New transaction", date: Date = Date(), completed: Bool = false) {
         self.type = type
         self.amount = amount
         self.note = note

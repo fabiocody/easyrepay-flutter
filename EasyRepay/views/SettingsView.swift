@@ -16,7 +16,22 @@ struct SettingsView: View {
     @ObservedObject var settings = dataStore.settings
     
     var body: some View {
-        NavigationView {
+        VStack(alignment: .leading) {
+            HStack {
+                Spacer()
+                Button("Done") {
+                    dataStore.save()
+                    self.presentationMode.wrappedValue.dismiss()
+                }
+                .padding(.top, 20)
+                .padding(.trailing, 15)
+            }
+            Text("Settings")
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .foregroundColor(.green)
+                .padding(.top, 10)
+                .padding(.leading, 15)
             Form {
                 Section(header: Text("Sync")) {
                     Toggle("iCloud", isOn: $settings.icloud.animation())
@@ -38,12 +53,6 @@ struct SettingsView: View {
                     EmptyView()
                 }
             }
-            .padding(.top, 10)
-            .navigationBarTitle("Settings")
-            .navigationBarItems(trailing: Button("Done") {
-                dataStore.save()
-                self.presentationMode.wrappedValue.dismiss()
-            })
         }
         .accentColor(.green)
     }
