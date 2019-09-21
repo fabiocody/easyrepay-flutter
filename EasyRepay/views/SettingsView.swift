@@ -19,11 +19,19 @@ struct SettingsView: View {
         NavigationView {
             Form {
                 Section(header: Text("Sync")) {
-                    Toggle("iCloud", isOn: $settings.icloud)
+                    Toggle("iCloud", isOn: $settings.icloud.animation())
+                    if settings.icloud {
+                        Text("iCloud sync is not working at the moment.")
+                            .foregroundColor(.red)
+                    }
                 }
-                Section(header: Text("General")) {
-                    ForEach(0..<5) { i in
-                        Text("Setting \(i)")
+                Section {
+                    Button(action: {}) {
+                        Text("Privacy notice")
+                    }
+                    Button(action: dataStore.deleteAll) {   // TODO: alert
+                        Text("Delete all data")
+                            .foregroundColor(.red)
                     }
                 }
                 Section(footer: SettingsFooter()) {

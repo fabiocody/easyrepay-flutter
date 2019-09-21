@@ -21,7 +21,6 @@
 		E50ABF41232006FB00B20CB4 /* TransactionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50ABF40232006FB00B20CB4 /* TransactionRow.swift */; };
 		E50ABF452320116100B20CB4 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50ABF442320116100B20CB4 /* Colors.swift */; };
 		E50ABF47232011CA00B20CB4 /* TransactionDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50ABF46232011CA00B20CB4 /* TransactionDetail.swift */; };
-		E50ABF4923201C1C00B20CB4 /* ReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50ABF4823201C1C00B20CB4 /* ReminderView.swift */; };
 		E51935B4232A41240095F9BA /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51935B3232A41240095F9BA /* SettingsView.swift */; };
 		E52C0DEA2323BF2F005F8C15 /* NewTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52C0DE92323BF2F005F8C15 /* NewTransactionView.swift */; };
 		E5487CAA23257D5A00B96195 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5487CA923257D5A00B96195 /* Model.swift */; };
@@ -46,7 +45,6 @@
 		E50ABF40232006FB00B20CB4 /* TransactionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionRow.swift; sourceTree = "<group>"; };
 		E50ABF442320116100B20CB4 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		E50ABF46232011CA00B20CB4 /* TransactionDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetail.swift; sourceTree = "<group>"; };
-		E50ABF4823201C1C00B20CB4 /* ReminderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderView.swift; sourceTree = "<group>"; };
 		E51935B3232A41240095F9BA /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		E52C0DE92323BF2F005F8C15 /* NewTransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTransactionView.swift; sourceTree = "<group>"; };
 		E5487CA923257D5A00B96195 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
@@ -130,7 +128,6 @@
 				E50ABF38231FED5500B20CB4 /* PersonRow.swift */,
 				E50ABF3E232006EC00B20CB4 /* TransactionsList.swift */,
 				E50ABF40232006FB00B20CB4 /* TransactionRow.swift */,
-				E50ABF4823201C1C00B20CB4 /* ReminderView.swift */,
 				E50ABF46232011CA00B20CB4 /* TransactionDetail.swift */,
 				E5D22FB123239CD7007ABA75 /* TransactionDetailView.swift */,
 				E52C0DE92323BF2F005F8C15 /* NewTransactionView.swift */,
@@ -227,7 +224,6 @@
 			files = (
 				E51935B4232A41240095F9BA /* SettingsView.swift in Sources */,
 				E50ABF452320116100B20CB4 /* Colors.swift in Sources */,
-				E50ABF4923201C1C00B20CB4 /* ReminderView.swift in Sources */,
 				E50ABF41232006FB00B20CB4 /* TransactionRow.swift in Sources */,
 				E50ABF3B231FEE3F00B20CB4 /* PeopleList.swift in Sources */,
 				E50ABF17231FE58900B20CB4 /* AppDelegate.swift in Sources */,
@@ -377,6 +373,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = EasyRepay/EasyRepay.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"EasyRepay/Preview Content\"";
 				DEVELOPMENT_TEAM = SM32T6M59X;
 				ENABLE_PREVIEWS = YES;
@@ -387,6 +384,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fabiocodiglioni.EasyRepay13;
 				PRODUCT_NAME = EasyRepay13;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -398,6 +396,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = EasyRepay/EasyRepay.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"EasyRepay/Preview Content\"";
 				DEVELOPMENT_TEAM = SM32T6M59X;
 				ENABLE_PREVIEWS = YES;
@@ -408,6 +407,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fabiocodiglioni.EasyRepay13;
 				PRODUCT_NAME = EasyRepay13;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

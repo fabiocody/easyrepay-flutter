@@ -13,7 +13,6 @@ struct TransactionsList: View {
     
     @ObservedObject var person: Person
     
-    @State private var reminderActive = false
     @State private var showAdd = false
     @State private var showCompleted = false        // TODO Show completed
         
@@ -21,10 +20,11 @@ struct TransactionsList: View {
         List {
             Section {
                 Toggle("Show completed", isOn: $showCompleted.animation())
-                /*Toggle("Activate reminder", isOn: $reminderActive.animation())
-                if reminderActive {
-                    Text("This should only appear when the reminder is active.")
-                }*/
+                Toggle("Activate reminder", isOn: $person.reminderActive.animation())
+                if person.reminderActive {
+                    Text("Reminders are not working at the moment.")
+                        .foregroundColor(.red)
+                }
             }
             Section {
                 ForEach(person.transactions) { transaction in

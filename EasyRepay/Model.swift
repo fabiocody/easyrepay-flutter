@@ -49,6 +49,12 @@ class DataStore: ObservableObject {
         }
     }
     
+    func deleteAll() {
+        people = []
+        settings = Settings()
+        save()
+    }
+
     func sortPeople() {
         people.sort(by: {$0.name < $1.name})
     }
