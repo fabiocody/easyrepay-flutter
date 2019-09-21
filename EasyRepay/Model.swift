@@ -139,7 +139,7 @@ class Transaction: Identifiable, ObservableObject {
     @Published var completed = false
     @Published var date: Date
     
-    init(type: TransactionType = .credit, amount: Double = 0.0, note: String = "New transaction", date: Date = Date(), completed: Bool = false) {
+    init(type: TransactionType = .credit, amount: Double = 0.0, note: String = "", date: Date = Date(), completed: Bool = false) {
         self.type = type
         self.amount = amount
         self.note = note

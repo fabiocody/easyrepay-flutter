@@ -60,6 +60,7 @@ struct TransactionDetail: View {
                 self.transaction.note = self.note == "" ? "Transaction" : self.note
                 self.transaction.date = self.date
                 self.transaction.completed = self.completed
+                // TODO: Insert if new
                 dataStore.save()
                 self.person.updateTotalAmount()
                 self.presentationMode.wrappedValue.dismiss()

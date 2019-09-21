@@ -13,7 +13,6 @@ struct TransactionsList: View {
     
     @ObservedObject var person: Person
     
-    //@State private var showAdd = false
     @State private var showCompleted = false        // TODO Show completed
         
     var body: some View {
@@ -58,16 +57,13 @@ struct TransactionsList: View {
         }
         .listStyle(GroupedListStyle())
         .navigationBarTitle(person.name)
-        .navigationBarItems(trailing: Button(action: {
-            withAnimation { self.person.transactions.append(Transaction()) }
-        }) {
+        .navigationBarItems(trailing: NavigationLink(destination: TransactionDetail(person: self.person, transaction: Transaction())) {
             HStack {
                 Text("New transaction")
                 Image(systemName: "plus.circle.fill")
                     .font(.title)
             }
         })
-        //.sheet(isPresented: self.$showAdd, content: {NewTransactionView(person: self.person)})
     }
     
     func delete(at offsets: IndexSet) {

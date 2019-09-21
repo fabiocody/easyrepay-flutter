@@ -35,9 +35,7 @@ struct PeopleList: View {
             }
             .navigationBarTitle(Text("EasyRepay"))
             .navigationBarItems(
-                leading: Button(action: {
-                    self.showSettings = true
-                }) {
+                leading: NavigationLink(destination: SettingsView()) {
                     HStack {
                         Image(systemName: "gear")
                             .font(.title)
