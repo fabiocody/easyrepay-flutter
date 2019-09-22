@@ -18,9 +18,9 @@ struct TransactionRow: View {
     var body: some View {
         HStack {
             if showCompleted {
-                Image(systemName: transaction.completed ? "checkmark" : "xmark")
+                Image(systemName: transaction.completed ? "checkmark.square" : "square")
                     .padding(.leading, 5)
-                    .foregroundColor(transaction.completed ? .green : .red)
+                    .foregroundColor(transaction.completed ? .green : .secondary)
                     .transition(.scale)
             }
             VStack(alignment: .leading) {
@@ -43,10 +43,10 @@ struct TransactionRow: View {
 
 struct TransactionRow_Previews: PreviewProvider {
     static var previews: some View {
-        Group {
-            TransactionRow(transaction: dataStore.people[0].transactions[0], showCompleted: .constant(true))
-            TransactionRow(transaction: dataStore.people[0].transactions[1], showCompleted: .constant(true))
+        NavigationView {
+            TransactionsList(person: dataStore.people[0])
         }
-        .previewLayout(.fixed(width: 300, height: 70))
+        .accentColor(.green)
+        .environment(\.colorScheme, .light)
     }
 }

@@ -57,10 +57,12 @@ struct TransactionDetail: View {
             trailing: Button("Save") {
                 self.transaction.type = TransactionType.allCases[self.typeSelection]
                 self.transaction.amount = self.amount ?? 0.0
-                self.transaction.note = self.note == "" ? "Transaction" : self.note
+                self.transaction.note = self.note == "" ? "New transaction" : self.note
                 self.transaction.date = self.date
                 self.transaction.completed = self.completed
-                // TODO: Insert if new
+                if !self.person.transactions.contains(where: {$0.id == self.transaction.id}) {
+                    self.person.transactions.append(self.transaction)
+                }
                 dataStore.save()
                 self.person.updateTotalAmount()
                 self.presentationMode.wrappedValue.dismiss()

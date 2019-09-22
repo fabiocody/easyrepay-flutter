@@ -115,11 +115,13 @@ class Person: Identifiable, ObservableObject {
         //print("UPDATING TOTAL AMOUNT")
         var sum = 0.0
         for t in transactions {
-            switch t.type {
-            case .credit, .settleDebt:
-                sum += t.amount
-            case .debt, .settleCredit:
-                sum -= t.amount
+            if !t.completed {
+                switch t.type {
+                case .credit, .settleDebt:
+                    sum += t.amount
+                case .debt, .settleCredit:
+                    sum -= t.amount
+                }
             }
         }
         totalAmount = sum

@@ -13,7 +13,7 @@ struct TransactionsList: View {
     
     @ObservedObject var person: Person
     
-    @State private var showCompleted = false        // TODO Show completed
+    @State private var showCompleted = false
         
     var body: some View {
         List {

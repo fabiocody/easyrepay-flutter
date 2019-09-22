@@ -40,10 +40,7 @@ struct PersonRow: View {
 
 struct PersonRow_Previews: PreviewProvider {
     static var previews: some View {
-        Group {
-            PersonRow(person: dataStore.people[0])
-            PersonRow(person: dataStore.people[1])
-        }
-        .previewLayout(.fixed(width: 300, height: 70))
+        PeopleList()
+            .environment(\.colorScheme, .light)
     }
 }

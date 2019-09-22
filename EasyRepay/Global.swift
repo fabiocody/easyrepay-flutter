@@ -17,6 +17,7 @@ var dataStore: DataStore = {
     p = Person(name: "Clay Jensen")
     p.transactions.append(Transaction(type: .debt, amount: 4.5, note: "Comics"))
     p.transactions.append(Transaction(type: .credit, amount: 15, note: "Bike helmet"))
+    p.transactions.append(Transaction(type: .credit, amount: 7, note: "Lunch", completed: true))
     store.people.append(p)
     
     p = Person(name: "Justin Fooley")

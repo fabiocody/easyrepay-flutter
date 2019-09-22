@@ -18,7 +18,7 @@ class Colors {
         return person.totalAmount >= 0 ? .green : .red
     }
     
-    static func amountColor(transaction: Transaction) -> Color {    // TODO: Change color code
+    static func amountColor(transaction: Transaction) -> Color {
         switch transaction.type {
             case .credit:
                 return .green

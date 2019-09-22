@@ -15,6 +15,8 @@ struct SettingsView: View {
     
     @ObservedObject var settings = dataStore.settings
     
+    @State var showActionSheet = false
+    
     var body: some View {
         Form {
             Section(header: Text("Sync")) {
@@ -25,10 +27,10 @@ struct SettingsView: View {
                 }
             }
             Section {
-                Button(action: {}) {
+                Button(action: {}) {    // TODO: Show URL
                     Text("Privacy notice")
                 }
-                Button(action: dataStore.deleteAll) {   // TODO: alert
+                Button(action: {self.showActionSheet = true}) {
                     Text("Delete all data")
                         .foregroundColor(.red)
                 }
@@ -38,8 +40,14 @@ struct SettingsView: View {
             }
         }
         .navigationBarTitle("Settings")
+        .actionSheet(isPresented: $showActionSheet) {
+            ActionSheet(title: Text("Do you really want to delete all your data?"),
+                        message: Text("This action cannot be undone."),
+                        buttons: [.destructive(Text("Delete all"), action: dataStore.deleteAll), .cancel()])
+        }
         // TODO SAVE
     }
+    
 }
 
 
