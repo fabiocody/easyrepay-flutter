@@ -45,7 +45,6 @@ struct SettingsView: View {
                         message: Text("This action cannot be undone."),
                         buttons: [.destructive(Text("Delete all"), action: dataStore.deleteAll), .cancel()])
         }
-        // TODO SAVE
     }
     
 }
@@ -55,7 +54,10 @@ struct SettingsFooter: View {
     var body: some View {
         HStack {
             Spacer()
-            Text("EasyRepay")
+            VStack {
+                Text("EasyRepay")
+                Text("by Fabio Codiglioni")
+            }
             Spacer()
         }
     }
@@ -64,6 +66,8 @@ struct SettingsFooter: View {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView()
+        NavigationView {
+            SettingsView()
+        }
     }
 }

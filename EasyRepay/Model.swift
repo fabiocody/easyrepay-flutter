@@ -25,8 +25,6 @@ class DataStore: ObservableObject {
         for p in people {
             pbstore.people.append(p.protobuf)
         }
-        print(pbstore)
-        print(fileURL)
         do {
             try pbstore.serializedData().write(to: fileURL)
             print("Save successful")
@@ -227,6 +225,8 @@ extension PBTransactionType {
 
 class Settings: ObservableObject {
     
-    @Published var icloud = false
+    @Published var icloud = false {
+        didSet { dataStore.save() }
+    }
     
 }
