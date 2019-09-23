@@ -35,7 +35,7 @@ struct TransactionDetail: View {
                 Text("Amount")
                 Spacer()
                 TextField("Enter amount", text: $amountText, onEditingChanged: onEditingChanged)
-                    .keyboardType(.numbersAndPunctuation)
+                    .keyboardType(.decimalPad)
                     .lineLimit(5)
                     .multilineTextAlignment(.trailing)
             }

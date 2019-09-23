@@ -19,8 +19,12 @@ struct PeopleList: View {
         NavigationView {
             Group {
                 if store.people.isEmpty {
-                    Text("Nothing to show here")
-                        .foregroundColor(.secondary)
+                    HStack {
+                        Text("Tap on")
+                        Image(systemName: "plus.circle.fill")
+                        Text("to get started")
+                    }
+                    .foregroundColor(.secondary)
                 } else {
                     List {
                         ForEach(store.people) { person in
