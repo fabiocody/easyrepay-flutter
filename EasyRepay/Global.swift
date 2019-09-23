@@ -47,8 +47,6 @@ let currencyFormatter: NumberFormatter = {
     formatter.numberStyle = .currency
     formatter.minimumFractionDigits = 2
     formatter.maximumFractionDigits = 2
-    //formatter.positiveFormat = "¤ #,##0.00"
-    //formatter.negativeFormat = "¤ -#,##0.00"
     return formatter
 }()
 

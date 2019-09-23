@@ -17,7 +17,7 @@ struct TransactionDetail: View {
     @ObservedObject var transaction: Transaction
     
     @State var typeSelection: Int = 0
-    @State var amount: Double? = nil
+    @State var amountText: String = ""
     @State var note: String = ""
     @State var date: Date = Date()
     @State var completed: Bool = false
@@ -34,20 +34,20 @@ struct TransactionDetail: View {
             HStack(alignment: .center) {
                 Text("Amount")
                 Spacer()
-                TextField("Enter amount", value: $amount, formatter: currencyFormatter, onEditingChanged: {
-                    if $0 && self.amount == 0 {
-                        self.amount = nil
-                    }
-                })
-                .keyboardType(.numbersAndPunctuation)
-                .lineLimit(5)
-                .multilineTextAlignment(.trailing)
+                TextField("Enter amount", text: $amountText, onEditingChanged: onEditingChanged)
+                    .keyboardType(.numbersAndPunctuation)
+                    .lineLimit(5)
+                    .multilineTextAlignment(.trailing)
             }
             HStack(alignment: .center) {
                 Text("Note")
                 Spacer()
-                TextField("Enter note", text: $note)
-                    .multilineTextAlignment(.trailing)
+                TextField("Enter note", text: $note, onEditingChanged: {
+                    if $0 && self.note == "New transaction" {
+                        self.note = ""
+                    }
+                })
+                .multilineTextAlignment(.trailing)
             }
             Toggle("Completed", isOn: $completed)
             DatePicker(selection: $date.animation(), label: {Text("Date")})
@@ -56,7 +56,8 @@ struct TransactionDetail: View {
         .navigationBarItems(
             trailing: Button("Save") {
                 self.transaction.type = TransactionType.allCases[self.typeSelection]
-                self.transaction.amount = self.amount ?? 0.0
+                self.onEditingChanged()
+                self.transaction.amount = currencyFormatter.number(from: self.amountText) as? Double ?? 0.0
                 self.transaction.note = self.note == "" ? "New transaction" : self.note
                 self.transaction.date = self.date
                 self.transaction.completed = self.completed
@@ -65,16 +66,36 @@ struct TransactionDetail: View {
                 }
                 dataStore.save()
                 self.person.updateTotalAmount()
+                self.person.sortTransactions()
                 self.presentationMode.wrappedValue.dismiss()
             }
         )
         .onAppear {
             let t = self.transaction
             self.typeSelection = t.type.index
-            self.amount = t.amount
+            self.amountText = currencyFormatter.string(for: t.amount)!
             self.note = t.note
             self.date = t.date
             self.completed = t.completed
+        }
+    }
+    
+    // This method is required because the TextField implementation with formatter sucks.
+    // It basically mimics the presence of a formatter
+    func onEditingChanged(_ editing: Bool = false) {
+        print("onEditingChanged \(editing)")
+        if let value = currencyFormatter.number(from: amountText) as? Double {
+            if editing {
+                if value == 0 {
+                    amountText = ""
+                } else {
+                    amountText = numberFormatter.string(for: value)!
+                }
+            } else {
+                amountText = currencyFormatter.string(for: value)!
+            }
+        } else {
+            amountText = currencyFormatter.string(for: 0.0)!
         }
     }
     

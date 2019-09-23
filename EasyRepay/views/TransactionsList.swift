@@ -25,33 +25,25 @@ struct TransactionsList: View {
                         .foregroundColor(.red)
                 }
             }
-            Section {
-                ForEach(person.transactions) { transaction in
-                    if self.showCompleted || !transaction.completed {
-                        NavigationLink(destination: TransactionDetail(person: self.person, transaction: transaction)) {
-                            TransactionRow(transaction: transaction, showCompleted: self.$showCompleted)
-                        }
-                    }
-                }
-                .onDelete(perform: delete)
-                if person.transactions.isEmpty {
-                    HStack {
-                        Spacer()
-                        Text("Nothing to show here")
-                            .foregroundColor(.secondary)
-                        Spacer()
-                    }
-                }
-            }
             if !person.transactions.isEmpty {
                 Section {
-                    HStack {
-                        Text("Total")
-                        Spacer()
-                        Text("\(currencyFormatter.string(for: abs(person.totalAmount))!)")
-                            .foregroundColor(Colors.amountColor(person: person))
-                            .padding(.trailing, 17)
+                    ForEach(person.transactions) { transaction in
+                        if self.showCompleted || !transaction.completed {
+                            NavigationLink(destination: TransactionDetail(person: self.person, transaction: transaction)) {
+                                TransactionRow(transaction: transaction, showCompleted: self.$showCompleted)
+                            }
+                        }
                     }
+                    .onDelete(perform: delete)
+                }
+            }
+            Section {
+                HStack {
+                    Text("Total")
+                    Spacer()
+                    Text("\(currencyFormatter.string(for: abs(person.totalAmount))!)")
+                        .foregroundColor(Colors.amountColor(person: person))
+                        .padding(.trailing, 17)
                 }
             }
         }

@@ -89,6 +89,7 @@ class Person: Identifiable, ObservableObject {
             transactions.append(Transaction(pbtransaction: t))
         }
         updateTotalAmount()
+        sortTransactions()
     }
 
     var protobuf: PBPerson {
@@ -110,7 +111,6 @@ class Person: Identifiable, ObservableObject {
     }
     
     func updateTotalAmount() {
-        //print("UPDATING TOTAL AMOUNT")
         var sum = 0.0
         for t in transactions {
             if !t.completed {
