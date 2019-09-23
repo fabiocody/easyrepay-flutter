@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 
 #if DEBUG
@@ -32,8 +33,8 @@ var dataStore: DataStore = {
     return store
 }()
 #else
-var peopleStore: PeopleStore = {
-    var store = PeopleStore()
+var dataStore: DataStore = {
+    var store = DataStore()
     store.read()
     return store
 }()
@@ -65,3 +66,13 @@ let dateFormatter: DateFormatter = {
     formatter.timeStyle = .short
     return formatter
 }()
+
+
+extension UIApplication {
+    static var appVersion: String? {
+        return Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
+    }
+    static var appBuild: String? {
+        return Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String
+    }
+}

@@ -56,7 +56,7 @@ struct SettingsFooter: View {
             Spacer()
             VStack {
                 Text("EasyRepay")
-                Text("by Fabio Codiglioni")
+                Text("v\(UIApplication.appVersion!) (\(UIApplication.appBuild!))")
             }
             Spacer()
         }
