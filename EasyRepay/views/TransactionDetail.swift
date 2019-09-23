@@ -24,7 +24,6 @@ struct TransactionDetail: View {
     
     var body: some View {
         Form {
-            Toggle("Completed", isOn: $completed)
             Picker(selection: $typeSelection, label: Text("Type")) {
                 ForEach(0..<TransactionType.allCases.count) {
                     Text(TransactionType.allCases[$0].rawValue).tag($0)
@@ -50,6 +49,7 @@ struct TransactionDetail: View {
                 TextField("Enter note", text: $note)
                     .multilineTextAlignment(.trailing)
             }
+            Toggle("Completed", isOn: $completed)
             DatePicker(selection: $date.animation(), label: {Text("Date")})
         }
         .navigationBarTitle(Text("Transaction"), displayMode: .inline)
