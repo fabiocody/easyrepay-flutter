@@ -37,6 +37,8 @@ class TransactionDetail extends StatefulWidget {
 
 class _PeopleListState extends State<PeopleList> {
 
+  TextEditingController _textFieldController = TextEditingController();
+
   void initState() {
     super.initState();
     if (kReleaseMode) {
@@ -54,11 +56,7 @@ class _PeopleListState extends State<PeopleList> {
       ),
       body: _buildPeopleList(context),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            widget.store.people.add(ModelFactory.newPerson());
-          });
-        },
+        onPressed: () => _newPersonDialog(context),
         tooltip: 'New Person',
         child: Icon(Icons.add),
       )
@@ -111,6 +109,29 @@ class _PeopleListState extends State<PeopleList> {
           );
         },
       )
+    );
+  }
+
+  _newPersonDialog(BuildContext context) async {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('New person'),
+          content: TextField(
+            controller: _textFieldController,
+            decoration: InputDecoration(hintText: "Enter name"),
+          ),
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text('CANCEL'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      }
     );
   }
 
@@ -181,7 +202,7 @@ class _TransactionsListState extends State<TransactionsList> {
               crossAxisAlignment: CrossAxisAlignment.start,
             ),
             Spacer(),
-            Text("${transaction.amount}", textScaleFactor: 1.1,)
+            Text("${transaction.amount}", textScaleFactor: 1.1)
           ],
         ),
         trailing: Icon(
