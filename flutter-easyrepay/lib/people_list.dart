@@ -77,7 +77,20 @@ class _PeopleListState extends State<PeopleList> {
           children: <Widget>[
             CircleAvatar(child: Text(person.name.split(" ").map((s) => s[0]).join(""))),
             VerticalDivider(),
-            Text(person.name)
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(person.name),
+                Text(
+                  "${person.transactions.length} " + (person.transactions.length == 1 ? "transaction" : "transactions"),
+                  textScaleFactor: 0.8,
+                  style: TextStyle(color: Colors.grey)
+                )
+              ],
+            ),
+            Spacer(),
+            Text("${ModelFactory.getTotalAmount(person)}")
           ],
         ),
         trailing: Icon(
@@ -104,6 +117,9 @@ class _PeopleListState extends State<PeopleList> {
           content: TextField(
             controller: _textFieldController,
             decoration: InputDecoration(hintText: "Enter name"),
+            autofocus: true,
+            keyboardType: TextInputType.text,
+            keyboardAppearance: Brightness.light,
           ),
           actions: <Widget>[
             FlatButton(

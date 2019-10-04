@@ -51,10 +51,30 @@ class _TransactionsListState extends State<TransactionsList> {
       final Iterable<Widget> tiles = widget.person.transactions.map(
         (PBTransaction transaction) => _buildTransactionRow(transaction)
       );
-      final List<Widget> rows = ListTile.divideTiles(
+      List<Widget> rows = ListTile.divideTiles(
         context: context,
         tiles: tiles
       ).toList();
+      rows.add(Divider(
+        thickness: 2,
+        height: 32,
+        indent: 10,
+        endIndent: 10,
+      ));
+      rows.add(Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Text("TOTAL",
+              style: TextStyle(color: Colors.grey),
+            ),
+            Spacer(),
+            Text("${ModelFactory.getTotalAmount(widget.person)}", textScaleFactor: 1.5)
+          ],
+        )),
+      );
       return ListView(children: rows);
     } else {
       return Center(child: Row(
@@ -85,7 +105,7 @@ class _TransactionsListState extends State<TransactionsList> {
             Column(
               children: <Widget>[
                 Text(transaction.note),
-                Text("${transaction.timestamp}", textScaleFactor: 0.75, style: TextStyle(color: Colors.grey))
+                Text("${transaction.timestamp}", textScaleFactor: 0.8, style: TextStyle(color: Colors.grey))
               ],
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -118,6 +138,8 @@ class _TransactionsListState extends State<TransactionsList> {
           content: TextField(
             controller: _textFieldController,
             decoration: InputDecoration(hintText: "Enter name"),
+            autofocus: true,
+            keyboardAppearance: Brightness.light,
           ),
           actions: <Widget>[
             FlatButton(
