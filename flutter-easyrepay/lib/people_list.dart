@@ -1,15 +1,13 @@
+import 'package:easyrepay/main.dart';
 import 'package:easyrepay/model_factory.dart';
 import 'package:easyrepay/proto/easyrepay.pb.dart';
 import 'package:easyrepay/transactions_list.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'main.dart';
-
 
 class PeopleList extends StatefulWidget {
-  final PBDataStore store;
-  PeopleList(this.store);
+  final PBDataStore store = ModelFactory.getStore();
   State createState() => _PeopleListState();
 }
 

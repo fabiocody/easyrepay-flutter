@@ -1,13 +1,10 @@
-import 'package:easyrepay/proto/easyrepay.pb.dart';
-import 'package:easyrepay/model_factory.dart';
 import 'package:easyrepay/people_list.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 
 
 void main() => runApp(MaterialApp(
   title: "EasyRepay",
-  home: PeopleList(ModelFactory.getStore()),
+  home: PeopleList(),
   theme: ThemeData(
     primarySwatch: Colors.green,
   )
