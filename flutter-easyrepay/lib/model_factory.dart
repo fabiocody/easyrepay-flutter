@@ -31,7 +31,7 @@ class ModelFactory {
     p = ModelFactory.newPerson(name: "Robyn Key");
     p.transactions.add(ModelFactory.newTransaction(type: PBTransactionType.DEBT, amount: 7.8, note: "Pens"));
     store.people.add(p);
-    store.people.sort((p1, p2) => p1.name.compareTo(p2.name));
+    sortPeople();
   }
 
   static PBPerson newPerson({String name}) {
@@ -54,6 +54,10 @@ class ModelFactory {
     if (date == null) t.timestamp = Int64(DateTime.now().millisecondsSinceEpoch ~/ 1000);
     else t.timestamp = Int64(date.millisecondsSinceEpoch ~/ 1000);
     return t;
+  }
+
+  static void sortPeople() {
+    getStore().people.sort((p1, p2) => p1.name.compareTo(p2.name));
   }
 
 }
