@@ -28,6 +28,13 @@ class TransactionsList extends StatefulWidget {
 }
 
 
+class TransactionDetail extends StatefulWidget {
+  final PBTransaction transaction;
+  TransactionDetail(this.transaction);
+  State createState() => _TransactionDetailState();
+}
+
+
 class _PeopleListState extends State<PeopleList> {
 
   void initState() {
@@ -59,14 +66,26 @@ class _PeopleListState extends State<PeopleList> {
   }
 
   Widget _buildPeopleList(BuildContext context) {
-    final Iterable<Widget> tiles = widget.store.people.map(
-      (PBPerson person) => _buildPersonRow(person)
-    );
-    final List<Widget> rows = ListTile.divideTiles(
-      context: context,
-      tiles: tiles
-    ).toList();
-    return ListView(children: rows);
+    if (widget.store.people.isNotEmpty) {
+      final Iterable<Widget> tiles = widget.store.people.map(
+        (PBPerson person) => _buildPersonRow(person)
+      );
+      final List<Widget> rows = ListTile.divideTiles(
+        context: context,
+        tiles: tiles
+      ).toList();
+      return ListView(children: rows);
+    } else {
+      return Center(child: Row(
+        children: <Widget>[
+          Text("Tap on ", textScaleFactor: 1.1),
+          Icon(Icons.add_circle, color: Colors.green),
+          Text(" to add a person", textScaleFactor: 1.1)
+        ],
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+      ));
+    }
   }
 
   Widget _buildPersonRow(PBPerson person) {
@@ -119,14 +138,26 @@ class _TransactionsListState extends State<TransactionsList> {
   }
 
   Widget _buildTransactionsList(BuildContext context) {
-    final Iterable<Widget> tiles = widget.person.transactions.map(
-      (PBTransaction transaction) => _buildTransactionRow(transaction)
-    );
-    final List<Widget> rows = ListTile.divideTiles(
-      context: context,
-      tiles: tiles
-    ).toList();
-    return ListView(children: rows);
+    if (widget.person.transactions.isNotEmpty) {
+      final Iterable<Widget> tiles = widget.person.transactions.map(
+        (PBTransaction transaction) => _buildTransactionRow(transaction)
+      );
+      final List<Widget> rows = ListTile.divideTiles(
+        context: context,
+        tiles: tiles
+      ).toList();
+      return ListView(children: rows);
+    } else {
+      return Center(child: Row(
+        children: <Widget>[
+          Text("Tap on ", textScaleFactor: 1.1),
+          Icon(Icons.add_circle, color: Colors.green),
+          Text(" to add a transaction", textScaleFactor: 1.1)
+        ],
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+      ));
+    }
   }
 
   Widget _buildTransactionRow(PBTransaction transaction) {
@@ -144,19 +175,42 @@ class _TransactionsListState extends State<TransactionsList> {
             Column(
               children: <Widget>[
                 Text(transaction.note),
-                Text("${transaction.timestamp}", style: TextStyle(fontSize: 12))
+                Text("${transaction.timestamp}", textScaleFactor: 0.75,)
               ],
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
             ),
             Spacer(),
-            Text("${transaction.amount}")
+            Text("${transaction.amount}", textScaleFactor: 1.1,)
           ],
         ),
         trailing: Icon(
           Icons.navigate_next,
           color: Colors.grey
         ),
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute<void>(
+              builder: (BuildContext context) => TransactionDetail(transaction)
+            )
+          );
+        },
+      )
+    );
+  }
+
+}
+
+
+class _TransactionDetailState extends State<TransactionDetail> {
+
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Transaction")
+      ),
+      body: Center(
+        child: Text("Hello, world!", textScaleFactor: 3)
       )
     );
   }
