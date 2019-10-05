@@ -1,4 +1,4 @@
-import 'package:easyrepay/main.dart';
+import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/model_factory.dart';
 import 'package:easyrepay/proto/easyrepay.pb.dart';
 import 'package:easyrepay/transactions_list.dart';
@@ -85,12 +85,12 @@ class _PeopleListState extends State<PeopleList> {
                 Text(
                   "${person.transactions.length} " + (person.transactions.length == 1 ? "transaction" : "transactions"),
                   textScaleFactor: 0.8,
-                  style: TextStyle(color: Colors.grey)
+                  style: TextStyle(color: Colors.grey[600])
                 )
               ],
             ),
             Spacer(),
-            Text("${ModelFactory.getTotalAmount(person)}")
+            getTotalAmountText(person, false)
           ],
         ),
         trailing: Icon(

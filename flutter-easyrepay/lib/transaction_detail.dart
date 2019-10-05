@@ -1,6 +1,7 @@
 import 'package:easyrepay/proto/easyrepay.pb.dart';
 import 'package:flutter/material.dart';
 
+
 class TransactionDetail extends StatefulWidget {
   final PBTransaction transaction;
   TransactionDetail(this.transaction);

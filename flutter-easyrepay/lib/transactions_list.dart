@@ -1,4 +1,4 @@
-import 'package:easyrepay/main.dart';
+import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/model_factory.dart';
 import 'package:easyrepay/proto/easyrepay.pb.dart';
 import 'package:easyrepay/transaction_detail.dart';
@@ -68,10 +68,10 @@ class _TransactionsListState extends State<TransactionsList> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Text("TOTAL",
-              style: TextStyle(color: Colors.grey),
+              style: TextStyle(color: Colors.grey[700]),
             ),
             Spacer(),
-            Text("${ModelFactory.getTotalAmount(widget.person)}", textScaleFactor: 1.5)
+            getTotalAmountText(widget.person, true)
           ],
         )),
       );
@@ -105,12 +105,12 @@ class _TransactionsListState extends State<TransactionsList> {
             Column(
               children: <Widget>[
                 Text(transaction.note),
-                Text("${transaction.timestamp}", textScaleFactor: 0.8, style: TextStyle(color: Colors.grey))
+                Text("${transaction.timestamp}", textScaleFactor: 0.8, style: TextStyle(color: Colors.grey[600]))
               ],
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
             ),
-            Text("${transaction.amount}", textScaleFactor: 1.1)
+            getAmountText(transaction)
           ],
         ),
         trailing: Icon(

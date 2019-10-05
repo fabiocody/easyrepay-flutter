@@ -1,8 +1,6 @@
+import 'package:easyrepay/proto/easyrepay.pb.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:uuid/uuid.dart';
-
-import 'package:easyrepay/proto/easyrepay.pb.dart';
-
 
 class ModelFactory {
 
@@ -25,10 +23,10 @@ class ModelFactory {
     p.transactions.add(ModelFactory.newTransaction(type: PBTransactionType.CREDIT, amount: 7, note: "Lunch", completed: true));
     store.people.add(p);
     // Second person
-    p = ModelFactory.newPerson(name: "Christos Soto");
+    p = ModelFactory.newPerson(name: "Steve Wilkins");
     store.people.add(p);
     // Third person
-    p = ModelFactory.newPerson(name: "Robyn Key");
+    p = ModelFactory.newPerson(name: "Brooklyn Thompson");
     p.transactions.add(ModelFactory.newTransaction(type: PBTransactionType.DEBT, amount: 7.8, note: "Pens"));
     store.people.add(p);
     sortPeople();
@@ -58,22 +56,6 @@ class ModelFactory {
 
   static void sortPeople() {
     getStore().people.sort((p1, p2) => p1.name.compareTo(p2.name));
-  }
-
-  static double getTotalAmount(PBPerson person) {
-    return person.transactions
-      .fold(0.0, (value, t) {
-        switch (t.type) {
-          case PBTransactionType.CREDIT:
-          case PBTransactionType.SETTLE_DEBT:
-            return value + t.amount;
-          case PBTransactionType.DEBT:
-          case PBTransactionType.SETTLE_CREDIT:
-            return value - t.amount;
-          default:
-            return value;
-        }
-      });
   }
 
 }
