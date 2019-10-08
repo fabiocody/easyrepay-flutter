@@ -1,7 +1,7 @@
 import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/model_factory.dart';
 import 'package:easyrepay/proto/easyrepay.pb.dart';
-import 'package:easyrepay/transaction_detail.dart';
+import 'package:easyrepay/views/transaction_detail.dart';
 import 'package:flutter/material.dart';
 
 

@@ -1,7 +1,7 @@
 import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/model_factory.dart';
 import 'package:easyrepay/proto/easyrepay.pb.dart';
-import 'package:easyrepay/transactions_list.dart';
+import 'package:easyrepay/views/transactions_list.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -73,10 +73,10 @@ class _PeopleListState extends State<PeopleList> {
       },
       background: deleteBackground,
       child: ListTile(
+        contentPadding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
+        leading: CircleAvatar(child: Text(person.name.split(" ").map((s) => s[0]).join(""))),
         title: Row(
           children: <Widget>[
-            CircleAvatar(child: Text(person.name.split(" ").map((s) => s[0]).join(""))),
-            VerticalDivider(),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,

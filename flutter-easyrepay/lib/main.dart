@@ -1,4 +1,4 @@
-import 'package:easyrepay/people_list.dart';
+import 'package:easyrepay/views/people_list.dart';
 import 'package:flutter/material.dart';
 
 
