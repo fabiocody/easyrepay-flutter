@@ -12,12 +12,28 @@ import SwiftUI
 struct PersonRow: View {
     
     @ObservedObject var person: Person
+    
+    var initials: String {
+        let maxCharacters = 3
+        let splits = person.name.split(separator: " ").map({$0.first!.uppercased()})
+        if splits.count > maxCharacters { return splits[0..<maxCharacters].joined() }
+        return splits.joined()
+    }
         
     var body: some View {
         HStack(alignment: .center) {
+            ZStack(alignment: .center) {
+                Circle()
+                    .frame(width: 50, height: 50, alignment: .center)
+                    .foregroundColor(.green)
+                Text(initials)
+                    .font(Font.system(size: 22))
+            }
+            Spacer()
             VStack(alignment: .leading) {
                 TextField("Enter name", text: $person.name, onCommit: commit)
                     .allowsTightening(true)
+                    .autocapitalization(.words)
                     .padding(.top, 5)
                     .padding(.bottom, -5)
                 Text("\(person.transactions.count) " + (person.transactions.count == 1 ? "transaction" : "transactions"))
