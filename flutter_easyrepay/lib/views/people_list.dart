@@ -54,7 +54,7 @@ class _PeopleListState extends State<PeopleList> {
       return Center(child: Row(
         children: <Widget>[
           Text("Tap on ", textScaleFactor: 1.1),
-          Icon(Icons.add_circle, color: Colors.green),
+          Icon(Icons.add_circle, color: accentColor),
           Text(" to add a person", textScaleFactor: 1.1)
         ],
         mainAxisAlignment: MainAxisAlignment.center,
@@ -74,7 +74,11 @@ class _PeopleListState extends State<PeopleList> {
       background: deleteBackground,
       child: ListTile(
         contentPadding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
-        leading: CircleAvatar(child: Text(person.name.split(" ").map((s) => s[0]).join(""))),
+        leading: CircleAvatar(
+          child: Text(person.name.split(" ").map((s) => s[0]).join("")),
+          backgroundColor: accentColor,
+          foregroundColor: Colors.white,
+        ),
         title: Row(
           children: <Widget>[
             Column(
@@ -85,7 +89,7 @@ class _PeopleListState extends State<PeopleList> {
                 Text(
                   "${person.transactions.length} " + (person.transactions.length == 1 ? "transaction" : "transactions"),
                   textScaleFactor: 0.8,
-                  style: TextStyle(color: Colors.grey[600])
+                  style: TextStyle(color: secondaryColor)
                 )
               ],
             ),
@@ -95,7 +99,7 @@ class _PeopleListState extends State<PeopleList> {
         ),
         trailing: Icon(
           Icons.navigate_next,
-          color: Colors.grey
+          color: Colors.grey[300]
         ),
         onTap: () {
           Navigator.of(context).push(

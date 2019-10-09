@@ -58,17 +58,17 @@ class _TransactionsListState extends State<TransactionsList> {
       rows.add(Divider(
         thickness: 2,
         height: 32,
-        indent: 10,
-        endIndent: 10,
+        indent: 12,
+        endIndent: 12,
       ));
       rows.add(Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.only(left: 24, right: 32),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Text("TOTAL",
-              style: TextStyle(color: Colors.grey[700]),
+              style: TextStyle(color: Colors.grey[300]),
             ),
             Spacer(),
             getTotalAmountText(widget.person, true)
@@ -80,7 +80,7 @@ class _TransactionsListState extends State<TransactionsList> {
       return Center(child: Row(
         children: <Widget>[
           Text("Tap on ", textScaleFactor: 1.1),
-          Icon(Icons.add_circle, color: Colors.green),
+          Icon(Icons.add_circle, color: accentColor),
           Text(" to add a transaction", textScaleFactor: 1.1)
         ],
         mainAxisAlignment: MainAxisAlignment.center,
@@ -105,7 +105,7 @@ class _TransactionsListState extends State<TransactionsList> {
             Column(
               children: <Widget>[
                 Text(transaction.note),
-                Text("${transaction.timestamp}", textScaleFactor: 0.8, style: TextStyle(color: Colors.grey[600]))
+                Text("${transaction.timestamp}", textScaleFactor: 0.8, style: TextStyle(color: secondaryColor))
               ],
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,7 +115,7 @@ class _TransactionsListState extends State<TransactionsList> {
         ),
         trailing: Icon(
           Icons.navigate_next,
-          color: Colors.grey
+          color: Colors.grey[300]
         ),
         onTap: () {
           Navigator.of(context).push(
@@ -139,7 +139,7 @@ class _TransactionsListState extends State<TransactionsList> {
             controller: _textFieldController,
             decoration: InputDecoration(hintText: "Enter name"),
             autofocus: true,
-            keyboardAppearance: Brightness.light,
+            keyboardAppearance: Brightness.dark,
           ),
           actions: <Widget>[
             FlatButton(

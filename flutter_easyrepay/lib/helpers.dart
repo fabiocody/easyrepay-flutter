@@ -31,7 +31,7 @@ Text getTotalAmountText(PBPerson person, bool isTotalScreen) {
   return Text(
     "${_getAmountString(totalAmount >= 0 ? totalAmount : -totalAmount)}",
     style: TextStyle(
-      color: (totalAmount >= 0 ? Colors.green : Colors.red)
+      color: (totalAmount >= 0 ? Colors.green[300] : Colors.red[400])
     ),
     textScaleFactor: isTotalScreen ? 1.5 : 1.2,
   );
@@ -46,10 +46,10 @@ Text getAmountText(PBTransaction transaction) {
         switch (transaction.type) {
           case PBTransactionType.CREDIT:
           case PBTransactionType.SETTLE_DEBT:
-            return Colors.green;
+            return Colors.green[300];
           case PBTransactionType.DEBT:
           case PBTransactionType.SETTLE_CREDIT:
-            return Colors.red;
+            return Colors.red[400];
           default:
             return Colors.purple;
         }
@@ -60,9 +60,9 @@ Text getAmountText(PBTransaction transaction) {
 }
 
 
-var deleteBackground = Container(
+final deleteBackground = Container(
   padding: const EdgeInsets.only(right: 8),
-  color: Colors.red,
+  color: Colors.red[400],
   child: Column(
     children: <Widget>[
       Text("Delete", 
@@ -76,3 +76,8 @@ var deleteBackground = Container(
     crossAxisAlignment: CrossAxisAlignment.end,
   ),
 );
+
+
+final primaryColor = Colors.green[800];
+final accentColor = Colors.green[600];
+final secondaryColor = Colors.grey[400];
