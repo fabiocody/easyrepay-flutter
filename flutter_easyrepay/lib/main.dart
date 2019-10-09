@@ -7,5 +7,6 @@ void main() => runApp(MaterialApp(
   home: PeopleList(),
   theme: ThemeData(
     primarySwatch: Colors.green,
-  )
+  ),
+  debugShowCheckedModeBanner: false,
 ));
