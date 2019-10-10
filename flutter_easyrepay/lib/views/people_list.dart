@@ -123,7 +123,9 @@ class _PeopleListState extends State<PeopleList> {
             decoration: InputDecoration(hintText: "Enter name"),
             autofocus: true,
             keyboardType: TextInputType.text,
-            keyboardAppearance: Brightness.light,
+            textCapitalization: TextCapitalization.words,
+            keyboardAppearance: Brightness.dark,
+            onEditingComplete: _saveNewPerson,
           ),
           actions: <Widget>[
             FlatButton(
@@ -135,19 +137,21 @@ class _PeopleListState extends State<PeopleList> {
             ),
             FlatButton(
               child: Text("SAVE", style: TextStyle(fontWeight: FontWeight.bold)),
-              onPressed: () {
-                setState(() {
-                  widget.store.people.add(ModelFactory.newPerson(name: _textFieldController.text));
-                  ModelFactory.sortPeople();
-                });
-                _textFieldController.clear();
-                Navigator.of(context).pop();
-              }
+              onPressed: _saveNewPerson,
             ),
           ],
         );
       }
     );
+  }
+
+  void _saveNewPerson() {
+    setState(() {
+      widget.store.people.add(ModelFactory.newPerson(name: _textFieldController.text));
+      ModelFactory.sortPeople();
+    });
+    _textFieldController.clear();
+    Navigator.of(context).pop();
   }
 
 }

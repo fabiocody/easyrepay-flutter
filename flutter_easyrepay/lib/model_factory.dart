@@ -41,13 +41,12 @@ class ModelFactory {
     return p;
   }
 
-  static PBTransaction newTransaction({PBTransactionType type = PBTransactionType.CREDIT, double amount = 0, String note, DateTime date, bool completed = false}) {
+  static PBTransaction newTransaction({PBTransactionType type = PBTransactionType.CREDIT, double amount = 0, String note = "", DateTime date, bool completed = false}) {
     var t = PBTransaction();
     t.id = Uuid().v4();
     t.type = type;
     t.amount = amount;
-    if (note == null) t.note = "New transaction";
-    else t.note = note;
+    t.note = note;
     t.completed = completed;
     if (date == null) t.timestamp = Int64(DateTime.now().millisecondsSinceEpoch ~/ 1000);
     else t.timestamp = Int64(date.millisecondsSinceEpoch ~/ 1000);

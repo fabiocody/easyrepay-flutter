@@ -60,6 +60,15 @@ Text getAmountText(PBTransaction transaction) {
 }
 
 
+final amountTextFieldFormatter = () {
+  var formatter = NumberFormat();
+  formatter.maximumFractionDigits = 2;
+  formatter.minimumFractionDigits = 2;
+  formatter.maximumIntegerDigits = 12;
+  return formatter;
+}();
+
+
 final deleteBackground = Container(
   padding: const EdgeInsets.only(right: 8),
   color: Colors.red[400],
