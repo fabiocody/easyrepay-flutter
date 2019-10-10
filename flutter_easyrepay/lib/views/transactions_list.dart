@@ -140,6 +140,7 @@ class _TransactionsListState extends State<TransactionsList> {
             decoration: InputDecoration(hintText: "Enter name"),
             autofocus: true,
             keyboardAppearance: Brightness.dark,
+            onEditingComplete: _saveEditedPerson,
           ),
           actions: <Widget>[
             FlatButton(
@@ -151,19 +152,21 @@ class _TransactionsListState extends State<TransactionsList> {
             ),
             FlatButton(
               child: Text("SAVE", style: TextStyle(fontWeight: FontWeight.bold)),
-              onPressed: () {
-                setState(() {
-                  widget.person.name = _textFieldController.text;
-                  ModelFactory.sortPeople();
-                });
-                _textFieldController.clear();
-                Navigator.of(context).pop();
-              }
+              onPressed: _saveEditedPerson,
             ),
           ],
         );
       }
     );
+  }
+
+  void _saveEditedPerson() {
+    setState(() {
+      widget.person.name = _textFieldController.text;
+      ModelFactory.sortPeople();
+    });
+    _textFieldController.clear();
+    Navigator.of(context).pop();
   }
 
 }

@@ -1,6 +1,7 @@
 // easyrepay.proto
 //
 // Compile with protoc --swift_out=. easyrepay.proto
+//              protoc --dart_out=. easyrepay.proto
 
 syntax = "proto3";
 
