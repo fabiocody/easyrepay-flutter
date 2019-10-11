@@ -50,6 +50,7 @@ const PBSettings$json = const {
   '1': 'PBSettings',
   '2': const [
     const {'1': 'icloud', '3': 1, '4': 1, '5': 8, '10': 'icloud'},
+    const {'1': 'dark', '3': 2, '4': 1, '5': 8, '10': 'dark'},
   ],
 };
 

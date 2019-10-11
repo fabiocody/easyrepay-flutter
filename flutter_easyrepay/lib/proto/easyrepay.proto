@@ -36,4 +36,5 @@ message PBTransaction {
 
 message PBSettings {
     bool icloud = 1;
+    bool dark = 2;
 }

@@ -30,6 +30,7 @@ class ModelFactory {
     p.transactions.add(ModelFactory.newTransaction(type: PBTransactionType.DEBT, amount: 7.8, note: "Pens"));
     store.people.add(p);
     sortPeople();
+    store.settings = PBSettings();
   }
 
   static PBPerson newPerson({String name}) {

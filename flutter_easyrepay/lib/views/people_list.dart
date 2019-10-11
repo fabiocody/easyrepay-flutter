@@ -31,6 +31,7 @@ class _PeopleListState extends State<PeopleList> {
       appBar: AppBar(
         title: Text("EasyRepay"),
       ),
+      drawer: _buildDrawer(),
       body: _buildPeopleList(context),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _newPersonDialog(context),
@@ -153,5 +154,38 @@ class _PeopleListState extends State<PeopleList> {
     _textFieldController.clear();
     Navigator.of(context).pop();
   }
+
+  Widget _buildDrawer() =>
+    Drawer(
+      child: ListView(
+        children: <Widget>[
+          Container(
+            height: 100,
+            child: DrawerHeader(
+              child: Text("EasyRepay", 
+                textScaleFactor: 3,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: accentColor
+                ),
+              ),
+            ),
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.brightness_4,
+              //color: secondaryColor,
+            ),
+            title: Text("Toggle dark mode (${widget.store.settings.dark})", textScaleFactor: 1.1,),
+            onTap: () {
+              setState(() {
+                widget.store.settings.dark = !widget.store.settings.dark;
+              });
+              print(widget.store.settings.dark);
+            },
+          )
+        ],
+      )
+    );
 
 }
