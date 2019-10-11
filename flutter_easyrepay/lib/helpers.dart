@@ -31,7 +31,7 @@ Text getTotalAmountText(PBPerson person, bool isTotalScreen) {
   return Text(
     "${_getAmountString(totalAmount >= 0 ? totalAmount : -totalAmount)}",
     style: TextStyle(
-      color: (totalAmount >= 0 ? Colors.green[300] : Colors.red[400])
+      color: (totalAmount >= 0 ? labelGreen : labelRed)
     ),
     textScaleFactor: isTotalScreen ? 1.5 : 1.2,
   );
@@ -90,3 +90,5 @@ final deleteBackground = Container(
 final primaryColor = Colors.green[800];
 final accentColor = Colors.green[600];
 final secondaryColor = Colors.grey[400];
+final labelGreen = Colors.green[300];
+final labelRed = Colors.red[400];

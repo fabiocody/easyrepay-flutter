@@ -40,144 +40,103 @@ class _TransactionDetailState extends State<TransactionDetail> {
   }
 
   Widget _buildTransactionDetail() {
-    return Form(
-      key: _formKey,
-      autovalidate: true,
-      child: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        children: <Widget>[
-          FormField(
-            builder: (FormFieldState state) {
-              return InputDecorator(
-                decoration: InputDecoration(
-                  icon: const Icon(Icons.account_balance_wallet),
-                  labelText: "Type"
-                ),
-                isEmpty: widget.transaction.type == null,
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton(
-                    value: widget.transaction.type,
-                    isDense: true,
-                    onChanged: (PBTransactionType newValue) {
-                      setState(() {
-                        widget.transaction.type = newValue;
-                      });
-                    },
-                    items: PBTransactionType.values.map((value) {
-                      return DropdownMenuItem(
-                        value: value,
-                        child: Text(() {
-                          switch (value) {
-                            case PBTransactionType.CREDIT:
-                              return "Credit";
-                            case PBTransactionType.DEBT:
-                              return "Debt";
-                            case PBTransactionType.SETTLE_CREDIT:
-                              return "Settle credit";
-                            case PBTransactionType.SETTLE_DEBT:
-                              return "Settle debt";
-                            default:
-                              return "";
-                          }
-                        }())
-                      );
-                    }).toList(),
-                  )
-                )
-              );
-            },
+    return ListView(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      children: <Widget>[
+        InputDecorator(
+          decoration: InputDecoration(
+            icon: const Icon(Icons.account_balance_wallet),
+            labelText: "Type"
           ),
-          TextFormField(
-            controller: _amountController,
-            decoration: const InputDecoration(
-              icon: const Icon(Icons.attach_money),
-              labelText: "Amount",
-              hintText: "Enter the amount"
-            ),
-            keyboardType: TextInputType.number,
-            inputFormatters: [
-              /*TextInputFormatter.withFunction(
-                (oldValue, newValue) {
-                  double value = double.tryParse(newValue.text);
-                  if (value == null)
-                    return oldValue;
-                  var newFormatted = TextEditingValue(text: amountTextFieldFormatter.format(value));
-                  print(newFormatted);
-                  return newFormatted;
-                }
-              )*/
-              WhitelistingTextInputFormatter.digitsOnly
+          isEmpty: widget.transaction.type == null,
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton(
+              value: widget.transaction.type,
+              isDense: true,
+              onChanged: (PBTransactionType newValue) {
+                setState(() {
+                  widget.transaction.type = newValue;
+                });
+              },
+              items: PBTransactionType.values.map((value) {
+                return DropdownMenuItem(
+                  value: value,
+                  child: Text(() {
+                    switch (value) {
+                      case PBTransactionType.CREDIT:
+                        return "Credit";
+                      case PBTransactionType.DEBT:
+                        return "Debt";
+                      case PBTransactionType.SETTLE_CREDIT:
+                        return "Settle credit";
+                      case PBTransactionType.SETTLE_DEBT:
+                        return "Settle debt";
+                      default:
+                        return "";
+                    }
+                  }())
+                );
+              }).toList(),
+            )
+          )
+        ),
+        TextFormField(
+          controller: _amountController,
+          decoration: const InputDecoration(
+            icon: const Icon(Icons.attach_money),
+            labelText: "Amount",
+            hintText: "Enter the amount"
+          ),
+          keyboardType: TextInputType.number,
+          inputFormatters: [
+            WhitelistingTextInputFormatter.digitsOnly
+          ],
+          onChanged: (String text) {
+            var value = double.tryParse(text);
+            if (value != null) {
+              value /= 100;
+              _amountController.text = amountTextFieldFormatter.format(value);
+            }
+          },
+        ),
+        TextFormField(
+          controller: _noteController,
+          decoration: const InputDecoration(
+            icon: const Icon(Icons.label),
+            labelText: "Note",
+            hintText: "Enter the note"
+          ),
+          textCapitalization: TextCapitalization.sentences,
+        ),
+        InputDecorator(
+          decoration: InputDecoration(
+            icon: const Icon(Icons.check_circle_outline),
+            contentPadding: const EdgeInsets.symmetric(vertical: 6)
+          ),
+          //isEmpty: true,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text("Completed", textScaleFactor: 1.1,),
+              Switch(
+                value: _completed,
+                onChanged: (newValue) {
+                  setState(() {
+                    _completed = newValue;
+                  });
+                },
+                activeColor: Colors.green,
+              )
             ],
-            onChanged: (String text) {
-              print("text = $text");
-              var value = double.tryParse(text);
-              if (value != null) {
-                value /= 100;
-                _amountController.text = amountTextFieldFormatter.format(value);
-              }
-            },
           ),
-          TextFormField(
-            controller: _noteController,
-            decoration: const InputDecoration(
-              icon: const Icon(Icons.label),
-              labelText: "Note",
-              hintText: "Enter the note"
-            ),
-            textCapitalization: TextCapitalization.sentences,
+        ),
+        TextFormField(
+          decoration: const InputDecoration(
+            icon: const Icon(Icons.calendar_today),
+            labelText: "Date",
           ),
-          FormField(
-            builder: (FormFieldState state) {
-              return InputDecorator(
-                decoration: InputDecoration(
-                  icon: const Icon(Icons.check_circle_outline),
-                  labelText: "Completed"
-                ),
-                //isEmpty: true,
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton(
-                    value: widget.transaction.completed,
-                    isDense: true,
-                    onChanged: (bool value) {
-                      setState(() {
-                        widget.transaction.completed = value;
-                      });
-                    },
-                    items: [
-                      DropdownMenuItem(
-                        value: true,
-                        child: const Text("Yes")
-                      ),
-                      DropdownMenuItem(
-                        value: false,
-                        child: const Text("No")
-                      )
-                    ],
-                    /*items: PBTransactionType.values.map((value) {
-                      return DropdownMenuItem(
-                        value: value,
-                        child: Text("$value")
-                      );
-                    }).toList(),*/
-                  )
-                )
-              );
-            },
-          ),
-          /*TextFormField(
-            decoration: const InputDecoration(
-              icon: const Icon(Icons.check_circle_outline),
-              labelText: "Completed",
-            ),
-          ),*/
-          TextFormField(
-            decoration: const InputDecoration(
-              icon: const Icon(Icons.calendar_today),
-              labelText: "Date",
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

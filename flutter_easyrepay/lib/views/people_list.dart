@@ -29,7 +29,7 @@ class _PeopleListState extends State<PeopleList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("EasyRepay")
+        title: Text("EasyRepay"),
       ),
       body: _buildPeopleList(context),
       floatingActionButton: FloatingActionButton(

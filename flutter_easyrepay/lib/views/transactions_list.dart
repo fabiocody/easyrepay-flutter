@@ -24,6 +24,7 @@ class _TransactionsListState extends State<TransactionsList> {
           IconButton(
             icon: Icon(Icons.edit),
             onPressed: () => _editPersonDialog(context),
+            tooltip: "Edit name",
           )
         ],
       ),
