@@ -15,7 +15,7 @@ struct PersonRow: View {
     
     var initials: String {
         let maxCharacters = 3
-        let splits = person.name.split(separator: " ").map({$0.first!.uppercased()})
+        let splits = person.name.components(separatedBy: " ").map({$0.first!.uppercased()})
         if splits.count > maxCharacters { return splits[0..<maxCharacters].joined() }
         return splits.joined()
     }
