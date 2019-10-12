@@ -17,7 +17,7 @@ class ModelFactory {
     store.clear();
     PBPerson p;
     // First person
-    p = ModelFactory.newPerson(name: "Maggie Nicholls");
+    p = ModelFactory.newPerson(name: "Brooklyn Thompson");
     p.transactions.add(ModelFactory.newTransaction(type: PBTransactionType.DEBT, amount: 4.5, note: "Pizza"));
     p.transactions.add(ModelFactory.newTransaction(type: PBTransactionType.CREDIT, amount: 15, note: "Pocket money"));
     p.transactions.add(ModelFactory.newTransaction(type: PBTransactionType.CREDIT, amount: 7, note: "Lunch", completed: true));
@@ -26,8 +26,15 @@ class ModelFactory {
     p = ModelFactory.newPerson(name: "Steve Wilkins");
     store.people.add(p);
     // Third person
-    p = ModelFactory.newPerson(name: "Brooklyn Thompson");
+    p = ModelFactory.newPerson(name: "Arthur Ford");
     p.transactions.add(ModelFactory.newTransaction(type: PBTransactionType.DEBT, amount: 7.8, note: "Pens"));
+    store.people.add(p);
+    p = ModelFactory.newPerson(name: "Liam Mcmillan");
+    p.transactions.add(ModelFactory.newTransaction(type: PBTransactionType.DEBT, amount: 4.99, note: "Sharpies"));
+    p.transactions.add(ModelFactory.newTransaction(type: PBTransactionType.SETTLE_DEBT, amount: 4.99, note: "Sharpies"));
+    store.people.add(p);
+    p = ModelFactory.newPerson(name: "Maggie Nicholls");
+    p.transactions.add(ModelFactory.newTransaction(type: PBTransactionType.DEBT, amount: 12, note: "CDs"));
     store.people.add(p);
     sortPeople();
     store.settings = PBSettings();
