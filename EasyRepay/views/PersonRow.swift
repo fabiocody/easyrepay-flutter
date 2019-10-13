@@ -19,7 +19,11 @@ struct PersonRow: View {
         if splits.count > maxCharacters { return splits[0..<maxCharacters].joined() }
         return splits.joined()
     }
-        
+
+    var notCompletedCount: Int {
+        return person.transactions.filter({!$0.completed}).count
+    }
+
     var body: some View {
         HStack(alignment: .center) {
             ZStack(alignment: .center) {
@@ -36,7 +40,7 @@ struct PersonRow: View {
                     .autocapitalization(.words)
                     .padding(.top, 5)
                     .padding(.bottom, -5)
-                Text("\(person.transactions.count) " + (person.transactions.count == 1 ? "transaction" : "transactions"))
+                Text("\(notCompletedCount) " + (notCompletedCount == 1 ? "transaction" : "transactions"))
                     .font(.footnote)
                     .foregroundColor(.secondary)
             }
