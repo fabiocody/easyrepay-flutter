@@ -15,12 +15,18 @@ class TransactionsList extends StatefulWidget {
 class _TransactionsListState extends State<TransactionsList> {
 
   TextEditingController _textFieldController = TextEditingController();
+  bool showCompleted = false;
 
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.person.name),
         actions: <Widget>[
+          IconButton(
+            icon: Icon(showCompleted ? Icons.check_circle : Icons.check_circle_outline),
+            tooltip: "Show completed",
+            onPressed: () => setState(() => showCompleted = !showCompleted),
+          ),
           IconButton(
             icon: Icon(Icons.edit),
             onPressed: () => _editPersonDialog(context),
@@ -48,10 +54,15 @@ class _TransactionsListState extends State<TransactionsList> {
   }
 
   Widget _buildTransactionsList(BuildContext context) {
-    if (widget.person.transactions.isNotEmpty) {
-      final Iterable<Widget> tiles = widget.person.transactions.map(
-        (PBTransaction transaction) => _buildTransactionRow(transaction)
-      );
+    List<PBTransaction> transactions = widget.person.transactions;
+    if (!showCompleted) {
+      transactions = widget.person.transactions
+        .where((transaction) => !transaction.completed)
+        .toList();
+    }
+    if (transactions.isNotEmpty) {
+      final Iterable<Widget> tiles = transactions
+        .map((transaction) => _buildTransactionRow(transaction));
       List<Widget> rows = ListTile.divideTiles(
         context: context,
         tiles: tiles
@@ -91,6 +102,7 @@ class _TransactionsListState extends State<TransactionsList> {
   }
 
   Widget _buildTransactionRow(PBTransaction transaction) {
+    // TODO: Mark completed transactions
     return Dismissible(
       key: Key(transaction.id),
       onDismissed: (direction) {

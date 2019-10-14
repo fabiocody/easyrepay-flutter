@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 
 double _getTotalAmount(PBPerson person) {
   return person.transactions
+    .where((transaction) => !transaction.completed)
     .fold(0.0, (value, t) {
       switch (t.type) {
         case PBTransactionType.CREDIT:

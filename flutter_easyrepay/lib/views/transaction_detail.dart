@@ -33,7 +33,14 @@ class _TransactionDetailState extends State<TransactionDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Transaction")
+        title: Text("Transaction"),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.save),
+            tooltip: "Save",
+            onPressed: _save,
+          )
+        ],
       ),
       body: _buildTransactionDetail()
     );
@@ -140,16 +147,14 @@ class _TransactionDetailState extends State<TransactionDetail> {
     );
   }
 
-  double getAmount(String text) {
-    var value = double.tryParse(text);
-    if (value != null) value /= 100;
-    return value;
-  }
-
   void _save() {
     var t = widget.transaction;
     t.type = _type;
-    // TODO: finish 
+    t.amount = double.tryParse(_amountController.text);
+    t.note = _noteController.text;
+    t.completed = _completed;
+    // TODO: date
+    Navigator.of(context).pop();
   }
 
 }
