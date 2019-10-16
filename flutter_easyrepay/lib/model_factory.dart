@@ -1,5 +1,7 @@
+import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/proto/easyrepay.pb.dart';
 import 'package:fixnum/fixnum.dart';
+import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 class ModelFactory {
@@ -63,6 +65,53 @@ class ModelFactory {
 
   static void sortPeople() {
     getStore().people.sort((p1, p2) => p1.name.compareTo(p2.name));
+  }
+
+  static double _getTotalAmount(PBPerson p) {
+    return p.transactions
+      .where((transaction) => !transaction.completed)
+      .fold(0.0, (value, t) {
+        switch (t.type) {
+          case PBTransactionType.CREDIT:
+          case PBTransactionType.SETTLE_DEBT:
+            return value + t.amount;
+          case PBTransactionType.DEBT:
+          case PBTransactionType.SETTLE_CREDIT:
+            return value - t.amount;
+          default:
+            return value;
+        }
+      });
+  }
+
+  static Text getTotalAmountText(PBPerson p, BuildContext context) {
+    var amount = _getTotalAmount(p);
+    return Text(
+      currencyFormatter.format(amount.abs()),
+      style: Theme.of(context).textTheme.title.copyWith(
+        color: amount.isNegative ? Colors.red : Colors.green,
+      )
+    );
+  }
+
+  static Text getAmountText(PBTransaction t, BuildContext context) {
+    return Text(
+      currencyFormatter.format(t.amount.abs()),
+      style: Theme.of(context).textTheme.title.copyWith(
+        color: () {
+          switch (t.type) {
+            case PBTransactionType.CREDIT:
+            case PBTransactionType.SETTLE_DEBT:
+              return Colors.green;
+            case PBTransactionType.DEBT:
+            case PBTransactionType.SETTLE_CREDIT:
+              return Colors.red;
+            default:
+              return Colors.purple;
+          }
+        }(),
+      )
+    );
   }
 
 }

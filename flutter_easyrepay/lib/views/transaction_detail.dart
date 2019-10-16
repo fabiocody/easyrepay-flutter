@@ -13,8 +13,6 @@ class TransactionDetail extends StatefulWidget {
 
 class _TransactionDetailState extends State<TransactionDetail> {
 
-  final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-
   PBTransactionType _type;
   TextEditingController _amountController = TextEditingController();
   TextEditingController _noteController = TextEditingController();
@@ -34,13 +32,11 @@ class _TransactionDetailState extends State<TransactionDetail> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Transaction"),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.save),
-            tooltip: "Save",
-            onPressed: _save,
-          )
-        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.save),
+        tooltip: "Save",
+        onPressed: _save,
       ),
       body: _buildTransactionDetail()
     );
@@ -55,14 +51,14 @@ class _TransactionDetailState extends State<TransactionDetail> {
             icon: const Icon(Icons.account_balance_wallet),
             labelText: "Type"
           ),
-          isEmpty: widget.transaction.type == null,
+          isEmpty: _type == null,
           child: DropdownButtonHideUnderline(
             child: DropdownButton(
-              value: widget.transaction.type,
+              value: _type,
               isDense: true,
               onChanged: (PBTransactionType newValue) {
                 setState(() {
-                  widget.transaction.type = newValue;
+                  _type = newValue;
                 });
               },
               items: PBTransactionType.values.map((value) {
@@ -124,7 +120,10 @@ class _TransactionDetailState extends State<TransactionDetail> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text("Completed", textScaleFactor: 1.1,),
+              Text(
+                "Completed",
+                style: Theme.of(context).textTheme.subhead,
+              ),
               Switch(
                 value: _completed,
                 onChanged: (newValue) {
@@ -132,7 +131,6 @@ class _TransactionDetailState extends State<TransactionDetail> {
                     _completed = newValue;
                   });
                 },
-                activeColor: Colors.green,
               )
             ],
           ),
@@ -148,12 +146,13 @@ class _TransactionDetailState extends State<TransactionDetail> {
   }
 
   void _save() {
-    var t = widget.transaction;
-    t.type = _type;
-    t.amount = double.tryParse(_amountController.text);
-    t.note = _noteController.text;
-    t.completed = _completed;
-    // TODO: date
+    setState(() {
+      widget.transaction.type = _type;
+      widget.transaction.amount = double.tryParse(_amountController.text);
+      widget.transaction.note = _noteController.text;
+      widget.transaction.completed = _completed;
+      // TODO: date
+    });
     Navigator.of(context).pop();
   }
 

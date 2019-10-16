@@ -31,7 +31,6 @@ class _PeopleListState extends State<PeopleList> {
       appBar: AppBar(
         title: Text("EasyRepay"),
       ),
-      drawer: _buildDrawer(),
       body: _buildPeopleList(context),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _newPersonDialog(context),
@@ -54,9 +53,19 @@ class _PeopleListState extends State<PeopleList> {
     } else {
       return Center(child: Row(
         children: <Widget>[
-          Text("Tap on ", textScaleFactor: 1.1),
-          Icon(Icons.add_circle, color: accentColor),
-          Text(" to add a person", textScaleFactor: 1.1)
+          Text(
+            "Tap on ",
+            style: Theme.of(context).textTheme.headline,
+          ),
+          Icon(
+            Icons.add_circle,
+            color: Theme.of(context).accentColor,
+            size: Theme.of(context).textTheme.headline.fontSize,
+          ),
+          Text(
+            " to add a person",
+            style: Theme.of(context).textTheme.headline
+          )
         ],
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -77,8 +86,6 @@ class _PeopleListState extends State<PeopleList> {
         contentPadding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
         leading: CircleAvatar(
           child: Text(person.name.split(" ").map((s) => s[0]).join("")),
-          backgroundColor: accentColor,
-          foregroundColor: Colors.white,
         ),
         title: Row(
           children: <Widget>[
@@ -89,18 +96,17 @@ class _PeopleListState extends State<PeopleList> {
                 Text(person.name),
                 Text(
                   "${person.transactions.length} " + (person.transactions.length == 1 ? "transaction" : "transactions"),
-                  textScaleFactor: 0.8,
-                  style: TextStyle(color: secondaryColor)
+                  style: Theme.of(context).textTheme.caption
                 )
               ],
             ),
             Spacer(),
-            getTotalAmountText(person, false)
+            ModelFactory.getTotalAmountText(person, context),
           ],
         ),
         trailing: Icon(
           Icons.navigate_next,
-          color: Colors.grey[300]
+          color: Theme.of(context).textTheme.caption.color
         ),
         onTap: () {
           Navigator.of(context).push(
@@ -125,7 +131,7 @@ class _PeopleListState extends State<PeopleList> {
             autofocus: true,
             keyboardType: TextInputType.text,
             textCapitalization: TextCapitalization.words,
-            keyboardAppearance: Brightness.dark,
+            keyboardAppearance: Theme.of(context).brightness,
             onEditingComplete: _saveNewPerson,
           ),
           actions: <Widget>[
@@ -154,38 +160,5 @@ class _PeopleListState extends State<PeopleList> {
     _textFieldController.clear();
     Navigator.of(context).pop();
   }
-
-  Widget _buildDrawer() =>
-    Drawer(
-      child: ListView(
-        children: <Widget>[
-          Container(
-            height: 100,
-            child: DrawerHeader(
-              child: Text("EasyRepay", 
-                textScaleFactor: 3,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: accentColor
-                ),
-              ),
-            ),
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.brightness_4,
-              //color: secondaryColor,
-            ),
-            title: Text("Toggle dark mode (${widget.store.settings.dark})", textScaleFactor: 1.1,),
-            onTap: () {
-              setState(() {
-                widget.store.settings.dark = !widget.store.settings.dark;
-              });
-              print(widget.store.settings.dark);
-            },
-          )
-        ],
-      )
-    );
 
 }

@@ -80,10 +80,12 @@ class _TransactionsListState extends State<TransactionsList> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Text("TOTAL",
-              style: TextStyle(color: Colors.grey[300]),
+              style: Theme.of(context).textTheme.subhead.copyWith(
+                color: Theme.of(context).textTheme.caption.color
+              ),
             ),
             Spacer(),
-            getTotalAmountText(widget.person, true)
+            ModelFactory.getTotalAmountText(widget.person, context),
           ],
         )),
       );
@@ -91,9 +93,19 @@ class _TransactionsListState extends State<TransactionsList> {
     } else {
       return Center(child: Row(
         children: <Widget>[
-          Text("Tap on ", textScaleFactor: 1.1),
-          Icon(Icons.add_circle, color: accentColor),
-          Text(" to add a transaction", textScaleFactor: 1.1)
+          Text(
+            "Tap on ",
+            style: Theme.of(context).textTheme.headline,
+          ),
+          Icon(
+            Icons.add_circle,
+            color: Theme.of(context).accentColor,
+            size: Theme.of(context).textTheme.headline.fontSize,
+          ),
+          Text(
+            " to add a transaction",
+            style: Theme.of(context).textTheme.headline
+          )
         ],
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -118,17 +130,20 @@ class _TransactionsListState extends State<TransactionsList> {
             Column(
               children: <Widget>[
                 Text(transaction.note),
-                Text("${transaction.timestamp}", textScaleFactor: 0.8, style: TextStyle(color: secondaryColor))
+                Text(
+                  "${transaction.timestamp}",
+                  style: Theme.of(context).textTheme.caption,
+                )
               ],
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
             ),
-            getAmountText(transaction)
+            ModelFactory.getAmountText(transaction, context),
           ],
         ),
         trailing: Icon(
           Icons.navigate_next,
-          color: Colors.grey[300]
+          color: Theme.of(context).textTheme.caption.color
         ),
         onTap: () {
           Navigator.of(context).push(
