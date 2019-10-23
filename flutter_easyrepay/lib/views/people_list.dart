@@ -42,20 +42,17 @@ class _PeopleListState extends State<PeopleList> {
 
   Widget _buildPeopleList(BuildContext context) {
     if (widget.store.people.isNotEmpty) {
-      final Iterable<Widget> tiles = widget.store.people.map(
-        (PBPerson person) => _buildPersonRow(person)
+      return ListView(
+        children: widget.store.people.map(
+          (person) => _buildPersonRow(person)
+        ).toList()
       );
-      final List<Widget> rows = ListTile.divideTiles(
-        context: context,
-        tiles: tiles
-      ).toList();
-      return ListView(children: rows);
     } else {
       return Center(child: Row(
         children: <Widget>[
           Text(
             "Tap on ",
-            style: Theme.of(context).textTheme.headline,
+            style: Theme.of(context).textTheme.headline.copyWith(color: Theme.of(context).textTheme.caption.color),
           ),
           Icon(
             Icons.add_circle,
@@ -64,7 +61,7 @@ class _PeopleListState extends State<PeopleList> {
           ),
           Text(
             " to add a person",
-            style: Theme.of(context).textTheme.headline
+            style: Theme.of(context).textTheme.headline.copyWith(color: Theme.of(context).textTheme.caption.color)
           )
         ],
         mainAxisAlignment: MainAxisAlignment.center,

@@ -61,17 +61,12 @@ class _TransactionsListState extends State<TransactionsList> {
         .toList();
     }
     if (transactions.isNotEmpty) {
-      final Iterable<Widget> tiles = transactions
-        .map((transaction) => _buildTransactionRow(transaction));
-      List<Widget> rows = ListTile.divideTiles(
-        context: context,
-        tiles: tiles
-      ).toList();
+      var rows = transactions.map((transaction) => _buildTransactionRow(transaction)).toList();
       rows.add(Divider(
         thickness: 2,
         height: 32,
-        indent: 12,
-        endIndent: 12,
+        indent: 8,
+        endIndent: 8,
       ));
       rows.add(Padding(
         padding: const EdgeInsets.only(left: 24, right: 32),
@@ -95,7 +90,7 @@ class _TransactionsListState extends State<TransactionsList> {
         children: <Widget>[
           Text(
             "Tap on ",
-            style: Theme.of(context).textTheme.headline,
+            style: Theme.of(context).textTheme.headline.copyWith(color: Theme.of(context).textTheme.caption.color),
           ),
           Icon(
             Icons.add_circle,
@@ -104,7 +99,7 @@ class _TransactionsListState extends State<TransactionsList> {
           ),
           Text(
             " to add a transaction",
-            style: Theme.of(context).textTheme.headline
+            style: Theme.of(context).textTheme.headline.copyWith(color: Theme.of(context).textTheme.caption.color)
           )
         ],
         mainAxisAlignment: MainAxisAlignment.center,
