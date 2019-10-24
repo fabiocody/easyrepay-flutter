@@ -61,30 +61,57 @@ class _TransactionsListState extends State<TransactionsList> {
         .toList();
     }
     if (transactions.isNotEmpty) {
-      var rows = transactions.map((transaction) => _buildTransactionRow(transaction)).toList();
-      rows.add(Divider(
-        thickness: 2,
-        height: 32,
-        indent: 8,
-        endIndent: 8,
-      ));
-      rows.add(Padding(
-        padding: const EdgeInsets.only(left: 24, right: 32),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Text('TOTAL',
-              style: Theme.of(context).textTheme.subhead.copyWith(
-                color: Theme.of(context).textTheme.caption.color
-              ),
+      final double dividerIndent = 4;
+      return ListView(
+        children: [
+          Card(
+            child: Column(
+              children: transactions.map((t) => _buildTransactionRow(t)).toList(), 
             ),
-            Spacer(),
-            ModelFactory.getTotalAmountText(widget.person, context),
-          ],
-        )),
+          ),
+          Divider(
+            indent: dividerIndent,
+            endIndent: dividerIndent,
+            color: Theme.of(context).textTheme.caption.color
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Expanded(child: Card(child: Container(
+                padding: const EdgeInsets.all(8),
+                child: Column(
+                  children: [
+                    Text('Debt', style: Theme.of(context).textTheme.title),
+                    Text('\$42.42', style: Theme.of(context).textTheme.display1.copyWith(color: DarkColors.orange))
+                  ],
+                ),
+              ))),
+              Expanded(child: Card(child: Container(
+                padding: const EdgeInsets.all(8),
+                child: Column(
+                  children: [
+                    Text('Credit', style: Theme.of(context).textTheme.title),
+                    Text('\$42.42', style: Theme.of(context).textTheme.display1.copyWith(color: DarkColors.lightGreen))
+                  ],
+                ),
+              ))),
+            ],
+          ),
+          Row(
+            children: [
+              Expanded(child: Card(child: Container(
+                padding: const EdgeInsets.all(8),
+                child: Column(
+                  children: [
+                    Text('Total', style: Theme.of(context).textTheme.title),
+                    Text('\$42.42', style: Theme.of(context).textTheme.display1)
+                  ],
+                ),
+              ))),
+            ],
+          )
+        ],
       );
-      return ListView(children: rows);
     } else {
       return Center(child: Row(
         children: <Widget>[

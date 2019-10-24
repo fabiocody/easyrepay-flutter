@@ -32,8 +32,10 @@ class ModelFactory {
     p.transactions.add(ModelFactory.newTransaction(type: PBTransactionType.DEBT, amount: 7.8, note: 'Pens'));
     store.people.add(p);
     p = ModelFactory.newPerson(name: 'Liam Mcmillan');
-    p.transactions.add(ModelFactory.newTransaction(type: PBTransactionType.DEBT, amount: 4.99, note: 'Sharpies'));
-    p.transactions.add(ModelFactory.newTransaction(type: PBTransactionType.SETTLE_DEBT, amount: 4.99, note: 'Sharpies'));
+    p.transactions.add(ModelFactory.newTransaction(type: PBTransactionType.DEBT, amount: 4.99, note: 'Some debt'));
+    p.transactions.add(ModelFactory.newTransaction(type: PBTransactionType.SETTLE_DEBT, amount: 4.99, note: 'Some debt'));
+    p.transactions.add(ModelFactory.newTransaction(type: PBTransactionType.CREDIT, amount: 9.99, note: 'Some credit'));
+    p.transactions.add(ModelFactory.newTransaction(type: PBTransactionType.SETTLE_CREDIT, amount: 9.99, note: 'Some credit'));
     store.people.add(p);
     p = ModelFactory.newPerson(name: 'Maggie Nicholls');
     p.transactions.add(ModelFactory.newTransaction(type: PBTransactionType.DEBT, amount: 12, note: 'CDs'));
@@ -101,13 +103,15 @@ class ModelFactory {
         color: () {
           switch (t.type) {
             case PBTransactionType.CREDIT:
-            case PBTransactionType.SETTLE_DEBT:
               return DarkColors.lightGreen;
+            case PBTransactionType.SETTLE_DEBT:
+              return DarkColors.magenta;
             case PBTransactionType.DEBT:
-            case PBTransactionType.SETTLE_CREDIT:
               return DarkColors.orange;
+            case PBTransactionType.SETTLE_CREDIT:
+              return DarkColors.teal;
             default:
-              return DarkColors.purple;
+              return DarkColors.darkGrey;
           }
         }(),
       )

@@ -75,6 +75,7 @@ class _PeopleListState extends State<PeopleList> {
   }
 
   Widget _buildPersonRow(PBPerson person) {
+    var personNameSplit = person.name.split(' ');
     return Dismissible(
       key: Key(person.id),
       onDismissed: (direction) {
@@ -87,7 +88,7 @@ class _PeopleListState extends State<PeopleList> {
         child: ListTile(
           contentPadding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
           leading: CircleAvatar(
-            child: Text(person.name.split(' ').map((s) => s[0]).join('')),
+            child: Text(personNameSplit.sublist(0, personNameSplit.length > 3 ? 3 : personNameSplit.length).map((s) => s[0]).join(''))
           ),
           title: Row(
             children: <Widget>[
@@ -106,10 +107,9 @@ class _PeopleListState extends State<PeopleList> {
               ModelFactory.getTotalAmountText(person, context),
             ],
           ),
-          trailing: IconButton(
-            icon: Icon(Icons.more_vert),
-            color: Theme.of(context).textTheme.caption.color,
-            onPressed: () => print('hello'),
+          trailing: Icon(
+            Icons.navigate_next,
+            color: Theme.of(context).textTheme.caption.color
           ),
           onTap: () {
             Navigator.of(context).push(
