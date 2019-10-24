@@ -32,11 +32,13 @@ class _TransactionDetailState extends State<TransactionDetail> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Transaction"),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.save),
-        tooltip: "Save",
-        onPressed: _save,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.save),
+            tooltip: "Save",
+            onPressed: _save,
+          )
+        ],
       ),
       body: _buildTransactionDetail()
     );
