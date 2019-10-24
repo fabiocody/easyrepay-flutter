@@ -30,7 +30,7 @@ class _PeopleListState extends State<PeopleList> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "EasyRepay",
+          'EasyRepay',
           textScaleFactor: 1.2,
         ),
       ),
@@ -46,6 +46,7 @@ class _PeopleListState extends State<PeopleList> {
   Widget _buildPeopleList(BuildContext context) {
     if (widget.store.people.isNotEmpty) {
       return ListView(
+        padding: const EdgeInsets.only(top: 4),
         children: widget.store.people.map(
           (person) => _buildPersonRow(person)
         ).toList()
@@ -54,7 +55,7 @@ class _PeopleListState extends State<PeopleList> {
       return Center(child: Row(
         children: <Widget>[
           Text(
-            "Tap on ",
+            'Tap on ',
             style: Theme.of(context).textTheme.headline.copyWith(color: Theme.of(context).textTheme.caption.color),
           ),
           Icon(
@@ -63,7 +64,7 @@ class _PeopleListState extends State<PeopleList> {
             size: Theme.of(context).textTheme.headline.fontSize,
           ),
           Text(
-            " to add a person",
+            ' to add a person',
             style: Theme.of(context).textTheme.headline.copyWith(color: Theme.of(context).textTheme.caption.color)
           )
         ],
@@ -82,39 +83,42 @@ class _PeopleListState extends State<PeopleList> {
         });
       },
       background: deleteBackground,
-      child: ListTile(
-        contentPadding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
-        leading: CircleAvatar(
-          child: Text(person.name.split(" ").map((s) => s[0]).join("")),
+      child: Card(
+        child: ListTile(
+          contentPadding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
+          leading: CircleAvatar(
+            child: Text(person.name.split(' ').map((s) => s[0]).join('')),
+          ),
+          title: Row(
+            children: <Widget>[
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(person.name),
+                  Text(
+                    '${person.transactions.length} ' + (person.transactions.length == 1 ? 'transaction' : 'transactions'),
+                    style: Theme.of(context).textTheme.caption
+                  )
+                ],
+              ),
+              Spacer(),
+              ModelFactory.getTotalAmountText(person, context),
+            ],
+          ),
+          trailing: IconButton(
+            icon: Icon(Icons.more_vert),
+            color: Theme.of(context).textTheme.caption.color,
+            onPressed: () => print('hello'),
+          ),
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) => TransactionsList(person)
+              )
+            );
+          },
         ),
-        title: Row(
-          children: <Widget>[
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(person.name),
-                Text(
-                  "${person.transactions.length} " + (person.transactions.length == 1 ? "transaction" : "transactions"),
-                  style: Theme.of(context).textTheme.caption
-                )
-              ],
-            ),
-            Spacer(),
-            ModelFactory.getTotalAmountText(person, context),
-          ],
-        ),
-        trailing: Icon(
-          Icons.navigate_next,
-          color: Theme.of(context).textTheme.caption.color
-        ),
-        onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute<void>(
-              builder: (BuildContext context) => TransactionsList(person)
-            )
-          );
-        },
       )
     );
   }
@@ -123,11 +127,11 @@ class _PeopleListState extends State<PeopleList> {
     return showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
+        var dialog = AlertDialog(
           title: Text('New person'),
           content: TextField(
             controller: _textFieldController,
-            decoration: InputDecoration(hintText: "Enter name"),
+            decoration: InputDecoration(hintText: 'Enter name'),
             autofocus: true,
             keyboardType: TextInputType.text,
             textCapitalization: TextCapitalization.words,
@@ -143,11 +147,19 @@ class _PeopleListState extends State<PeopleList> {
               }
             ),
             FlatButton(
-              child: Text("SAVE", style: TextStyle(fontWeight: FontWeight.bold)),
+              child: Text(
+                'SAVE', 
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: DarkColors.lightGreen,
+                )
+              ),
               onPressed: _saveNewPerson,
             ),
           ],
         );
+        print(dialog.backgroundColor);
+        return dialog;
       }
     );
   }

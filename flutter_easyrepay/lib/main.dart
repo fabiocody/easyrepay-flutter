@@ -1,3 +1,4 @@
+import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/views/people_list.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +9,7 @@ var lightTheme = ThemeData(
   primarySwatch: primarySwatch,
 );
 
-var darkTheme = ThemeData(
+/*var darkTheme = ThemeData(
   brightness: Brightness.dark,
   primarySwatch: primarySwatch,
   primaryColor: Colors.grey[900], //primarySwatch[700],
@@ -17,11 +18,23 @@ var darkTheme = ThemeData(
   toggleableActiveColor: primarySwatch[300], // or [200]
   accentColor: primarySwatch[500],  // or [200]
   canvasColor: Color.fromRGBO(0x12, 0x12, 0x12, 1.0),
+  cardColor: Color.fromRGBO(0xff, 0xff, 0xff, 0.05)
+);*/
+
+var darkTheme = ThemeData(
+  brightness: Brightness.dark,
+  //primaryColor: DarkColors.darkGreen,
+  primaryColorDark: DarkColors.green,
+  accentColor: DarkColors.green,
+  toggleableActiveColor: DarkColors.lightGreen,
+  canvasColor: DarkColors.darkGrey,
+  cardColor: DarkColors.surfaceOverlay,
+  dialogBackgroundColor: DarkColors.surfaceOverlay,
 );
 
 
 void main() => runApp(MaterialApp(
-  title: "EasyRepay",
+  title: 'EasyRepay',
   home: PeopleList(),
   theme: lightTheme,
   darkTheme: darkTheme,

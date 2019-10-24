@@ -31,11 +31,11 @@ class _TransactionDetailState extends State<TransactionDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Transaction"),
+        title: Text('Transaction'),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.save),
-            tooltip: "Save",
+            tooltip: 'Save',
             onPressed: _save,
           )
         ],
@@ -51,7 +51,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
         InputDecorator(
           decoration: InputDecoration(
             icon: const Icon(Icons.account_balance_wallet),
-            labelText: "Type"
+            labelText: 'Type'
           ),
           isEmpty: _type == null,
           child: DropdownButtonHideUnderline(
@@ -69,15 +69,15 @@ class _TransactionDetailState extends State<TransactionDetail> {
                   child: Text(() {
                     switch (value) {
                       case PBTransactionType.CREDIT:
-                        return "Credit";
+                        return 'Credit';
                       case PBTransactionType.DEBT:
-                        return "Debt";
+                        return 'Debt';
                       case PBTransactionType.SETTLE_CREDIT:
-                        return "Settle credit";
+                        return 'Settle credit';
                       case PBTransactionType.SETTLE_DEBT:
-                        return "Settle debt";
+                        return 'Settle debt';
                       default:
-                        return "";
+                        return '';
                     }
                   }())
                 );
@@ -89,8 +89,8 @@ class _TransactionDetailState extends State<TransactionDetail> {
           controller: _amountController,
           decoration: const InputDecoration(
             icon: const Icon(Icons.attach_money),
-            labelText: "Amount",
-            hintText: "Enter the amount"
+            labelText: 'Amount',
+            hintText: 'Enter the amount'
           ),
           keyboardType: TextInputType.number,
           inputFormatters: [
@@ -108,8 +108,8 @@ class _TransactionDetailState extends State<TransactionDetail> {
           controller: _noteController,
           decoration: const InputDecoration(
             icon: const Icon(Icons.label),
-            labelText: "Note",
-            hintText: "Enter the note"
+            labelText: 'Note',
+            hintText: 'Enter the note'
           ),
           textCapitalization: TextCapitalization.sentences,
         ),
@@ -123,7 +123,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
-                "Completed",
+                'Completed',
                 style: Theme.of(context).textTheme.subhead,
               ),
               Switch(
@@ -140,7 +140,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
         TextFormField(
           decoration: const InputDecoration(
             icon: const Icon(Icons.calendar_today),
-            labelText: "Date",
+            labelText: 'Date',
           ),
         ),
       ],

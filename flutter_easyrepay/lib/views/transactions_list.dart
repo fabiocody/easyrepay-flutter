@@ -24,13 +24,13 @@ class _TransactionsListState extends State<TransactionsList> {
         actions: <Widget>[
           IconButton(
             icon: Icon(showCompleted ? Icons.check_circle : Icons.check_circle_outline),
-            tooltip: "Show completed",
+            tooltip: 'Show completed',
             onPressed: () => setState(() => showCompleted = !showCompleted),
           ),
           IconButton(
             icon: Icon(Icons.edit),
             onPressed: () => _editPersonDialog(context),
-            tooltip: "Edit name",
+            tooltip: 'Edit name',
           )
         ],
       ),
@@ -74,7 +74,7 @@ class _TransactionsListState extends State<TransactionsList> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Text("TOTAL",
+            Text('TOTAL',
               style: Theme.of(context).textTheme.subhead.copyWith(
                 color: Theme.of(context).textTheme.caption.color
               ),
@@ -89,7 +89,7 @@ class _TransactionsListState extends State<TransactionsList> {
       return Center(child: Row(
         children: <Widget>[
           Text(
-            "Tap on ",
+            'Tap on ',
             style: Theme.of(context).textTheme.headline.copyWith(color: Theme.of(context).textTheme.caption.color),
           ),
           Icon(
@@ -98,7 +98,7 @@ class _TransactionsListState extends State<TransactionsList> {
             size: Theme.of(context).textTheme.headline.fontSize,
           ),
           Text(
-            " to add a transaction",
+            ' to add a transaction',
             style: Theme.of(context).textTheme.headline.copyWith(color: Theme.of(context).textTheme.caption.color)
           )
         ],
@@ -126,7 +126,7 @@ class _TransactionsListState extends State<TransactionsList> {
               children: <Widget>[
                 Text(transaction.note),
                 Text(
-                  "${transaction.timestamp}",
+                  '${transaction.timestamp}',
                   style: Theme.of(context).textTheme.caption,
                 )
               ],
@@ -160,7 +160,7 @@ class _TransactionsListState extends State<TransactionsList> {
           title: Text('Change name'),
           content: TextField(
             controller: _textFieldController,
-            decoration: InputDecoration(hintText: "Enter name"),
+            decoration: InputDecoration(hintText: 'Enter name'),
             autofocus: true,
             keyboardAppearance: Brightness.dark,
             onEditingComplete: _saveEditedPerson,
@@ -174,7 +174,7 @@ class _TransactionsListState extends State<TransactionsList> {
               }
             ),
             FlatButton(
-              child: Text("SAVE", style: TextStyle(fontWeight: FontWeight.bold)),
+              child: Text('SAVE', style: TextStyle(fontWeight: FontWeight.bold)),
               onPressed: _saveEditedPerson,
             ),
           ],
