@@ -103,7 +103,7 @@ class _PeopleListState extends State<PeopleList> {
                 ],
               ),
               Spacer(),
-              person.getTotalAmountText(context)
+              person.getTotalAmountTextTile(context)
             ],
           ),
           trailing: Icon(

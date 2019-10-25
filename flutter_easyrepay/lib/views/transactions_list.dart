@@ -81,7 +81,7 @@ class _TransactionsListState extends State<TransactionsList> {
                 child: Column(
                   children: [
                     Text('Debt', style: Theme.of(context).textTheme.title),
-                    Text('\$42.42', style: Theme.of(context).textTheme.display1.copyWith(color: DarkColors.orange))
+                    widget.person.getDebtAmountText(context)
                   ],
                 ),
               ))),
@@ -90,7 +90,7 @@ class _TransactionsListState extends State<TransactionsList> {
                 child: Column(
                   children: [
                     Text('Credit', style: Theme.of(context).textTheme.title),
-                    Text('\$42.42', style: Theme.of(context).textTheme.display1.copyWith(color: DarkColors.lightGreen))
+                    widget.person.getCreditAmountText(context)
                   ],
                 ),
               ))),
@@ -103,7 +103,7 @@ class _TransactionsListState extends State<TransactionsList> {
                 child: Column(
                   children: [
                     Text('Total', style: Theme.of(context).textTheme.title),
-                    Text('\$42.42', style: Theme.of(context).textTheme.display1)
+                    widget.person.getTotalAmountText(context)
                   ],
                 ),
               ))),

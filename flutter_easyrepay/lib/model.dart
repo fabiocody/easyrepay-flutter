@@ -51,30 +51,29 @@ class DataStore {
 class Person {
   String id = Uuid().v4();
   String name;
-  List<Transaction> transactions;
+  List<Transaction> transactions = [];
   bool reminderActive = false;
   DateTime reminderDate;
 
   Person(this.name);
 
-  double getTotalAmount() {
-    return transactions.where((t) => !t.completed)
-      .fold(0.0, (value, t) {
-        switch(t.type) {
-          case TransactionType.credit:
-          case TransactionType.settleDebt:
-            return value + t.amount;
-          case TransactionType.debt:
-          case TransactionType.settleCredit:
-            return value - t.amount;
-          default:
-            return value;
-        }
-      });
+  double _sumFold(double value, Transaction t) {
+    switch(t.type) {
+      case TransactionType.credit:
+      case TransactionType.settleDebt:
+        return value + t.amount;
+      case TransactionType.debt:
+      case TransactionType.settleCredit:
+        return value - t.amount;
+      default:
+        return value;
+    }
   }
 
-  Text getTotalAmountText(BuildContext context) {
-    var amount = getTotalAmount();
+  Text getTotalAmountTextTile(BuildContext context) {
+    var amount = transactions
+      .where((t) => !t.completed)
+      .fold(0.0, _sumFold);
     return Text(
       currencyFormatter.format(amount.abs()),
       style: Theme.of(context).textTheme.title.copyWith(
@@ -82,6 +81,39 @@ class Person {
       )
     );
   }
+
+  Text getCreditAmountText(BuildContext context) {
+    var amount = transactions
+      .where((t) => !t.completed && (t.type == TransactionType.credit || t.type == TransactionType.settleDebt))
+      .fold(0.0, _sumFold);
+    return Text(
+      currencyFormatter.format(amount.abs()),
+      style: Theme.of(context).textTheme.display1.copyWith(color: DarkColors.lightGreen)
+    );
+  }
+
+  Text getDebtAmountText(BuildContext context) {
+    var amount = transactions
+      .where((t) => !t.completed && (t.type == TransactionType.debt || t.type == TransactionType.settleCredit))
+      .fold(0.0, _sumFold);
+    return Text(
+      currencyFormatter.format(amount.abs()),
+      style: Theme.of(context).textTheme.display1.copyWith(color: DarkColors.orange)
+    );
+  }
+
+  Text getTotalAmountText(BuildContext context) {
+    var amount = transactions
+      .where((t) => !t.completed)
+      .fold(0.0, _sumFold);
+    return Text(
+      currencyFormatter.format(amount.abs()),
+      style: Theme.of(context).textTheme.display1.copyWith(
+        color: amount.isNegative ? DarkColors.orange : DarkColors.lightGreen
+      )
+    );
+  }
+
 }
 
 
