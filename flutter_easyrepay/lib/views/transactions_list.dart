@@ -1,12 +1,11 @@
 import 'package:easyrepay/helpers.dart';
-import 'package:easyrepay/model_factory.dart';
-import 'package:easyrepay/proto/easyrepay.pb.dart';
+import 'package:easyrepay/model.dart';
 import 'package:easyrepay/views/transaction_detail.dart';
 import 'package:flutter/material.dart';
 
 
 class TransactionsList extends StatefulWidget {
-  final PBPerson person;
+  final Person person;
   TransactionsList(this.person);
   State createState() => _TransactionsListState();
 }
@@ -36,7 +35,7 @@ class _TransactionsListState extends State<TransactionsList> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          PBTransaction t = ModelFactory.newTransaction();
+          Transaction t = Transaction();
           setState(() {
             widget.person.transactions.add(t);
           });
@@ -54,7 +53,7 @@ class _TransactionsListState extends State<TransactionsList> {
   }
 
   Widget _buildTransactionsList(BuildContext context) {
-    List<PBTransaction> transactions = widget.person.transactions;
+    List<Transaction> transactions = widget.person.transactions;
     if (!showCompleted) {
       transactions = widget.person.transactions
         .where((transaction) => !transaction.completed)
@@ -135,7 +134,7 @@ class _TransactionsListState extends State<TransactionsList> {
     }
   }
 
-  Widget _buildTransactionRow(PBTransaction transaction) {
+  Widget _buildTransactionRow(Transaction transaction) {
     // TODO: Mark completed transactions
     return Dismissible(
       key: Key(transaction.id),
@@ -153,14 +152,14 @@ class _TransactionsListState extends State<TransactionsList> {
               children: <Widget>[
                 Text(transaction.note),
                 Text(
-                  '${transaction.timestamp}',
+                  '${transaction.date}',
                   style: Theme.of(context).textTheme.caption,
                 )
               ],
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
             ),
-            ModelFactory.getAmountText(transaction, context),
+            transaction.getAmountText(context),
           ],
         ),
         trailing: Icon(
@@ -213,7 +212,7 @@ class _TransactionsListState extends State<TransactionsList> {
   void _saveEditedPerson() {
     setState(() {
       widget.person.name = _textFieldController.text;
-      ModelFactory.sortPeople();
+      DataStore.shared().sortPeople();
     });
     _textFieldController.clear();
     Navigator.of(context).pop();

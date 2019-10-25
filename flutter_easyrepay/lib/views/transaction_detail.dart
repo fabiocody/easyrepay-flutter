@@ -1,11 +1,11 @@
 import 'package:easyrepay/helpers.dart';
-import 'package:easyrepay/proto/easyrepay.pb.dart';
+import 'package:easyrepay/model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 
 class TransactionDetail extends StatefulWidget {
-  final PBTransaction transaction;
+  final Transaction transaction;
   TransactionDetail(this.transaction);
   State createState() => _TransactionDetailState();
 }
@@ -13,7 +13,7 @@ class TransactionDetail extends StatefulWidget {
 
 class _TransactionDetailState extends State<TransactionDetail> {
 
-  PBTransactionType _type;
+  TransactionType _type;
   TextEditingController _amountController = TextEditingController();
   TextEditingController _noteController = TextEditingController();
   bool _completed;
@@ -25,7 +25,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
     _amountController.text = amountTextFieldFormatter.format(widget.transaction.amount);
     _noteController.text = widget.transaction.note;
     _completed = widget.transaction.completed;
-    _date = DateTime.fromMillisecondsSinceEpoch(widget.transaction.timestamp.toInt() * 100);
+    _date = widget.transaction.date;
   }
 
   Widget build(BuildContext context) {
@@ -58,23 +58,23 @@ class _TransactionDetailState extends State<TransactionDetail> {
             child: DropdownButton(
               value: _type,
               isDense: true,
-              onChanged: (PBTransactionType newValue) {
+              onChanged: (TransactionType newValue) {
                 setState(() {
                   _type = newValue;
                 });
               },
-              items: PBTransactionType.values.map((value) {
+              items: TransactionType.values.map((value) {
                 return DropdownMenuItem(
                   value: value,
                   child: Text(() {
                     switch (value) {
-                      case PBTransactionType.CREDIT:
+                      case TransactionType.credit:
                         return 'Credit';
-                      case PBTransactionType.DEBT:
+                      case TransactionType.debt:
                         return 'Debt';
-                      case PBTransactionType.SETTLE_CREDIT:
+                      case TransactionType.settleCredit:
                         return 'Settle credit';
-                      case PBTransactionType.SETTLE_DEBT:
+                      case TransactionType.settleDebt:
                         return 'Settle debt';
                       default:
                         return '';

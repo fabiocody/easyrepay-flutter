@@ -1,13 +1,12 @@
 import 'package:easyrepay/helpers.dart';
-import 'package:easyrepay/model_factory.dart';
-import 'package:easyrepay/proto/easyrepay.pb.dart';
+import 'package:easyrepay/model.dart';
 import 'package:easyrepay/views/transactions_list.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 
 class PeopleList extends StatefulWidget {
-  final PBDataStore store = ModelFactory.getStore();
+  final DataStore store = DataStore.shared();
   State createState() => _PeopleListState();
 }
 
@@ -22,7 +21,7 @@ class _PeopleListState extends State<PeopleList> {
       // RELEASE
     } else {
       // DEBUG
-      ModelFactory.getDebugData(widget.store);
+      widget.store.fillWithDebugData();
     }
   }
 
@@ -74,7 +73,7 @@ class _PeopleListState extends State<PeopleList> {
     }
   }
 
-  Widget _buildPersonRow(PBPerson person) {
+  Widget _buildPersonRow(Person person) {
     var personNameSplit = person.name.split(' ');
     return Dismissible(
       key: Key(person.id),
@@ -104,7 +103,7 @@ class _PeopleListState extends State<PeopleList> {
                 ],
               ),
               Spacer(),
-              ModelFactory.getTotalAmountText(person, context),
+              person.getTotalAmountText(context)
             ],
           ),
           trailing: Icon(
@@ -166,8 +165,8 @@ class _PeopleListState extends State<PeopleList> {
 
   void _saveNewPerson() {
     setState(() {
-      widget.store.people.add(ModelFactory.newPerson(name: _textFieldController.text));
-      ModelFactory.sortPeople();
+      widget.store.people.add(Person(_textFieldController.text));
+      widget.store.sortPeople();
     });
     _textFieldController.clear();
     Navigator.of(context).pop();
