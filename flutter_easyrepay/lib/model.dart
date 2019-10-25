@@ -1,5 +1,10 @@
+import 'dart:io';
 import 'package:easyrepay/helpers.dart';
+import 'package:easyrepay/proto/easyrepay.pbserver.dart';
+import 'package:fixnum/fixnum.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 
 class DataStore {
@@ -13,8 +18,29 @@ class DataStore {
     return _store;
   }
 
-  void fillWithLocalData() {
-    // TODO
+  DataStore() {
+    if (kReleaseMode) {
+      fillWithLocalData();
+    } else {
+      fillWithDebugData();
+    }
+  }
+
+  Future<String> get _localPath async {
+    final directory = await getApplicationDocumentsDirectory();
+    return directory.path;
+  }
+
+  Future<File> get _localFile async {
+    final path = await _localPath;
+    return File('$path/easyrepay_datastore.pb');
+  }
+
+  void fillWithLocalData() async {
+    final file = await _localFile;
+    final bytes = await file.readAsBytes();
+    final pbStore = PBDataStore.fromBuffer(bytes);
+    people = pbStore.people.map((p) => Person.fromPB(p)).toList();
   }
 
   void fillWithDebugData() {
@@ -42,6 +68,18 @@ class DataStore {
     sortPeople();
   }
 
+  PBDataStore get protobuf {
+    var store = PBDataStore();
+    store.people.addAll(people.map((p) => p.protobuf));
+  }
+
+  void save() async {
+    if (kReleaseMode) {
+      final file = await _localFile;
+      file.writeAsBytes(protobuf.writeToBuffer());
+    }
+  }
+
   void sortPeople() {
     people.sort((p1, p2) => p1.name.compareTo(p2.name));
   }
@@ -56,6 +94,24 @@ class Person {
   DateTime reminderDate;
 
   Person(this.name);
+
+  Person.fromPB(PBPerson p) {
+    id = p.id;
+    name = p.name;
+    transactions = p.transactions.map((t) => Transaction.fromPB(t)).toList();
+    reminderActive = p.reminderActive;
+    reminderDate = DateTime.fromMillisecondsSinceEpoch(p.reminderTimestamp.toInt() * 1000);
+  }
+
+  PBPerson get protobuf {
+    var p = PBPerson();
+    p.id = id;
+    p.name = name;
+    p.transactions.addAll(transactions.map((t) => t.protobuf).toList());
+    p.reminderActive = reminderActive;
+    p.reminderTimestamp = Int64(reminderDate.millisecondsSinceEpoch ~/ 1000);
+    return p;
+  }
 
   double _sumFold(double value, Transaction t) {
     switch(t.type) {
@@ -128,6 +184,52 @@ class Transaction {
   Transaction({this.type=TransactionType.credit, this.amount=0, this.note='', this.completed=false, this.date}) {
     if (date == null)
       date = DateTime.now();
+  }
+
+  Transaction.fromPB(PBTransaction t) {
+    id = t.id;
+    type = () {
+      switch (t.type) {
+        case PBTransactionType.CREDIT:
+          return TransactionType.credit;
+        case PBTransactionType.DEBT:
+          return TransactionType.debt;
+        case PBTransactionType.SETTLE_CREDIT:
+          return TransactionType.settleCredit;
+        case PBTransactionType.SETTLE_DEBT:
+          return TransactionType.settleDebt;
+        default:
+          return null;
+      }
+    }();
+    amount = t.amount;
+    note = t.note;
+    completed = t.completed;
+    date = DateTime.fromMillisecondsSinceEpoch(t.timestamp.toInt() * 1000);
+  }
+
+  PBTransaction get protobuf {
+    var t = PBTransaction();
+    t.id = id;
+    t.type = () {
+      switch (type) {
+        case TransactionType.credit:
+          return PBTransactionType.CREDIT;
+        case TransactionType.debt:
+          return PBTransactionType.DEBT;
+        case TransactionType.settleCredit:
+          return PBTransactionType.SETTLE_CREDIT;
+        case TransactionType.settleDebt:
+          return PBTransactionType.SETTLE_DEBT;
+        default:
+          return null;
+      }
+    }();
+    t.amount = amount;
+    t.note = note;
+    t.completed = completed;
+    t.timestamp = Int64(date.millisecondsSinceEpoch ~/ 1000);
+    return t;
   }
 
   Text getAmountText(BuildContext context) {

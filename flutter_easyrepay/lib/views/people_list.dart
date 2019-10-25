@@ -1,7 +1,6 @@
 import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/model.dart';
 import 'package:easyrepay/views/transactions_list.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 
@@ -14,16 +13,6 @@ class PeopleList extends StatefulWidget {
 class _PeopleListState extends State<PeopleList> {
 
   TextEditingController _textFieldController = TextEditingController();
-
-  void initState() {
-    super.initState();
-    if (kReleaseMode) {
-      // RELEASE
-    } else {
-      // DEBUG
-      widget.store.fillWithDebugData();
-    }
-  }
 
   Widget build(BuildContext context) {
     return Scaffold(

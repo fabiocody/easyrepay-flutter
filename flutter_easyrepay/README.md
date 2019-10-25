@@ -6,4 +6,4 @@ This is the Flutter port of EasyRepay, and app that allows you to write down all
 
 - Remove slide to delete and add a menu in the tile.
 - Add date picker.
-- Implement flutter-native conversion.
+- Implement native->protobuf conversion.
