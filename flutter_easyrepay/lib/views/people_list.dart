@@ -157,6 +157,7 @@ class _PeopleListState extends State<PeopleList> {
       widget.store.people.add(Person(_textFieldController.text));
       widget.store.sortPeople();
     });
+    widget.store.save();
     _textFieldController.clear();
     Navigator.of(context).pop();
   }

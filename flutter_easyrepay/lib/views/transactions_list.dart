@@ -214,6 +214,7 @@ class _TransactionsListState extends State<TransactionsList> {
       widget.person.name = _textFieldController.text;
       DataStore.shared().sortPeople();
     });
+    DataStore.shared().save();
     _textFieldController.clear();
     Navigator.of(context).pop();
   }
