@@ -35,13 +35,9 @@ class _TransactionsListState extends State<TransactionsList> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Transaction t = Transaction();
-          setState(() {
-            widget.person.transactions.add(t);
-          });
           Navigator.of(context).push(
             MaterialPageRoute<void>(
-              builder: (BuildContext context) => TransactionDetail(t)
+              builder: (BuildContext context) => TransactionDetail(widget.person, Transaction())
             )
           );
         },
@@ -169,7 +165,7 @@ class _TransactionsListState extends State<TransactionsList> {
         onTap: () {
           Navigator.of(context).push(
             MaterialPageRoute<void>(
-              builder: (BuildContext context) => TransactionDetail(transaction)
+              builder: (BuildContext context) => TransactionDetail(widget.person, transaction)
             )
           );
         },

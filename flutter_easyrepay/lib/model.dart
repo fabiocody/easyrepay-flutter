@@ -113,6 +113,10 @@ class Person {
     return p;
   }
 
+  void sortTransactions() {
+    transactions.sort((t1, t2) => t1.date.compareTo(t2.date));
+  }
+
   double _sumFold(double value, Transaction t) {
     switch(t.type) {
       case TransactionType.credit:

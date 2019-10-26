@@ -6,7 +6,8 @@ import 'package:flutter/services.dart';
 
 class TransactionDetail extends StatefulWidget {
   final Transaction transaction;
-  TransactionDetail(this.transaction);
+  final Person person;
+  TransactionDetail(this.person, this.transaction);
   State createState() => _TransactionDetailState();
 }
 
@@ -154,18 +155,6 @@ class _TransactionDetailState extends State<TransactionDetail> {
     );
   }
 
-  void _save() {
-    setState(() {
-      widget.transaction.type = _type;
-      widget.transaction.amount = double.tryParse(_amountController.text);
-      widget.transaction.note = _noteController.text;
-      widget.transaction.completed = _completed;
-      widget.transaction.date = _date;
-    });
-    DataStore.shared().save();
-    Navigator.of(context).pop();
-  }
-
   void _showDateTimePicker(BuildContext context) async {
     var date = await showDatePicker(
       initialDate: _date,
@@ -177,6 +166,23 @@ class _TransactionDetailState extends State<TransactionDetail> {
       initialTime: TimeOfDay.fromDateTime(_date),
       context: context,
     );
-    setState(() => _date = DateTime(date.year, date.month, date.day, time.hour, time.minute));
+    if (date != null && time != null)
+      setState(() => _date = DateTime(date.year, date.month, date.day, time.hour, time.minute));
+  }
+
+  void _save() {
+    setState(() {
+      widget.transaction.type = _type;
+      widget.transaction.amount = double.tryParse(_amountController.text);
+      widget.transaction.note = _noteController.text;
+      widget.transaction.completed = _completed;
+      widget.transaction.date = _date;
+      if (!widget.person.transactions.contains(widget.transaction)) {
+        widget.person.transactions.add(widget.transaction);
+      }
+      widget.person.sortTransactions();
+    });
+    DataStore.shared().save();
+    Navigator.of(context).pop();
   }
 }
