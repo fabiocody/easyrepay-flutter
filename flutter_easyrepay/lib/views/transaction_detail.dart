@@ -168,13 +168,13 @@ class _TransactionDetailState extends State<TransactionDetail> {
 
   void _showDateTimePicker(BuildContext context) async {
     var date = await showDatePicker(
-      initialDate: widget.transaction.date,
-      firstDate: widget.transaction.date.subtract(Duration(days: 365)),
-      lastDate: widget.transaction.date.add(Duration(days: 365)),
+      initialDate: _date,
+      firstDate: _date.subtract(Duration(days: 365)),
+      lastDate: _date.add(Duration(days: 365)),
       context: context,
     );
     var time = await showTimePicker(
-      initialTime: TimeOfDay.fromDateTime(widget.transaction.date),
+      initialTime: TimeOfDay.fromDateTime(_date),
       context: context,
     );
     setState(() => _date = DateTime(date.year, date.month, date.day, time.hour, time.minute));
