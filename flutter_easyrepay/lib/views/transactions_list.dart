@@ -62,6 +62,7 @@ class _TransactionsListState extends State<TransactionsList> {
     if (transactions.isNotEmpty) {
       final double dividerIndent = 4;
       return ListView(
+        padding: const EdgeInsets.only(top: 4),
         children: [
           Card(
             child: Column(
@@ -135,7 +136,6 @@ class _TransactionsListState extends State<TransactionsList> {
   }
 
   Widget _buildTransactionRow(Transaction transaction) {
-    // TODO: Mark completed transactions
     return Dismissible(
       key: Key(transaction.id),
       onDismissed: (direction) {
@@ -152,7 +152,7 @@ class _TransactionsListState extends State<TransactionsList> {
               children: <Widget>[
                 Text(transaction.note),
                 Text(
-                  '${transaction.date}',
+                  dateFormatter.format(transaction.date),
                   style: Theme.of(context).textTheme.caption,
                 )
               ],

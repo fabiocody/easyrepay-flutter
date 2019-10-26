@@ -12,6 +12,7 @@ final amountTextFieldFormatter = () {
 
 
 final currencyFormatter = NumberFormat.simpleCurrency();
+final dateFormatter = DateFormat.yMd().add_Hm();
 
 
 class DarkColors {

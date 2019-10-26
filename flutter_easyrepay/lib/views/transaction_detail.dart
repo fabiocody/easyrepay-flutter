@@ -40,11 +40,11 @@ class _TransactionDetailState extends State<TransactionDetail> {
           )
         ],
       ),
-      body: _buildTransactionDetail()
+      body: _buildTransactionDetail(context)
     );
   }
 
-  Widget _buildTransactionDetail() {
+  Widget _buildTransactionDetail(BuildContext context) {
     return ListView(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       children: <Widget>[
@@ -137,11 +137,18 @@ class _TransactionDetailState extends State<TransactionDetail> {
             ],
           ),
         ),
-        TextFormField(
-          decoration: const InputDecoration(
-            icon: const Icon(Icons.calendar_today),
-            labelText: 'Date',
+        InkWell(
+          child: InputDecorator(
+            decoration: InputDecoration(
+              icon: const Icon(Icons.calendar_today),
+              labelText: 'Date',
+            ),
+            child: Text(
+              dateFormatter.format(_date),
+              style: Theme.of(context).textTheme.subhead,
+            ),
           ),
+          onTap: () => _showDateTimePicker(context),
         ),
       ],
     );
@@ -153,10 +160,23 @@ class _TransactionDetailState extends State<TransactionDetail> {
       widget.transaction.amount = double.tryParse(_amountController.text);
       widget.transaction.note = _noteController.text;
       widget.transaction.completed = _completed;
-      // TODO: date
+      widget.transaction.date = _date;
     });
     DataStore.shared().save();
     Navigator.of(context).pop();
   }
 
+  void _showDateTimePicker(BuildContext context) async {
+    var date = await showDatePicker(
+      initialDate: widget.transaction.date,
+      firstDate: widget.transaction.date.subtract(Duration(days: 365)),
+      lastDate: widget.transaction.date.add(Duration(days: 365)),
+      context: context,
+    );
+    var time = await showTimePicker(
+      initialTime: TimeOfDay.fromDateTime(widget.transaction.date),
+      context: context,
+    );
+    setState(() => _date = DateTime(date.year, date.month, date.day, time.hour, time.minute));
+  }
 }
