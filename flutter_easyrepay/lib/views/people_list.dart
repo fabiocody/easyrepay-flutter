@@ -115,7 +115,7 @@ class _PeopleListState extends State<PeopleList> {
     return showDialog(
       context: context,
       builder: (context) {
-        var dialog = AlertDialog(
+        return AlertDialog(
           title: Text('New person'),
           content: TextField(
             controller: _textFieldController,
@@ -146,8 +146,6 @@ class _PeopleListState extends State<PeopleList> {
             ),
           ],
         );
-        print(dialog.backgroundColor);
-        return dialog;
       }
     );
   }

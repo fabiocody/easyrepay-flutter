@@ -156,7 +156,6 @@ class _TransactionDetailState extends State<TransactionDetail> {
   }
 
   void _showDateTimePicker(BuildContext context) async {
-    print(dateFormatter.locale);
     var date = await showDatePicker(
       initialDate: _date,
       firstDate: _date.subtract(Duration(days: 365)),
