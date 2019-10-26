@@ -1,6 +1,7 @@
 import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/views/people_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 var primarySwatch = Colors.green;
 
@@ -27,5 +28,13 @@ void main() => runApp(MaterialApp(
   theme: lightTheme,
   darkTheme: darkTheme,
   themeMode: ThemeMode.dark,
-  //debugShowCheckedModeBanner: false,
+  localizationsDelegates: [
+    GlobalMaterialLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+  ],
+  supportedLocales: [
+    const Locale('en'),
+    const Locale('it'),
+  ],
 ));

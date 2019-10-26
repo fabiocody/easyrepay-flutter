@@ -156,18 +156,21 @@ class _TransactionDetailState extends State<TransactionDetail> {
   }
 
   void _showDateTimePicker(BuildContext context) async {
+    print(dateFormatter.locale);
     var date = await showDatePicker(
       initialDate: _date,
       firstDate: _date.subtract(Duration(days: 365)),
       lastDate: _date.add(Duration(days: 365)),
       context: context,
     );
-    var time = await showTimePicker(
-      initialTime: TimeOfDay.fromDateTime(_date),
-      context: context,
-    );
-    if (date != null && time != null)
-      setState(() => _date = DateTime(date.year, date.month, date.day, time.hour, time.minute));
+    if (date != null) {
+      var time = await showTimePicker(
+        initialTime: TimeOfDay.fromDateTime(_date),
+        context: context,
+      );
+      if (time != null)
+        setState(() => _date = DateTime(date.year, date.month, date.day, time.hour, time.minute));
+    }
   }
 
   void _save() {
