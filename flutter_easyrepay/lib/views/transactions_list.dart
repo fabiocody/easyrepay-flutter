@@ -185,7 +185,9 @@ class _TransactionsListState extends State<TransactionsList> {
             controller: _textFieldController,
             decoration: InputDecoration(hintText: 'Enter name'),
             autofocus: true,
-            keyboardAppearance: Brightness.dark,
+            keyboardType: TextInputType.text,
+            textCapitalization: TextCapitalization.words,
+            keyboardAppearance: Theme.of(context).brightness,
             onEditingComplete: _saveEditedPerson,
           ),
           actions: <Widget>[
