@@ -12,4 +12,4 @@ This is the Flutter port of EasyRepay, and app that allows you to write down all
 
 ## Credits
 
-Main icon made by [srip](https://www.flaticon.com/authors/srip) from [www.faticon.com](https://www.flaticon.com/).
+Main icon made by [srip](https://www.flaticon.com/authors/srip) from [www.flaticon.com](https://www.flaticon.com/).
