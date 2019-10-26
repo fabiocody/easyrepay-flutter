@@ -155,6 +155,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
       widget.transaction.completed = _completed;
       // TODO: date
     });
+    DataStore.shared().save();
     Navigator.of(context).pop();
   }
 
