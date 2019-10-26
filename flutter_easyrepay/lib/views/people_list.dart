@@ -1,6 +1,7 @@
 import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/model.dart';
 import 'package:easyrepay/views/transactions_list.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 
@@ -13,6 +14,17 @@ class PeopleList extends StatefulWidget {
 class _PeopleListState extends State<PeopleList> {
 
   TextEditingController _textFieldController = TextEditingController();
+
+  void initState() {
+    super.initState();
+    if (kReleaseMode) {
+      widget.store.fillWithLocalData()
+        .then((v) => setState(() => null));
+    } else {
+      widget.store.fillWithDebugData()
+        .then((v) => setState(() => null));
+    }
+  }
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,6 +82,7 @@ class _PeopleListState extends State<PeopleList> {
         setState(() {
           widget.store.people.remove(person);
         });
+        widget.store.save();
       },
       background: deleteBackground,
       child: Card(

@@ -138,6 +138,7 @@ class _TransactionsListState extends State<TransactionsList> {
         setState(() {
           widget.person.transactions.remove(transaction);
         });
+        DataStore.shared().save();
       },
       background: deleteBackground,
       child: ListTile(

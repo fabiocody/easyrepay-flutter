@@ -10,20 +10,10 @@ import 'package:uuid/uuid.dart';
 class DataStore {
   List<Person> people = [];
 
-  static DataStore _store;
+  static DataStore _store = DataStore();
 
   static DataStore shared() {
-    if (_store == null)
-      _store = DataStore();
     return _store;
-  }
-
-  DataStore() {
-    if (kReleaseMode) {
-      fillWithLocalData();
-    } else {
-      fillWithDebugData();
-    }
   }
 
   Future<String> get _localPath async {
@@ -36,14 +26,19 @@ class DataStore {
     return File('$path/easyrepay_datastore.pb');
   }
 
-  void fillWithLocalData() async {
-    final file = await _localFile;
-    final bytes = await file.readAsBytes();
-    final pbStore = PBDataStore.fromBuffer(bytes);
-    people = pbStore.people.map((p) => Person.fromPB(p)).toList();
+  Future fillWithLocalData() async {
+    try {
+      final file = await _localFile;
+      final bytes = await file.readAsBytes();
+      final pbStore = PBDataStore.fromBuffer(bytes);
+      people = pbStore.people.map((p) => Person.fromPB(p)).toList();
+    } catch (e) {
+      print(e);
+      people = [];
+    }
   }
 
-  void fillWithDebugData() {
+  Future fillWithDebugData() async {
     people = [];
     Person p;
     p = Person('Brooklyn Thompson');
@@ -71,6 +66,7 @@ class DataStore {
   PBDataStore get protobuf {
     var store = PBDataStore();
     store.people.addAll(people.map((p) => p.protobuf));
+    return store;
   }
 
   void save() async {
@@ -109,7 +105,7 @@ class Person {
     p.name = name;
     p.transactions.addAll(transactions.map((t) => t.protobuf).toList());
     p.reminderActive = reminderActive;
-    p.reminderTimestamp = Int64(reminderDate.millisecondsSinceEpoch ~/ 1000);
+    p.reminderTimestamp = reminderDate == null ? Int64(0) : Int64(reminderDate.millisecondsSinceEpoch ~/ 1000);
     return p;
   }
 
