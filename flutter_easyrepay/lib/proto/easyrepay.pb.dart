@@ -121,7 +121,7 @@ class PBTransaction extends $pb.GeneratedMessage {
     ..aOS(1, 'id')
     ..e<PBTransactionType>(2, 'type', $pb.PbFieldType.OE, defaultOrMaker: PBTransactionType.CREDIT, valueOf: PBTransactionType.valueOf, enumValues: PBTransactionType.values)
     ..a<$core.double>(3, 'amount', $pb.PbFieldType.OD)
-    ..aOS(4, 'note')
+    ..aOS(4, 'description')
     ..aOB(5, 'completed')
     ..a<$fixnum.Int64>(6, 'timestamp', $pb.PbFieldType.OU6, defaultOrMaker: $fixnum.Int64.ZERO)
     ..hasRequiredFields = false
@@ -170,13 +170,13 @@ class PBTransaction extends $pb.GeneratedMessage {
   void clearAmount() => clearField(3);
 
   @$pb.TagNumber(4)
-  $core.String get note => $_getSZ(3);
+  $core.String get description => $_getSZ(3);
   @$pb.TagNumber(4)
-  set note($core.String v) { $_setString(3, v); }
+  set description($core.String v) { $_setString(3, v); }
   @$pb.TagNumber(4)
-  $core.bool hasNote() => $_has(3);
+  $core.bool hasDescription() => $_has(3);
   @$pb.TagNumber(4)
-  void clearNote() => clearField(4);
+  void clearDescription() => clearField(4);
 
   @$pb.TagNumber(5)
   $core.bool get completed => $_getBF(4);

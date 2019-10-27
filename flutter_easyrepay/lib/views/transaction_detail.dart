@@ -16,7 +16,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
 
   TransactionType _type;
   TextEditingController _amountController = TextEditingController();
-  TextEditingController _noteController = TextEditingController();
+  TextEditingController _descriptionController = TextEditingController();
   bool _completed;
   DateTime _date;
 
@@ -24,7 +24,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
     super.initState();
     _type = widget.transaction.type;
     _amountController.text = amountTextFieldFormatter.format(widget.transaction.amount);
-    _noteController.text = widget.transaction.note;
+    _descriptionController.text = widget.transaction.description;
     _completed = widget.transaction.completed;
     _date = widget.transaction.date;
   }
@@ -106,9 +106,9 @@ class _TransactionDetailState extends State<TransactionDetail> {
           },
         ),
         TextFormField(
-          controller: _noteController,
+          controller: _descriptionController,
           decoration: const InputDecoration(
-            icon: const Icon(Icons.label),
+            icon: const Icon(Icons.assignment),
             labelText: 'Note',
             hintText: 'Enter the note'
           ),
@@ -176,7 +176,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
     setState(() {
       widget.transaction.type = _type;
       widget.transaction.amount = double.tryParse(_amountController.text);
-      widget.transaction.note = _noteController.text;
+      widget.transaction.description = _descriptionController.text;
       widget.transaction.completed = _completed;
       widget.transaction.date = _date;
       if (!widget.person.transactions.contains(widget.transaction)) {

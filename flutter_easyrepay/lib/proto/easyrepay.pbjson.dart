@@ -40,7 +40,7 @@ const PBTransaction$json = const {
     const {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
     const {'1': 'type', '3': 2, '4': 1, '5': 14, '6': '.PBTransactionType', '10': 'type'},
     const {'1': 'amount', '3': 3, '4': 1, '5': 1, '10': 'amount'},
-    const {'1': 'note', '3': 4, '4': 1, '5': 9, '10': 'note'},
+    const {'1': 'description', '3': 4, '4': 1, '5': 9, '10': 'description'},
     const {'1': 'completed', '3': 5, '4': 1, '5': 8, '10': 'completed'},
     const {'1': 'timestamp', '3': 6, '4': 1, '5': 4, '10': 'timestamp'},
   ],

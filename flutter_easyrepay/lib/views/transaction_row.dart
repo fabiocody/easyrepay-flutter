@@ -7,18 +7,20 @@ import 'package:flutter/material.dart';
 class TransactionRow extends StatelessWidget {
   final Person person;
   final Transaction transaction;
+  final bool showCompleted;
   final Function updateState;
 
-  TransactionRow(this.person, this.transaction, this.updateState);
+  TransactionRow(this.person, this.transaction, this.showCompleted, this.updateState);
 
   Widget build(BuildContext context) {
     return ListTile(
+      leading: showCompleted ? _getCompletedIcon(context) : null,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Column(
             children: <Widget>[
-              Text(transaction.note),
+              Text(transaction.description),
               Text(
                 dateFormatter.format(transaction.date),
                 style: Theme.of(context).textTheme.caption,
@@ -43,6 +45,12 @@ class TransactionRow extends StatelessWidget {
       },
       onLongPress: () => _showMenu(context),
     );
+  }
+
+  Icon _getCompletedIcon(BuildContext context) {
+    return transaction.completed 
+      ? Icon(Icons.assignment_turned_in, color: DarkColors.lightGreen) 
+      : Icon(Icons.assignment_late, color: Theme.of(context).textTheme.caption.color);
   }
 
   void _showMenu(BuildContext context) async {

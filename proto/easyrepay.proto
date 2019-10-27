@@ -29,7 +29,7 @@ message PBTransaction {
     string id = 1;
     PBTransactionType type = 2;
     double amount = 3;
-    string note = 4;
+    string description = 4;
     bool completed = 5;
     uint64 timestamp = 6;
 }

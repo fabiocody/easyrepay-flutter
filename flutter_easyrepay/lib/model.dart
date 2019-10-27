@@ -42,23 +42,23 @@ class DataStore {
     people = [];
     Person p;
     p = Person('Brooklyn Thompson');
-    p.transactions.add(Transaction(type: TransactionType.debt, amount: 4.5, note: 'Pizza'));
-    p.transactions.add(Transaction(type: TransactionType.credit, amount: 15, note: 'Pocket money'));
-    p.transactions.add(Transaction(type: TransactionType.credit, amount: 7, note: 'Lunch', completed: true));
+    p.transactions.add(Transaction(type: TransactionType.debt, amount: 4.5, description: 'Pizza'));
+    p.transactions.add(Transaction(type: TransactionType.credit, amount: 15, description: 'Pocket money'));
+    p.transactions.add(Transaction(type: TransactionType.credit, amount: 7, description: 'Lunch', completed: true));
     people.add(p);
     p = Person('Steve Wilkins');
     people.add(p);
     p = Person('Arthur Ford');
-    p.transactions.add(Transaction(type: TransactionType.debt, amount: 7.8, note: 'Pens'));
+    p.transactions.add(Transaction(type: TransactionType.debt, amount: 7.8, description: 'Pens'));
     people.add(p);
     p = Person('Liam Mcmillan');
-    p.transactions.add(Transaction(type: TransactionType.debt, amount: 4.99, note: 'Some debt'));
-    p.transactions.add(Transaction(type: TransactionType.settleDebt, amount: 4.99, note: 'Some debt'));
-    p.transactions.add(Transaction(type: TransactionType.credit, amount: 9.99, note: 'Some credit'));
-    p.transactions.add(Transaction(type: TransactionType.settleCredit, amount: 9.99, note: 'Some credit'));
+    p.transactions.add(Transaction(type: TransactionType.debt, amount: 4.99, description: 'Some debt'));
+    p.transactions.add(Transaction(type: TransactionType.settleDebt, amount: 4.99, description: 'Some debt'));
+    p.transactions.add(Transaction(type: TransactionType.credit, amount: 9.99, description: 'Some credit'));
+    p.transactions.add(Transaction(type: TransactionType.settleCredit, amount: 9.99, description: 'Some credit'));
     people.add(p);
     p = Person('Maggie Nicholls');
-    p.transactions.add(Transaction(type: TransactionType.debt, amount: 12, note: 'CDs'));
+    p.transactions.add(Transaction(type: TransactionType.debt, amount: 12, description: 'CDs'));
     people.add(p);
     sortPeople();
   }
@@ -110,7 +110,7 @@ class Person {
     return p;
   }
 
-  int get transactions_count {
+  int get transactionsCount {
     return transactions.where((t) => !t.completed).length;
   }
 
@@ -182,11 +182,11 @@ class Transaction {
   String id = Uuid().v4();
   TransactionType type;
   double amount;
-  String note;
+  String description;
   bool completed;
   DateTime date;
 
-  Transaction({this.type=TransactionType.credit, this.amount=0, this.note='', this.completed=false, this.date}) {
+  Transaction({this.type=TransactionType.credit, this.amount=0, this.description='', this.completed=false, this.date}) {
     if (date == null)
       date = DateTime.now();
   }
@@ -208,7 +208,7 @@ class Transaction {
       }
     }();
     amount = t.amount;
-    note = t.note;
+    description = t.description;
     completed = t.completed;
     date = DateTime.fromMillisecondsSinceEpoch(t.timestamp.toInt() * 1000);
   }
@@ -231,7 +231,7 @@ class Transaction {
       }
     }();
     t.amount = amount;
-    t.note = note;
+    t.description = description;
     t.completed = completed;
     t.timestamp = Int64(date.millisecondsSinceEpoch ~/ 1000);
     return t;

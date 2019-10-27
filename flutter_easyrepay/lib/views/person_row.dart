@@ -25,7 +25,7 @@ class PersonRow extends StatelessWidget {
               children: <Widget>[
                 Text(person.name),
                 Text(
-                  '${person.transactions_count} ' + (person.transactions.length == 1 ? 'transaction' : 'transactions'),
+                  '${person.transactionsCount} ' + (person.transactions.length == 1 ? 'transaction' : 'transactions'),
                   style: Theme.of(context).textTheme.caption
                 )
               ],
@@ -64,7 +64,7 @@ class PersonRow extends StatelessWidget {
       ),
       ListTile(
         title: Text(BottomSheetItems.removeAllCompleted),
-        leading: Icon(Icons.remove_circle),
+        leading: Icon(Icons.clear_all),
         onTap: () => _menuAction(BottomSheetItems.removeAllCompleted, context),
 
       ),

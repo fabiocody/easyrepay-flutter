@@ -63,7 +63,7 @@ class _TransactionsListState extends State<TransactionsList> {
           Card(
             child: Column(
               children: transactions.map(
-                (t) => TransactionRow(widget.person, t, () => setState(() => null))
+                (t) => TransactionRow(widget.person, t, showCompleted, () => setState(() => null))
               ).toList(), 
             ),
           ),
