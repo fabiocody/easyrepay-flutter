@@ -74,8 +74,8 @@ class _PeopleListState extends State<PeopleList> {
     }
   }
 
-  _newPersonDialog(BuildContext context) async {
-    return showDialog(
+  void _newPersonDialog(BuildContext context) {
+    showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(

@@ -47,10 +47,10 @@ class TransactionRow extends StatelessWidget {
     );
   }
 
-  Icon _getCompletedIcon(BuildContext context) {
+  Widget _getCompletedIcon(BuildContext context) {
     return transaction.completed 
-      ? Icon(Icons.assignment_turned_in, color: DarkColors.lightGreen) 
-      : Icon(Icons.assignment_late, color: Theme.of(context).textTheme.caption.color);
+      ? Icon(Icons.check_circle_outline, color: DarkColors.lightGreen)
+      : Icon(Icons.panorama_fish_eye, color: Theme.of(context).textTheme.caption.color);
   }
 
   void _showMenu(BuildContext context) async {

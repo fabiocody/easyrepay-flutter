@@ -4,7 +4,6 @@ This is the [Flutter](https://flutter.dev) porting of EasyRepay, and app that al
 
 ## TODO
 
-- Mark completed transactions.
 - Animations.
 
 ## Credits

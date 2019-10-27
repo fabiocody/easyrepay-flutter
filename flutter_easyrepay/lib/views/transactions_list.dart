@@ -27,9 +27,15 @@ class _TransactionsListState extends State<TransactionsList> {
             onPressed: () => setState(() => showCompleted = !showCompleted),
           ),
           IconButton(
-            icon: Icon(Icons.edit),
-            onPressed: () => _editPersonDialog(context),
-            tooltip: 'Edit name',
+            icon: Icon(Icons.add_alert),
+            tooltip: 'Reminder',
+            onPressed: () => showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: Text('Work in progress'),
+                content: Text('This feature is not implemented yet.'),
+              )
+            )
           )
         ],
       ),
@@ -132,49 +138,4 @@ class _TransactionsListState extends State<TransactionsList> {
       ));
     }
   }
-
-  _editPersonDialog(BuildContext context) async {
-    _textFieldController.text = widget.person.name;
-    return showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Change name'),
-          content: TextField(
-            controller: _textFieldController,
-            decoration: InputDecoration(hintText: 'Enter name'),
-            autofocus: true,
-            keyboardType: TextInputType.text,
-            textCapitalization: TextCapitalization.words,
-            keyboardAppearance: Theme.of(context).brightness,
-            onEditingComplete: _saveEditedPerson,
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('CANCEL'),
-              onPressed: () {
-                _textFieldController.clear();
-                Navigator.of(context).pop();
-              }
-            ),
-            FlatButton(
-              child: Text('SAVE', style: TextStyle(fontWeight: FontWeight.bold)),
-              onPressed: _saveEditedPerson,
-            ),
-          ],
-        );
-      }
-    );
-  }
-
-  void _saveEditedPerson() {
-    setState(() {
-      widget.person.name = _textFieldController.text;
-      DataStore.shared().sortPeople();
-    });
-    DataStore.shared().save();
-    _textFieldController.clear();
-    Navigator.of(context).pop();
-  }
-
 }
