@@ -1,5 +1,6 @@
 import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/model.dart';
+import 'package:easyrepay/views/person_row.dart';
 import 'package:easyrepay/views/transactions_list.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +49,7 @@ class _PeopleListState extends State<PeopleList> {
       return ListView(
         padding: const EdgeInsets.only(top: 4),
         children: widget.store.people.map(
-          (person) => _buildPersonRow(person)
+          (person) => PersonRow(person)
         ).toList()
       );
     } else {
@@ -72,56 +73,6 @@ class _PeopleListState extends State<PeopleList> {
         crossAxisAlignment: CrossAxisAlignment.center,
       ));
     }
-  }
-
-  Widget _buildPersonRow(Person person) {
-    var personNameSplit = person.name.split(' ');
-    return Dismissible(
-      key: Key(person.id),
-      onDismissed: (direction) {
-        setState(() {
-          widget.store.people.remove(person);
-        });
-        widget.store.save();
-      },
-      background: deleteBackground,
-      child: Card(
-        child: ListTile(
-          contentPadding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
-          leading: CircleAvatar(
-            child: Text(personNameSplit.sublist(0, personNameSplit.length > 3 ? 3 : personNameSplit.length).map((s) => s[0]).join(''))
-          ),
-          title: Row(
-            children: <Widget>[
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(person.name),
-                  Text(
-                    '${person.transactions.length} ' + (person.transactions.length == 1 ? 'transaction' : 'transactions'),
-                    style: Theme.of(context).textTheme.caption
-                  )
-                ],
-              ),
-              Spacer(),
-              person.getTotalAmountTextTile(context)
-            ],
-          ),
-          trailing: Icon(
-            Icons.navigate_next,
-            color: Theme.of(context).textTheme.caption.color
-          ),
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute<void>(
-                builder: (BuildContext context) => TransactionsList(person)
-              )
-            );
-          },
-        ),
-      )
-    );
   }
 
   _newPersonDialog(BuildContext context) async {

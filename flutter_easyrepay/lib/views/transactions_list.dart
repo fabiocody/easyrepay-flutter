@@ -1,6 +1,7 @@
 import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/model.dart';
 import 'package:easyrepay/views/transaction_detail.dart';
+import 'package:easyrepay/views/transaction_row.dart';
 import 'package:flutter/material.dart';
 
 
@@ -62,7 +63,7 @@ class _TransactionsListState extends State<TransactionsList> {
         children: [
           Card(
             child: Column(
-              children: transactions.map((t) => _buildTransactionRow(t)).toList(), 
+              children: transactions.map((t) => TransactionRow(widget.person, t)).toList(), 
             ),
           ),
           Divider(
@@ -129,49 +130,6 @@ class _TransactionsListState extends State<TransactionsList> {
         crossAxisAlignment: CrossAxisAlignment.center,
       ));
     }
-  }
-
-  Widget _buildTransactionRow(Transaction transaction) {
-    return Dismissible(
-      key: Key(transaction.id),
-      onDismissed: (direction) {
-        setState(() {
-          widget.person.transactions.remove(transaction);
-        });
-        DataStore.shared().save();
-      },
-      background: deleteBackground,
-      child: ListTile(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Column(
-              children: <Widget>[
-                Text(transaction.note),
-                Text(
-                  dateFormatter.format(transaction.date),
-                  style: Theme.of(context).textTheme.caption,
-                )
-              ],
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-            ),
-            transaction.getAmountText(context),
-          ],
-        ),
-        trailing: Icon(
-          Icons.navigate_next,
-          color: Theme.of(context).textTheme.caption.color
-        ),
-        onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute<void>(
-              builder: (BuildContext context) => TransactionDetail(widget.person, transaction)
-            )
-          );
-        },
-      )
-    );
   }
 
   _editPersonDialog(BuildContext context) async {
