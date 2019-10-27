@@ -4,11 +4,8 @@ This is the [Flutter](https://flutter.dev) porting of EasyRepay, and app that al
 
 ## TODO
 
-- Remove slide to delete and add a long press menu.
-- Remove decimal digits (`x.remainder(x.floor()) == 0` checks if the decimal part is 0).
 - Mark completed transactions.
 - Animations.
-- Reuse new person / edit person dialog.
 
 ## Credits
 

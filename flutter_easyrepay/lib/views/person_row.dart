@@ -99,7 +99,6 @@ class PersonRow extends StatelessWidget {
   }
 
   _editPersonDialog(BuildContext context) async {
-    print('Edit person');
     TextEditingController controller = TextEditingController(text: person.name);
     return showDialog(
       context: context,

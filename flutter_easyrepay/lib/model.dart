@@ -73,7 +73,7 @@ class DataStore {
     if (kReleaseMode) {
       final file = await _localFile;
       file.writeAsBytes(protobuf.writeToBuffer());
-      print('Saved');
+      print('SAVED');
     }
   }
 
