@@ -79,7 +79,7 @@ class TransactionRow extends StatelessWidget {
     if (action == BottomSheetItems.completed) {
       transaction.completed = true;
     } else if (action == BottomSheetItems.delete) {
-      DataStore.shared().people.remove(person);
+      person.transactions.remove(transaction);
     }
     DataStore.shared().save();
     updateState();
