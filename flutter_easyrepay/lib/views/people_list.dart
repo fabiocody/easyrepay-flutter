@@ -1,7 +1,6 @@
 import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/model.dart';
 import 'package:easyrepay/views/person_row.dart';
-import 'package:easyrepay/views/transactions_list.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -49,7 +48,7 @@ class _PeopleListState extends State<PeopleList> {
       return ListView(
         padding: const EdgeInsets.only(top: 4),
         children: widget.store.people.map(
-          (person) => PersonRow(person)
+          (person) => PersonRow(person, () => setState(() => null))
         ).toList()
       );
     } else {

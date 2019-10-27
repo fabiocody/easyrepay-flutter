@@ -109,6 +109,10 @@ class Person {
     return p;
   }
 
+  int get transactions_count {
+    return transactions.where((t) => !t.completed).length;
+  }
+
   void sortTransactions() {
     transactions.sort((t1, t2) => t1.date.compareTo(t2.date));
   }

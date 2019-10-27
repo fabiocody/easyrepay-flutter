@@ -7,8 +7,9 @@ import 'package:flutter/material.dart';
 class TransactionRow extends StatelessWidget {
   final Person person;
   final Transaction transaction;
+  final Function updateState;
 
-  TransactionRow(this.person, this.transaction);
+  TransactionRow(this.person, this.transaction, this.updateState);
 
   Widget build(BuildContext context) {
     return ListTile(

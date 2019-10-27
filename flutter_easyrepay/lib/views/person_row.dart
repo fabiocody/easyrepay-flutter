@@ -1,11 +1,13 @@
+import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/model.dart';
 import 'package:easyrepay/views/transactions_list.dart';
 import 'package:flutter/material.dart';
 
 class PersonRow extends StatelessWidget {
   final Person person;
+  final Function updateState;
 
-  PersonRow(this.person);
+  PersonRow(this.person, this.updateState);
 
   Widget build(BuildContext context) {
     var nameSplit = person.name.split(' ');
@@ -23,7 +25,7 @@ class PersonRow extends StatelessWidget {
               children: <Widget>[
                 Text(person.name),
                 Text(
-                  '${person.transactions.length} ' + (person.transactions.length == 1 ? 'transaction' : 'transactions'),
+                  '${person.transactions_count} ' + (person.transactions.length == 1 ? 'transaction' : 'transactions'),
                   style: Theme.of(context).textTheme.caption
                 )
               ],
@@ -43,7 +45,91 @@ class PersonRow extends StatelessWidget {
             )
           );
         },
+        onLongPress: () => _showMenu(context)
       ),
     );
+  }
+
+  void _showMenu(BuildContext context) async {
+    final menuItems = [
+      ListTile(
+        title: Text(BottomSheetItems.rename),
+        leading: Icon(Icons.edit),
+        onTap: () => _menuAction(BottomSheetItems.rename, context),
+      ),
+      ListTile(
+        title: Text(BottomSheetItems.allCompleted),
+        leading: Icon(Icons.check_circle),
+        onTap: () => _menuAction(BottomSheetItems.allCompleted, context),
+      ),
+      ListTile(
+        title: Text(BottomSheetItems.delete, style: TextStyle(color: DarkColors.orange)),
+        leading: Icon(Icons.delete_forever, color: DarkColors.orange,),
+        onTap: () => _menuAction(BottomSheetItems.delete, context),
+      ),
+    ];
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => ListView(
+        children: menuItems,
+        shrinkWrap: true,
+      )
+    );
+  }
+
+  void _menuAction(String action, BuildContext context) async {
+    print(action);
+    if (action == BottomSheetItems.rename) {
+      await _editPersonDialog(context);
+    } else if (action == BottomSheetItems.allCompleted) {
+      person.transactions.forEach((t) => t.completed = true);
+    } else if (action == BottomSheetItems.delete) {
+      DataStore.shared().people.remove(person);
+    }
+    updateState();
+    Navigator.of(context).pop();
+  }
+
+  _editPersonDialog(BuildContext context) async {
+    print('Edit person');
+    TextEditingController controller = TextEditingController(text: person.name);
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Change name'),
+          content: TextField(
+            controller: controller,
+            decoration: InputDecoration(hintText: 'Enter name'),
+            autofocus: true,
+            keyboardType: TextInputType.text,
+            textCapitalization: TextCapitalization.words,
+            keyboardAppearance: Theme.of(context).brightness,
+            onEditingComplete: () => _saveEditedPerson(controller, context),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('CANCEL'),
+              onPressed: () {
+                controller.clear();
+                Navigator.of(context).pop();
+              }
+            ),
+            FlatButton(
+              child: Text('SAVE', style: TextStyle(fontWeight: FontWeight.bold)),
+              onPressed: () => _saveEditedPerson(controller, context),
+            ),
+          ],
+        );
+      }
+    );
+  }
+
+  void _saveEditedPerson(TextEditingController controller, BuildContext context) {
+    person.name = controller.text;
+    DataStore.shared().sortPeople();
+    DataStore.shared().save();
+    controller.clear();
+    Navigator.of(context).pop();
   }
 }

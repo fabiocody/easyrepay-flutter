@@ -1,4 +1,3 @@
-import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/model.dart';
 import 'package:easyrepay/views/transaction_detail.dart';
 import 'package:easyrepay/views/transaction_row.dart';
@@ -63,7 +62,9 @@ class _TransactionsListState extends State<TransactionsList> {
         children: [
           Card(
             child: Column(
-              children: transactions.map((t) => TransactionRow(widget.person, t)).toList(), 
+              children: transactions.map(
+                (t) => TransactionRow(widget.person, t, () => setState(() => null))
+              ).toList(), 
             ),
           ),
           Divider(
