@@ -41,6 +41,40 @@ class TransactionRow extends StatelessWidget {
           )
         );
       },
+      onLongPress: () => _showMenu(context),
     );
+  }
+
+  void _showMenu(BuildContext context) async {
+    final menuItems = [
+      ListTile(
+        title: Text(BottomSheetItems.completed),
+        leading: Icon(Icons.check_circle),
+        onTap: () => _menuAction(BottomSheetItems.completed, context),
+      ),
+      ListTile(
+        title: Text(BottomSheetItems.delete, style: TextStyle(color: DarkColors.orange)),
+        leading: Icon(Icons.delete_forever, color: DarkColors.orange,),
+        onTap: () => _menuAction(BottomSheetItems.delete, context),
+      ),
+    ];
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => ListView(
+        children: menuItems,
+        shrinkWrap: true,
+      )
+    );
+  }
+
+  void _menuAction(String action, BuildContext context) async {
+    if (action == BottomSheetItems.completed) {
+      transaction.completed = true;
+    } else if (action == BottomSheetItems.delete) {
+      DataStore.shared().people.remove(person);
+    }
+    DataStore.shared().save();
+    updateState();
+    Navigator.of(context).pop();
   }
 }

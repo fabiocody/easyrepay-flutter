@@ -31,7 +31,9 @@ class DarkColors {
 
 class BottomSheetItems {
   static final rename = 'Rename';
-  static final allCompleted = 'Mark all as completed';
+  static final completed = 'Mark as completed';
+  static final allCompleted = 'Mark all transactions as completed';
+  static final removeAllCompleted = 'Remove all completed transactions';
   static final delete = 'Delete';
 }
 

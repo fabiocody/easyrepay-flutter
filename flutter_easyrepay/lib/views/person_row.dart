@@ -63,6 +63,12 @@ class PersonRow extends StatelessWidget {
         onTap: () => _menuAction(BottomSheetItems.allCompleted, context),
       ),
       ListTile(
+        title: Text(BottomSheetItems.removeAllCompleted),
+        leading: Icon(Icons.remove_circle),
+        onTap: () => _menuAction(BottomSheetItems.removeAllCompleted, context),
+
+      ),
+      ListTile(
         title: Text(BottomSheetItems.delete, style: TextStyle(color: DarkColors.orange)),
         leading: Icon(Icons.delete_forever, color: DarkColors.orange,),
         onTap: () => _menuAction(BottomSheetItems.delete, context),
@@ -78,14 +84,16 @@ class PersonRow extends StatelessWidget {
   }
 
   void _menuAction(String action, BuildContext context) async {
-    print(action);
     if (action == BottomSheetItems.rename) {
       await _editPersonDialog(context);
     } else if (action == BottomSheetItems.allCompleted) {
       person.transactions.forEach((t) => t.completed = true);
+    } else if (action == BottomSheetItems.removeAllCompleted) {
+      person.transactions.removeWhere((t) => t.completed);
     } else if (action == BottomSheetItems.delete) {
       DataStore.shared().people.remove(person);
     }
+    DataStore.shared().save();
     updateState();
     Navigator.of(context).pop();
   }
