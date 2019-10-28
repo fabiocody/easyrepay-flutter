@@ -21,10 +21,12 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  protobuf: 1.0.0
-  uuid: 2.0.2
-  intl: ">=0.15.8"
-  path_provider: 1.4.0
+  protobuf: ^1.0.0
+  uuid: ^2.0.2
+  intl: ^0.15.8
+  path_provider: ^1.4.0
+  vibrate: ^0.0.4
+  devicelocale: ^0.2.0
 
 dev_dependencies:
   flutter_test:

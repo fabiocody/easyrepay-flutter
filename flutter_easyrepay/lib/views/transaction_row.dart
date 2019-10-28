@@ -1,8 +1,10 @@
+import 'package:easyrepay/device_specifics.dart';
 import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/model.dart';
 import 'package:easyrepay/views/transaction_detail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:vibrate/vibrate.dart';
 
 class TransactionRow extends StatelessWidget {
   final Person person;
@@ -54,6 +56,8 @@ class TransactionRow extends StatelessWidget {
   }
 
   void _showMenu(BuildContext context) async {
+    if (DeviceSpecifics.shared.canVibrate)
+      Vibrate.feedback(FeedbackType.impact);
     final menuItems = [
       ListTile(
         title: Text(BottomSheetItems.completed),
