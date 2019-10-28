@@ -1,4 +1,3 @@
-import 'package:easyrepay/device_specifics.dart';
 import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/model.dart';
 import 'package:easyrepay/views/transactions_list.dart';
@@ -53,8 +52,7 @@ class PersonRow extends StatelessWidget {
   }
 
   void _showMenu(BuildContext context) async {
-    if (DeviceSpecifics.shared.canVibrate)
-      Vibrate.feedback(FeedbackType.heavy);
+    vibrate(FeedbackType.heavy);
     final menuItems = [
       ListTile(
         title: Text(BottomSheetItems.rename),

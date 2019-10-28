@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:vibrate/vibrate.dart';
 
 
 final amountTextFieldFormatter = () {
@@ -38,20 +39,7 @@ class BottomSheetItems {
 }
 
 
-final deleteBackground = Container(
-  padding: const EdgeInsets.only(right: 8),
-  color: Colors.red[400],
-  child: Column(
-    children: <Widget>[
-      Text(
-        'Delete',
-        style: TextStyle(
-          fontSize: 16, 
-          color: Colors.white
-        ),
-      ),
-    ],
-    mainAxisAlignment: MainAxisAlignment.center,
-    crossAxisAlignment: CrossAxisAlignment.end,
-  ),
-);
+void vibrate(FeedbackType type) async {
+  if (await Vibrate.canVibrate)
+    Vibrate.feedback(type);
+}

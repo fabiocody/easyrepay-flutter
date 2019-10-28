@@ -1,4 +1,4 @@
-import 'package:easyrepay/device_specifics.dart';
+import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/model.dart';
 import 'package:easyrepay/views/transaction_detail.dart';
 import 'package:easyrepay/views/transaction_row.dart';
@@ -25,8 +25,7 @@ class _TransactionsListState extends State<TransactionsList> {
             icon: Icon(showCompleted ? Icons.check_circle : Icons.check_circle_outline),
             tooltip: 'Show completed',
             onPressed: () {
-              if (DeviceSpecifics.shared.canVibrate)
-                Vibrate.feedback(FeedbackType.success);
+              vibrate(FeedbackType.success);
               setState(() => showCompleted = !showCompleted);
             },
           ),
@@ -34,8 +33,7 @@ class _TransactionsListState extends State<TransactionsList> {
             icon: Icon(Icons.add_alert),
             tooltip: 'Reminder',
             onPressed: () {
-              if (DeviceSpecifics.shared.canVibrate)
-                Vibrate.feedback(FeedbackType.error);
+              vibrate(FeedbackType.error);
               showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
@@ -48,15 +46,11 @@ class _TransactionsListState extends State<TransactionsList> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          if (DeviceSpecifics.shared.canVibrate)
-            Vibrate.feedback(FeedbackType.light);
-          Navigator.of(context).push(
+        onPressed: () => Navigator.of(context).push(
             MaterialPageRoute<void>(
               builder: (BuildContext context) => TransactionDetail(widget.person, Transaction())
             )
-          );
-        },
+          ),
         tooltip: 'New Person',
         child: Icon(Icons.add),
       ),

@@ -1,4 +1,3 @@
-import 'package:easyrepay/device_specifics.dart';
 import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/model.dart';
 import 'package:flutter/material.dart';
@@ -132,8 +131,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
               Switch(
                 value: _completed,
                 onChanged: (newValue) {
-                  if (DeviceSpecifics.shared.canVibrate)
-                    Vibrate.feedback(FeedbackType.medium);
+                  vibrate(FeedbackType.medium);
                   setState(() {
                     _completed = newValue;
                   });
