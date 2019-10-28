@@ -1,7 +1,9 @@
+import 'package:easyrepay/device_specifics.dart';
 import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:vibrate/vibrate.dart';
 
 
 class TransactionDetail extends StatefulWidget {
@@ -130,6 +132,8 @@ class _TransactionDetailState extends State<TransactionDetail> {
               Switch(
                 value: _completed,
                 onChanged: (newValue) {
+                  if (DeviceSpecifics.shared.canVibrate)
+                    Vibrate.feedback(FeedbackType.medium);
                   setState(() {
                     _completed = newValue;
                   });

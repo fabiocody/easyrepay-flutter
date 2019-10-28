@@ -1,7 +1,9 @@
+import 'package:easyrepay/device_specifics.dart';
 import 'package:easyrepay/model.dart';
 import 'package:easyrepay/views/transaction_detail.dart';
 import 'package:easyrepay/views/transaction_row.dart';
 import 'package:flutter/material.dart';
+import 'package:vibrate/vibrate.dart';
 
 
 class TransactionsList extends StatefulWidget {
@@ -12,8 +14,6 @@ class TransactionsList extends StatefulWidget {
 
 
 class _TransactionsListState extends State<TransactionsList> {
-
-  TextEditingController _textFieldController = TextEditingController();
   bool showCompleted = false;
 
   Widget build(BuildContext context) {
@@ -24,23 +24,33 @@ class _TransactionsListState extends State<TransactionsList> {
           IconButton(
             icon: Icon(showCompleted ? Icons.check_circle : Icons.check_circle_outline),
             tooltip: 'Show completed',
-            onPressed: () => setState(() => showCompleted = !showCompleted),
+            onPressed: () {
+              if (DeviceSpecifics.shared.canVibrate)
+                Vibrate.feedback(FeedbackType.success);
+              setState(() => showCompleted = !showCompleted);
+            },
           ),
           IconButton(
             icon: Icon(Icons.add_alert),
             tooltip: 'Reminder',
-            onPressed: () => showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                title: Text('Work in progress'),
-                content: Text('This feature is not implemented yet.'),
-              )
-            )
+            onPressed: () {
+              if (DeviceSpecifics.shared.canVibrate)
+                Vibrate.feedback(FeedbackType.error);
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: Text('Work in progress'),
+                  content: Text('This feature is not implemented yet.'),
+                )
+              );
+            }
           )
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          if (DeviceSpecifics.shared.canVibrate)
+            Vibrate.feedback(FeedbackType.light);
           Navigator.of(context).push(
             MaterialPageRoute<void>(
               builder: (BuildContext context) => TransactionDetail(widget.person, Transaction())

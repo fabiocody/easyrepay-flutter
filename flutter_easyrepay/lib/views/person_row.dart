@@ -54,7 +54,7 @@ class PersonRow extends StatelessWidget {
 
   void _showMenu(BuildContext context) async {
     if (DeviceSpecifics.shared.canVibrate)
-      Vibrate.feedback(FeedbackType.impact);
+      Vibrate.feedback(FeedbackType.heavy);
     final menuItems = [
       ListTile(
         title: Text(BottomSheetItems.rename),
