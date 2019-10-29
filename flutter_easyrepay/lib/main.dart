@@ -41,10 +41,9 @@ void main() => runApp(MaterialApp(
   ],
   localeResolutionCallback: (locale, supportedLocales) {
     for (var supportedLocale in supportedLocales)
-      if (supportedLocale.languageCode == locale.languageCode &&
-          supportedLocale.countryCode == locale.countryCode)
+      if (supportedLocale.languageCode == locale?.languageCode &&
+          supportedLocale.countryCode == locale?.countryCode)
         return supportedLocale;
-    //return supportedLocales.first;
-    return Locale('it', 'IT');
+    return supportedLocales.first;
   },
 ));
