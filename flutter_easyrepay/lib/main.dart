@@ -40,12 +40,11 @@ void main() => runApp(MaterialApp(
     const Locale('it', 'IT'),
   ],
   localeResolutionCallback: (locale, supportedLocales) {
-    print(locale);
     for (var supportedLocale in supportedLocales)
       if (supportedLocale.languageCode == locale.languageCode &&
           supportedLocale.countryCode == locale.countryCode)
         return supportedLocale;
-    return supportedLocales.first;
+    //return supportedLocales.first;
+    return Locale('it', 'IT');
   },
-  locale: const Locale('it', 'IT')
 ));

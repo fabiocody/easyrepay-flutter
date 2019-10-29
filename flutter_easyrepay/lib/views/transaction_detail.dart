@@ -111,8 +111,8 @@ class _TransactionDetailState extends State<TransactionDetail> {
           controller: _descriptionController,
           decoration: InputDecoration(
             icon: Icon(Icons.assignment),
-            labelText: AppLocalizations.of(context).translate('Note'),
-            hintText: AppLocalizations.of(context).translate('Enter the note')
+            labelText: AppLocalizations.of(context).translate('Description'),
+            hintText: AppLocalizations.of(context).translate('Enter the description')
           ),
           textCapitalization: TextCapitalization.sentences,
         ),

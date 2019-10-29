@@ -1,19 +1,5 @@
-import 'package:easyrepay/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:vibrate/vibrate.dart';
-
-
-/*final amountTextFieldFormatter = () {
-  var formatter = NumberFormat();
-  formatter.maximumFractionDigits = 2;
-  formatter.minimumFractionDigits = 2;
-  formatter.maximumIntegerDigits = 12;
-  return formatter;
-}();*/
-
-
-//final currencyFormatter = NumberFormat.simpleCurrency();
-//final dateFormatter = DateFormat.yMd().add_jm();
 
 
 class DarkColors {
