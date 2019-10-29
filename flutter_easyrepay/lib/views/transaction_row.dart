@@ -59,14 +59,14 @@ class TransactionRow extends StatelessWidget {
     vibrate(FeedbackType.heavy);
     final menuItems = [
       ListTile(
-        title: Text(BottomSheetItems.completed),
+        title: Text(BottomSheetItems.getShared(context).completed),
         leading: Icon(Icons.check_circle),
-        onTap: () => _menuAction(BottomSheetItems.completed, context),
+        onTap: () => _menuAction(BottomSheetItems.getShared(context).completed, context),
       ),
       ListTile(
-        title: Text(BottomSheetItems.delete, style: TextStyle(color: DarkColors.orange)),
+        title: Text(BottomSheetItems.getShared(context).delete, style: TextStyle(color: DarkColors.orange)),
         leading: Icon(Icons.delete_forever, color: DarkColors.orange,),
-        onTap: () => _menuAction(BottomSheetItems.delete, context),
+        onTap: () => _menuAction(BottomSheetItems.getShared(context).delete, context),
       ),
     ];
     showModalBottomSheet(
@@ -79,9 +79,9 @@ class TransactionRow extends StatelessWidget {
   }
 
   void _menuAction(String action, BuildContext context) async {
-    if (action == BottomSheetItems.completed) {
+    if (action == BottomSheetItems.getShared(context).completed) {
       transaction.completed = true;
-    } else if (action == BottomSheetItems.delete) {
+    } else if (action == BottomSheetItems.getShared(context).delete) {
       person.transactions.remove(transaction);
     }
     DataStore.shared().save();

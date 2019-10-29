@@ -16,16 +16,6 @@ class DarkColors {
 }
 
 
-class BottomSheetItems {
-  // TODO: Localize
-  static final rename = 'Rename';
-  static final completed = 'Mark as completed';
-  static final allCompleted = 'Mark all transactions as completed';
-  static final removeAllCompleted = 'Remove all completed transactions';
-  static final delete = 'Delete';
-}
-
-
 void vibrate(FeedbackType type) async {
   if (await Vibrate.canVibrate)
     Vibrate.feedback(type);

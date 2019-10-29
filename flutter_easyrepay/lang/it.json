@@ -26,5 +26,10 @@
     "Description": "Descrizione",
     "Enter the description": "Inserisci la descrizione",
     "Completed": "Completata",
-    "Date": "Data"
+    "Date": "Data",
+    "Rename": "Rinomina",
+    "Mark as completed": "Segna come completata",
+    "Mark all transactions as completed": "Segna tutte le transazioni come completate",
+    "Remove all completed transactions": "Rimuovi tutte le transazioni completate",
+    "Delete": "Elimina"
 }

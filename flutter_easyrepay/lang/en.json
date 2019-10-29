@@ -26,5 +26,10 @@
     "Description": "Description",
     "Enter the description": "Enter the description",
     "Completed": "Completed",
-    "Date": "Date"
+    "Date": "Date",
+    "Rename": "Rename",
+    "Mark as completed": "Mark as completed",
+    "Mark all transactions as completed": "Mark all transactions as completed",
+    "Remove all completed transactions": "Remove all completed transactions",
+    "Delete": "Delete"
 }

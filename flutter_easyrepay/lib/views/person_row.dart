@@ -58,25 +58,25 @@ class PersonRow extends StatelessWidget {
     vibrate(FeedbackType.heavy);
     final menuItems = [
       ListTile(
-        title: Text(BottomSheetItems.rename),
+        title: Text(BottomSheetItems.getShared(context).rename),
         leading: Icon(Icons.edit),
-        onTap: () => _menuAction(BottomSheetItems.rename, context),
+        onTap: () => _menuAction(BottomSheetItems.getShared(context).rename, context),
       ),
       ListTile(
-        title: Text(BottomSheetItems.allCompleted),
+        title: Text(BottomSheetItems.getShared(context).allCompleted),
         leading: Icon(Icons.check_circle),
-        onTap: () => _menuAction(BottomSheetItems.allCompleted, context),
+        onTap: () => _menuAction(BottomSheetItems.getShared(context).allCompleted, context),
       ),
       ListTile(
-        title: Text(BottomSheetItems.removeAllCompleted),
+        title: Text(BottomSheetItems.getShared(context).removeAllCompleted),
         leading: Icon(Icons.clear_all),
-        onTap: () => _menuAction(BottomSheetItems.removeAllCompleted, context),
+        onTap: () => _menuAction(BottomSheetItems.getShared(context).removeAllCompleted, context),
 
       ),
       ListTile(
-        title: Text(BottomSheetItems.delete, style: TextStyle(color: DarkColors.orange)),
+        title: Text(BottomSheetItems.getShared(context).delete, style: TextStyle(color: DarkColors.orange)),
         leading: Icon(Icons.delete_forever, color: DarkColors.orange,),
-        onTap: () => _menuAction(BottomSheetItems.delete, context),
+        onTap: () => _menuAction(BottomSheetItems.getShared(context).delete, context),
       ),
     ];
     showModalBottomSheet(
@@ -89,13 +89,13 @@ class PersonRow extends StatelessWidget {
   }
 
   void _menuAction(String action, BuildContext context) async {
-    if (action == BottomSheetItems.rename) {
+    if (action == BottomSheetItems.getShared(context).rename) {
       await _editPersonDialog(context);
-    } else if (action == BottomSheetItems.allCompleted) {
+    } else if (action == BottomSheetItems.getShared(context).allCompleted) {
       person.transactions.forEach((t) => t.completed = true);
-    } else if (action == BottomSheetItems.removeAllCompleted) {
+    } else if (action == BottomSheetItems.getShared(context).removeAllCompleted) {
       person.transactions.removeWhere((t) => t.completed);
-    } else if (action == BottomSheetItems.delete) {
+    } else if (action == BottomSheetItems.getShared(context).delete) {
       DataStore.shared().people.remove(person);
     }
     DataStore.shared().save();
