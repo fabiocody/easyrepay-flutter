@@ -262,3 +262,6 @@ $RECYCLE.BIN/
 **/xcshareddata/WorkspaceSettings.xcsettings
 
 # End of https://www.gitignore.io/api/dart,linux,swift,xcode,macos,flutter,swiftpm,windows,visualstudiocode,swiftpackagemanager
+
+
+.pubspec.old.yaml
