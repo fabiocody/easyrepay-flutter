@@ -43,7 +43,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
           IconButton(
             icon: Icon(Icons.save),
             tooltip: AppLocalizations.of(context).translate('Save'),
-            onPressed: _save,
+            onPressed: () => _save(context),
           )
         ],
       ),
@@ -104,7 +104,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
             WhitelistingTextInputFormatter.digitsOnly
           ],
           onChanged: (String text) {
-            var value = double.tryParse(text);
+            var value = AppLocalizations.of(context).amountTextFieldFormatter.parse(text);
             if (value != null) {
               value /= 100;
               _amountController.text = AppLocalizations.of(context).amountTextFieldFormatter.format(value);
@@ -179,10 +179,10 @@ class _TransactionDetailState extends State<TransactionDetail> {
     }
   }
 
-  void _save() {
+  void _save(BuildContext context) {
     setState(() {
       widget.transaction.type = _type;
-      widget.transaction.amount = double.tryParse(_amountController.text);
+      widget.transaction.amount = AppLocalizations.of(context).amountTextFieldFormatter.parse(_amountController.text);
       widget.transaction.description = _descriptionController.text;
       widget.transaction.completed = _completed;
       widget.transaction.date = _date;
