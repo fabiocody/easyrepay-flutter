@@ -21,6 +21,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
   TextEditingController _descriptionController = TextEditingController();
   bool _completed;
   DateTime _date;
+  bool _initialized = false;
 
   void initState() {
     super.initState();
@@ -31,7 +32,10 @@ class _TransactionDetailState extends State<TransactionDetail> {
   }
 
   Widget build(BuildContext context) {
-    _amountController.text = AppLocalizations.of(context).amountTextFieldFormatter.format(widget.transaction.amount);
+    if (!_initialized) {
+      _amountController.text = AppLocalizations.of(context).amountTextFieldFormatter.format(widget.transaction.amount);
+      _initialized = true;
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context).translate('Transaction')),

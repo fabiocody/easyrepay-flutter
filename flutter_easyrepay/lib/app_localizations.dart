@@ -14,7 +14,7 @@ class AppLocalizations {
 
   AppLocalizations(this.locale) {
     _currencyFormatter = NumberFormat.simpleCurrency(locale: locale.toString());
-    _amountTextFieldFormatter = NumberFormat();
+    _amountTextFieldFormatter = NumberFormat(null, locale.toString());
     _amountTextFieldFormatter.maximumFractionDigits = 2;
     _amountTextFieldFormatter.minimumFractionDigits = 2;
     _amountTextFieldFormatter.maximumIntegerDigits = 12;
