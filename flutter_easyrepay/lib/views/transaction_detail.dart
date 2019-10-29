@@ -25,13 +25,13 @@ class _TransactionDetailState extends State<TransactionDetail> {
   void initState() {
     super.initState();
     _type = widget.transaction.type;
-    _amountController.text = AppLocalizations.of(context).amountTextFieldFormatter.format(widget.transaction.amount);
     _descriptionController.text = widget.transaction.description;
     _completed = widget.transaction.completed;
     _date = widget.transaction.date;
   }
 
   Widget build(BuildContext context) {
+    _amountController.text = AppLocalizations.of(context).amountTextFieldFormatter.format(widget.transaction.amount);
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context).translate('Transaction')),

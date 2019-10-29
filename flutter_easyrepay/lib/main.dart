@@ -47,4 +47,5 @@ void main() => runApp(MaterialApp(
         return supportedLocale;
     return supportedLocales.first;
   },
+  locale: const Locale('it', 'IT')
 ));

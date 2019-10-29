@@ -45,7 +45,7 @@ class AppLocalizations {
   NumberFormat get amountTextFieldFormatter => _amountTextFieldFormatter;
 
   static String dateFormatOf(BuildContext context, DateTime date) => 
-    MaterialLocalizations.of(context).formatFullDate(date) + ' ' + MaterialLocalizations.of(context).formatTimeOfDay(TimeOfDay.fromDateTime(date));
+    MaterialLocalizations.of(context).formatMediumDate(date) + ' ' + MaterialLocalizations.of(context).formatTimeOfDay(TimeOfDay.fromDateTime(date));
 }
 
 
