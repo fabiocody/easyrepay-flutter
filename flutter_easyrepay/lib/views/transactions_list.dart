@@ -1,3 +1,4 @@
+import 'package:easyrepay/app_localizations.dart';
 import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/model.dart';
 import 'package:easyrepay/views/transaction_detail.dart';
@@ -23,7 +24,7 @@ class _TransactionsListState extends State<TransactionsList> {
         actions: <Widget>[
           IconButton(
             icon: Icon(showCompleted ? Icons.check_circle : Icons.check_circle_outline),
-            tooltip: 'Show completed',
+            tooltip: AppLocalizations.of(context).translate('Show completed'),
             onPressed: () {
               vibrate(FeedbackType.success);
               setState(() => showCompleted = !showCompleted);
@@ -31,14 +32,14 @@ class _TransactionsListState extends State<TransactionsList> {
           ),
           IconButton(
             icon: Icon(Icons.add_alert),
-            tooltip: 'Reminder',
+            tooltip: AppLocalizations.of(context).translate('Reminder'),
             onPressed: () {
               vibrate(FeedbackType.error);
               showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
-                  title: Text('Work in progress'),
-                  content: Text('This feature is not implemented yet.'),
+                  title: Text(AppLocalizations.of(context).translate('Work in progress')),
+                  content: Text(AppLocalizations.of(context).translate('This feature is not implemented yet.')),
                 )
               );
             }
@@ -51,7 +52,7 @@ class _TransactionsListState extends State<TransactionsList> {
               builder: (BuildContext context) => TransactionDetail(widget.person, Transaction())
             )
           ),
-        tooltip: 'New Person',
+        tooltip: AppLocalizations.of(context).translate('New transaction'),
         child: Icon(Icons.add),
       ),
       body: _buildTransactionsList(context),
@@ -89,7 +90,7 @@ class _TransactionsListState extends State<TransactionsList> {
                 padding: const EdgeInsets.all(8),
                 child: Column(
                   children: [
-                    Text('Debt', style: Theme.of(context).textTheme.title),
+                    Text(AppLocalizations.of(context).translate('Debt'), style: Theme.of(context).textTheme.title),
                     widget.person.getDebtAmountText(context)
                   ],
                 ),
@@ -98,7 +99,7 @@ class _TransactionsListState extends State<TransactionsList> {
                 padding: const EdgeInsets.all(8),
                 child: Column(
                   children: [
-                    Text('Credit', style: Theme.of(context).textTheme.title),
+                    Text(AppLocalizations.of(context).translate('Credit'), style: Theme.of(context).textTheme.title),
                     widget.person.getCreditAmountText(context)
                   ],
                 ),
@@ -111,7 +112,7 @@ class _TransactionsListState extends State<TransactionsList> {
                 padding: const EdgeInsets.all(8),
                 child: Column(
                   children: [
-                    Text('Total', style: Theme.of(context).textTheme.title),
+                    Text(AppLocalizations.of(context).translate('Total'), style: Theme.of(context).textTheme.title),
                     widget.person.getTotalAmountText(context)
                   ],
                 ),
@@ -124,7 +125,7 @@ class _TransactionsListState extends State<TransactionsList> {
       return Center(child: Row(
         children: <Widget>[
           Text(
-            'Tap on ',
+            AppLocalizations.of(context).translate('Tap on '),
             style: Theme.of(context).textTheme.headline.copyWith(color: Theme.of(context).textTheme.caption.color),
           ),
           Icon(
@@ -133,7 +134,7 @@ class _TransactionsListState extends State<TransactionsList> {
             size: Theme.of(context).textTheme.headline.fontSize,
           ),
           Text(
-            ' to add a transaction',
+            AppLocalizations.of(context).translate(' to add a transaction'),
             style: Theme.of(context).textTheme.headline.copyWith(color: Theme.of(context).textTheme.caption.color)
           )
         ],

@@ -1,3 +1,4 @@
+import 'package:easyrepay/app_localizations.dart';
 import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/model.dart';
 import 'package:easyrepay/views/transactions_list.dart';
@@ -26,7 +27,9 @@ class PersonRow extends StatelessWidget {
               children: <Widget>[
                 Text(person.name),
                 Text(
-                  '${person.transactionsCount} ' + (person.transactions.length == 1 ? 'transaction' : 'transactions'),
+                  '${person.transactionsCount} ' + (person.transactions.length == 1
+                    ? AppLocalizations.of(context).translate('transaction')
+                    : AppLocalizations.of(context).translate('transactions')),
                   style: Theme.of(context).textTheme.caption
                 )
               ],
@@ -106,10 +109,10 @@ class PersonRow extends StatelessWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Change name'),
+          title: Text(AppLocalizations.of(context).translate('Edit name')),
           content: TextField(
             controller: controller,
-            decoration: InputDecoration(hintText: 'Enter name'),
+            decoration: InputDecoration(hintText: AppLocalizations.of(context).translate('Enter name')),
             autofocus: true,
             keyboardType: TextInputType.text,
             textCapitalization: TextCapitalization.words,
@@ -118,14 +121,17 @@ class PersonRow extends StatelessWidget {
           ),
           actions: <Widget>[
             FlatButton(
-              child: Text('CANCEL'),
+              child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
               onPressed: () {
                 controller.clear();
                 Navigator.of(context).pop();
               }
             ),
             FlatButton(
-              child: Text('SAVE', style: TextStyle(fontWeight: FontWeight.bold)),
+              child: Text(
+                AppLocalizations.of(context).translate('SAVE'), 
+                style: TextStyle(fontWeight: FontWeight.bold)
+              ),
               onPressed: () => _saveEditedPerson(controller, context),
             ),
           ],

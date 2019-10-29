@@ -1,9 +1,11 @@
 import 'dart:io';
+import 'package:easyrepay/app_localizations.dart';
 import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/proto/easyrepay.pbserver.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -136,7 +138,7 @@ class Person {
       .where((t) => !t.completed)
       .fold(0.0, _sumFold);
     return Text(
-      currencyFormatter.format(amount.abs()),
+      AppLocalizations.of(context).currencyFormatter.format(amount.abs()),
       style: Theme.of(context).textTheme.title.copyWith(
         color: amount.isNegative ? DarkColors.orange : DarkColors.lightGreen
       )
@@ -148,7 +150,7 @@ class Person {
       .where((t) => !t.completed && (t.type == TransactionType.credit || t.type == TransactionType.settleDebt))
       .fold(0.0, _sumFold);
     return Text(
-      currencyFormatter.format(amount.abs()),
+      AppLocalizations.of(context).currencyFormatter.format(amount.abs()),
       style: Theme.of(context).textTheme.display1.copyWith(color: DarkColors.lightGreen)
     );
   }
@@ -158,7 +160,7 @@ class Person {
       .where((t) => !t.completed && (t.type == TransactionType.debt || t.type == TransactionType.settleCredit))
       .fold(0.0, _sumFold);
     return Text(
-      currencyFormatter.format(amount.abs()),
+      AppLocalizations.of(context).currencyFormatter.format(amount.abs()),
       style: Theme.of(context).textTheme.display1.copyWith(color: DarkColors.orange)
     );
   }
@@ -168,7 +170,7 @@ class Person {
       .where((t) => !t.completed)
       .fold(0.0, _sumFold);
     return Text(
-      currencyFormatter.format(amount.abs()),
+      AppLocalizations.of(context).currencyFormatter.format(amount.abs()),
       style: Theme.of(context).textTheme.display1.copyWith(
         color: amount.isNegative ? DarkColors.orange : DarkColors.lightGreen
       )
@@ -239,7 +241,7 @@ class Transaction {
 
   Text getAmountText(BuildContext context) {
     return Text(
-      currencyFormatter.format(amount.abs()),
+      AppLocalizations.of(context).currencyFormatter.format(amount.abs()),
       style: Theme.of(context).textTheme.title.copyWith(
         color: () {
           switch (type) {

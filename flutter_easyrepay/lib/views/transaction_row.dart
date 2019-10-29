@@ -1,5 +1,6 @@
 import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/model.dart';
+import 'package:easyrepay/app_localizations.dart';
 import 'package:easyrepay/views/transaction_detail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ class TransactionRow extends StatelessWidget {
             children: <Widget>[
               Text(transaction.description),
               Text(
-                dateFormatter.format(transaction.date),
+                AppLocalizations.dateFormatOf(context, transaction.date),
                 style: Theme.of(context).textTheme.caption,
               )
             ],

@@ -1,3 +1,4 @@
+import 'package:easyrepay/app_localizations.dart';
 import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/model.dart';
 import 'package:easyrepay/views/person_row.dart';
@@ -37,7 +38,7 @@ class _PeopleListState extends State<PeopleList> {
       body: _buildPeopleList(context),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _newPersonDialog(context),
-        tooltip: 'New Person',
+        tooltip: AppLocalizations.of(context).translate('Add person'),
         child: Icon(Icons.add),
       )
     );
@@ -55,7 +56,7 @@ class _PeopleListState extends State<PeopleList> {
       return Center(child: Row(
         children: <Widget>[
           Text(
-            'Tap on ',
+            AppLocalizations.of(context).translate('Tap on '),
             style: Theme.of(context).textTheme.headline.copyWith(color: Theme.of(context).textTheme.caption.color),
           ),
           Icon(
@@ -64,7 +65,7 @@ class _PeopleListState extends State<PeopleList> {
             size: Theme.of(context).textTheme.headline.fontSize,
           ),
           Text(
-            ' to add a person',
+            AppLocalizations.of(context).translate(' to add a person'),
             style: Theme.of(context).textTheme.headline.copyWith(color: Theme.of(context).textTheme.caption.color)
           )
         ],
@@ -79,10 +80,10 @@ class _PeopleListState extends State<PeopleList> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('New person'),
+          title: Text(AppLocalizations.of(context).translate('New person')),
           content: TextField(
             controller: _textFieldController,
-            decoration: InputDecoration(hintText: 'Enter name'),
+            decoration: InputDecoration(hintText: AppLocalizations.of(context).translate('Enter name')),
             autofocus: true,
             keyboardType: TextInputType.text,
             textCapitalization: TextCapitalization.words,
@@ -91,7 +92,7 @@ class _PeopleListState extends State<PeopleList> {
           ),
           actions: <Widget>[
             FlatButton(
-              child: Text('CANCEL'),
+              child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
               onPressed: () {
                 _textFieldController.clear();
                 Navigator.of(context).pop();
@@ -99,7 +100,7 @@ class _PeopleListState extends State<PeopleList> {
             ),
             FlatButton(
               child: Text(
-                'SAVE', 
+                AppLocalizations.of(context).translate('SAVE'),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: DarkColors.lightGreen,

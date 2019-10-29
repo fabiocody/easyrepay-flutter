@@ -1,19 +1,19 @@
+import 'package:easyrepay/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:vibrate/vibrate.dart';
 
 
-final amountTextFieldFormatter = () {
+/*final amountTextFieldFormatter = () {
   var formatter = NumberFormat();
   formatter.maximumFractionDigits = 2;
   formatter.minimumFractionDigits = 2;
   formatter.maximumIntegerDigits = 12;
   return formatter;
-}();
+}();*/
 
 
-final currencyFormatter = NumberFormat.simpleCurrency();
-final dateFormatter = DateFormat.yMd().add_jm();
+//final currencyFormatter = NumberFormat.simpleCurrency();
+//final dateFormatter = DateFormat.yMd().add_jm();
 
 
 class DarkColors {
@@ -31,6 +31,7 @@ class DarkColors {
 
 
 class BottomSheetItems {
+  // TODO: Localize
   static final rename = 'Rename';
   static final completed = 'Mark as completed';
   static final allCompleted = 'Mark all transactions as completed';

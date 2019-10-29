@@ -1,3 +1,4 @@
+import 'package:easyrepay/app_localizations.dart';
 import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/model.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
   void initState() {
     super.initState();
     _type = widget.transaction.type;
-    _amountController.text = amountTextFieldFormatter.format(widget.transaction.amount);
+    _amountController.text = AppLocalizations.of(context).amountTextFieldFormatter.format(widget.transaction.amount);
     _descriptionController.text = widget.transaction.description;
     _completed = widget.transaction.completed;
     _date = widget.transaction.date;
@@ -33,11 +34,11 @@ class _TransactionDetailState extends State<TransactionDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Transaction'),
+        title: Text(AppLocalizations.of(context).translate('Transaction')),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.save),
-            tooltip: 'Save',
+            tooltip: AppLocalizations.of(context).translate('Save'),
             onPressed: _save,
           )
         ],
@@ -48,12 +49,12 @@ class _TransactionDetailState extends State<TransactionDetail> {
 
   Widget _buildTransactionDetail(BuildContext context) {
     return ListView(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: EdgeInsets.symmetric(horizontal: 16),
       children: <Widget>[
         InputDecorator(
           decoration: InputDecoration(
-            icon: const Icon(Icons.account_balance_wallet),
-            labelText: 'Type'
+            icon: Icon(Icons.account_balance_wallet),
+            labelText: AppLocalizations.of(context).translate('Type')
           ),
           isEmpty: _type == null,
           child: DropdownButtonHideUnderline(
@@ -71,13 +72,13 @@ class _TransactionDetailState extends State<TransactionDetail> {
                   child: Text(() {
                     switch (value) {
                       case TransactionType.credit:
-                        return 'Credit';
+                        return AppLocalizations.of(context).translate('Credit');
                       case TransactionType.debt:
-                        return 'Debt';
+                        return AppLocalizations.of(context).translate('Debt');
                       case TransactionType.settleCredit:
-                        return 'Settle credit';
+                        return AppLocalizations.of(context).translate('Settle credit');
                       case TransactionType.settleDebt:
-                        return 'Settle debt';
+                        return AppLocalizations.of(context).translate('Settle debt');
                       default:
                         return '';
                     }
@@ -89,10 +90,10 @@ class _TransactionDetailState extends State<TransactionDetail> {
         ),
         TextFormField(
           controller: _amountController,
-          decoration: const InputDecoration(
-            icon: const Icon(Icons.attach_money),
-            labelText: 'Amount',
-            hintText: 'Enter the amount'
+          decoration: InputDecoration(
+            icon: Icon(Icons.attach_money),
+            labelText: AppLocalizations.of(context).translate('Amount'),
+            hintText: AppLocalizations.of(context).translate('Enter the amount'),
           ),
           keyboardType: TextInputType.number,
           inputFormatters: [
@@ -102,16 +103,16 @@ class _TransactionDetailState extends State<TransactionDetail> {
             var value = double.tryParse(text);
             if (value != null) {
               value /= 100;
-              _amountController.text = amountTextFieldFormatter.format(value);
+              _amountController.text = AppLocalizations.of(context).amountTextFieldFormatter.format(value);
             }
           },
         ),
         TextFormField(
           controller: _descriptionController,
-          decoration: const InputDecoration(
-            icon: const Icon(Icons.assignment),
-            labelText: 'Note',
-            hintText: 'Enter the note'
+          decoration: InputDecoration(
+            icon: Icon(Icons.assignment),
+            labelText: AppLocalizations.of(context).translate('Note'),
+            hintText: AppLocalizations.of(context).translate('Enter the note')
           ),
           textCapitalization: TextCapitalization.sentences,
         ),
@@ -125,7 +126,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
-                'Completed',
+                AppLocalizations.of(context).translate('Completed'),
                 style: Theme.of(context).textTheme.subhead,
               ),
               Switch(
@@ -144,10 +145,10 @@ class _TransactionDetailState extends State<TransactionDetail> {
           child: InputDecorator(
             decoration: InputDecoration(
               icon: const Icon(Icons.calendar_today),
-              labelText: 'Date',
+              labelText: AppLocalizations.of(context).translate('Date'),
             ),
             child: Text(
-              dateFormatter.format(_date),
+              AppLocalizations.dateFormatOf(context, _date),
               style: Theme.of(context).textTheme.subhead,
             ),
           ),

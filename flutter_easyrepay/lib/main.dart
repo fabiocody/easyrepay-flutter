@@ -1,3 +1,4 @@
+import 'package:easyrepay/app_localizations.dart';
 import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/views/people_list.dart';
 import 'package:flutter/material.dart';
@@ -29,12 +30,21 @@ void main() => runApp(MaterialApp(
   darkTheme: darkTheme,
   themeMode: ThemeMode.dark,
   localizationsDelegates: [
+    AppLocalizations.delegate,
     GlobalMaterialLocalizations.delegate,
     GlobalWidgetsLocalizations.delegate,
     GlobalCupertinoLocalizations.delegate,
   ],
   supportedLocales: [
-    const Locale('en'),
-    const Locale('it'),
+    const Locale('en', 'US'),
+    const Locale('it', 'IT'),
   ],
+  localeResolutionCallback: (locale, supportedLocales) {
+    print(locale);
+    for (var supportedLocale in supportedLocales)
+      if (supportedLocale.languageCode == locale.languageCode &&
+          supportedLocale.countryCode == locale.countryCode)
+        return supportedLocale;
+    return supportedLocales.first;
+  },
 ));
