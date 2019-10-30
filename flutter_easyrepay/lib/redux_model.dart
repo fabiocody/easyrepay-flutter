@@ -1,5 +1,7 @@
+import 'package:easyrepay/app_localizations.dart';
 import 'package:easyrepay/proto/easyrepay.pb.dart';
 import 'package:fixnum/fixnum.dart';
+import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 
@@ -61,10 +63,14 @@ class Person {
     Person(Uuid().v4(), name, List.unmodifiable([]), false, null);
 
   factory Person.from(Person p) => 
-    Person(p.id, p.name, p.transactions.map((t) => Transaction.from(t)), p.reminderActive, p.reminderDate);
+    Person(p.id, p.name, List.unmodifiable(p.transactions.map((t) => Transaction.from(t))), p.reminderActive, p.reminderDate);
 
-  /*factory Person.fromPB(PBPerson pb) =>
-    Person(pb.id, pb.name, pb.transactions.map())*/
+  factory Person.fromPB(PBPerson pb) =>
+    Person(pb.id, 
+           pb.name, 
+           List.unmodifiable(pb.transactions.map((t) => Transaction.fromPB(t)).toList()),
+           pb.reminderActive, 
+           DateTime.fromMillisecondsSinceEpoch(pb.reminderTimestamp.toInt() * 1000));
 
   PBPerson get protobuf {
     var p = PBPerson();
@@ -88,29 +94,29 @@ class Transaction {
 
   Transaction(this.id, this.type, this.amount, this.description, this.completed, this.date);
 
-  factory Transaction.initial({type=TransactionType.credit, amount=0, description='', completed=false, date}) => 
-    Transaction(Uuid().v4(), type, amount, description, completed, date == null ? DateTime.now() : date);
+  factory Transaction.initial({type, amount=0, description='', completed=false, date}) => 
+    Transaction(Uuid().v4(), 
+                type == null ? TransactionType.credit : type, 
+                amount, 
+                description, 
+                completed, 
+                date == null ? DateTime.now() : date);
 
   factory Transaction.from(Transaction t) =>
     Transaction(t.id, t.type, t.amount, t.description, t.completed, t.date);
 
+  factory Transaction.fromPB(PBTransaction pb) =>
+    Transaction(pb.id,
+                TransactionType.fromPB(pb.type),
+                pb.amount,
+                pb.description,
+                pb.completed,
+                DateTime.fromMillisecondsSinceEpoch(pb.timestamp.toInt() * 1000));
+
   PBTransaction get protobuf {
     var t = PBTransaction();
     t.id = id;
-    t.type = () {
-      switch (type) {
-        case TransactionType.credit:
-          return PBTransactionType.CREDIT;
-        case TransactionType.debt:
-          return PBTransactionType.DEBT;
-        case TransactionType.settleCredit:
-          return PBTransactionType.SETTLE_CREDIT;
-        case TransactionType.settleDebt:
-          return PBTransactionType.SETTLE_DEBT;
-        default:
-          return null;
-      }
-    }();
+    t.type = type.protobuf;
     t.amount = amount;
     t.description = description;
     t.completed = completed;
@@ -120,4 +126,54 @@ class Transaction {
 }
 
 
-enum TransactionType { credit, debt, settleCredit, settleDebt }
+class TransactionType {
+  static TransactionType _credit;
+  static TransactionType _debt;
+  static TransactionType _settleCredit;
+  static TransactionType _settleDebt;
+
+  static init(BuildContext context) {
+    _credit = TransactionType(AppLocalizations.of(context).translate('Credit'));
+    _debt = TransactionType(AppLocalizations.of(context).translate('Debt'));
+    _settleCredit = TransactionType(AppLocalizations.of(context).translate('Settle credit'));
+    _settleDebt = TransactionType(AppLocalizations.of(context).translate('Settle debt'));
+  }
+
+  static TransactionType get credit => _credit;
+  static TransactionType get debt => _debt;
+  static TransactionType get settleCredit => _settleCredit;
+  static TransactionType get settleDebt => _settleDebt;
+
+  final String string;
+
+  TransactionType(this.string);
+
+  factory TransactionType.fromPB(PBTransactionType pb) {
+    switch (pb) {
+      case PBTransactionType.CREDIT:
+        return _credit;
+      case PBTransactionType.DEBT:
+        return _debt;
+      case PBTransactionType.SETTLE_CREDIT:
+        return _settleCredit;
+      case PBTransactionType.SETTLE_DEBT:
+        return _settleDebt;
+      default:
+        return null;
+    }
+  }
+
+  PBTransactionType get protobuf {
+    if (string == TransactionType.credit.string) {
+      return PBTransactionType.CREDIT;
+    } else if (string == TransactionType.debt.string) {
+      return PBTransactionType.DEBT;
+    } else if (string == TransactionType.settleCredit.string) {
+      return PBTransactionType.SETTLE_CREDIT;
+    } else if (string == TransactionType.settleDebt.string) {
+      return PBTransactionType.SETTLE_DEBT;
+    } else {
+      return null;
+    }
+  }
+}
