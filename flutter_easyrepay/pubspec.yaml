@@ -27,6 +27,7 @@ dependencies:
   path_provider: ^1.4.0
   vibrate: ^0.0.4
   devicelocale: ^0.2.0
+  flutter_redux: ^0.5.3
 
 dev_dependencies:
   flutter_test:
