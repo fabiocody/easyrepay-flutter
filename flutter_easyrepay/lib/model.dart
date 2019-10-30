@@ -111,26 +111,14 @@ class Person {
     return p;
   }
 
-  int get transactionsCount {
-    return transactions.where((t) => !t.completed).length;
-  }
+  int get transactionsCount =>
+    transactions.where((t) => !t.completed).length;
 
-  void sortTransactions() {
+  void sortTransactions() =>
     transactions.sort((t1, t2) => t1.date.compareTo(t2.date));
-  }
 
-  double _sumFold(double value, Transaction t) {
-    switch(t.type) {
-      case TransactionType.credit:
-      case TransactionType.settleDebt:
-        return value + t.amount;
-      case TransactionType.debt:
-      case TransactionType.settleCredit:
-        return value - t.amount;
-      default:
-        return value;
-    }
-  }
+  double _sumFold(double value, Transaction t) =>
+    t.type.addOrSub(value, t.amount);
 
   Text getTotalAmountTextTile(BuildContext context) {
     var amount = transactions
@@ -187,27 +175,16 @@ class Transaction {
   bool completed;
   DateTime date;
 
-  Transaction({this.type=TransactionType.credit, this.amount=0, this.description='', this.completed=false, this.date}) {
+  Transaction({this.type, this.amount=0, this.description='', this.completed=false, this.date}) {
+    if (type == null)
+      type = TransactionType.credit;
     if (date == null)
       date = DateTime.now();
   }
 
   Transaction.fromPB(PBTransaction t) {
     id = t.id;
-    type = () {
-      switch (t.type) {
-        case PBTransactionType.CREDIT:
-          return TransactionType.credit;
-        case PBTransactionType.DEBT:
-          return TransactionType.debt;
-        case PBTransactionType.SETTLE_CREDIT:
-          return TransactionType.settleCredit;
-        case PBTransactionType.SETTLE_DEBT:
-          return TransactionType.settleDebt;
-        default:
-          return null;
-      }
-    }();
+    type = TransactionType.fromPB(t.type);
     amount = t.amount;
     description = t.description;
     completed = t.completed;
@@ -217,20 +194,7 @@ class Transaction {
   PBTransaction get protobuf {
     var t = PBTransaction();
     t.id = id;
-    t.type = () {
-      switch (type) {
-        case TransactionType.credit:
-          return PBTransactionType.CREDIT;
-        case TransactionType.debt:
-          return PBTransactionType.DEBT;
-        case TransactionType.settleCredit:
-          return PBTransactionType.SETTLE_CREDIT;
-        case TransactionType.settleDebt:
-          return PBTransactionType.SETTLE_DEBT;
-        default:
-          return null;
-      }
-    }();
+    t.type = type.protobuf;
     t.amount = amount;
     t.description = description;
     t.completed = completed;
@@ -241,25 +205,75 @@ class Transaction {
   Text getAmountText(BuildContext context) {
     return Text(
       AppLocalizations.of(context).currencyFormatter.format(amount.abs()),
-      style: Theme.of(context).textTheme.title.copyWith(
-        color: () {
-          switch (type) {
-            case TransactionType.credit:
-              return DarkColors.lightGreen;
-            case TransactionType.settleDebt:
-              return DarkColors.magenta;
-            case TransactionType.debt:
-              return DarkColors.orange;
-            case TransactionType.settleCredit:
-              return DarkColors.teal;
-            default:
-              return DarkColors.darkGrey;
-          }
-        }(),
-      )
+      style: Theme.of(context).textTheme.title.copyWith(color: type.color)
     );
   }
 }
 
 
-enum TransactionType { credit, debt, settleCredit, settleDebt }
+class TransactionType {
+  static final TransactionType credit = TransactionType('Credit');
+  static final TransactionType debt = TransactionType('Debt');
+  static final TransactionType settleCredit = TransactionType('Settle credit');
+  static final TransactionType settleDebt = TransactionType('Settle debt');
+
+  static final List<TransactionType> values = List.unmodifiable([credit, debt, settleCredit, settleDebt]);
+
+  final String _rawString;
+
+  TransactionType(this._rawString);
+
+  factory TransactionType.fromPB(PBTransactionType pb) {
+    switch (pb) {
+      case PBTransactionType.CREDIT:
+        return credit;
+      case PBTransactionType.DEBT:
+        return debt;
+      case PBTransactionType.SETTLE_CREDIT:
+        return settleCredit;
+      case PBTransactionType.SETTLE_DEBT:
+        return settleDebt;
+      default:
+        return null;
+    }
+  }
+
+  PBTransactionType get protobuf {
+    if (this == TransactionType.credit) {
+      return PBTransactionType.CREDIT;
+    } else if (this == TransactionType.debt) {
+      return PBTransactionType.DEBT;
+    } else if (this == TransactionType.settleCredit) {
+      return PBTransactionType.SETTLE_CREDIT;
+    } else if (this == TransactionType.settleDebt) {
+      return PBTransactionType.SETTLE_DEBT;
+    } else {
+      return null;
+    }
+  }
+
+  String string(BuildContext context) => AppLocalizations.of(context).translate(_rawString);
+
+  Color get color {
+    if (this == TransactionType.credit)
+      return DarkColors.lightGreen;
+    else if (this == TransactionType.debt)
+      return DarkColors.orange;
+    else if (this == TransactionType.settleCredit)
+      return DarkColors.teal;
+    else if (this == TransactionType.settleDebt)
+      return DarkColors.magenta;
+    return null;
+  }
+
+  get addOrSub {
+    if (this == TransactionType.credit || this == TransactionType.settleDebt)
+      return (v1, v2) => v1 + v2;
+    else if (this == TransactionType.debt || this == TransactionType.settleCredit)
+      return (v1, v2) => v1 - v2;
+    return (v, _) => v;
+  }
+
+  bool operator ==(o) => o is TransactionType && _rawString == o._rawString;
+  int get hashCode => _rawString.hashCode;
+}

@@ -73,20 +73,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
               items: TransactionType.values.map((value) {
                 return DropdownMenuItem(
                   value: value,
-                  child: Text(() {
-                    switch (value) {
-                      case TransactionType.credit:
-                        return AppLocalizations.of(context).translate('Credit');
-                      case TransactionType.debt:
-                        return AppLocalizations.of(context).translate('Debt');
-                      case TransactionType.settleCredit:
-                        return AppLocalizations.of(context).translate('Settle credit');
-                      case TransactionType.settleDebt:
-                        return AppLocalizations.of(context).translate('Settle debt');
-                      default:
-                        return '';
-                    }
-                  }())
+                  child: Text(value.string(context))
                 );
               }).toList(),
             )
