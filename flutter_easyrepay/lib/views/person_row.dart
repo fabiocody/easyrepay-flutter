@@ -1,15 +1,14 @@
 import 'package:easyrepay/app_localizations.dart';
 import 'package:easyrepay/helpers.dart';
-import 'package:easyrepay/model.dart';
+import 'package:easyrepay/redux/model.dart';
 import 'package:easyrepay/views/transactions_list.dart';
 import 'package:flutter/material.dart';
 import 'package:vibrate/vibrate.dart';
 
 class PersonRow extends StatelessWidget {
   final Person person;
-  final Function updateState;
 
-  PersonRow(this.person, this.updateState);
+  PersonRow(this.person);
 
   Widget build(BuildContext context) {
     var nameSplit = person.name.split(' ');
