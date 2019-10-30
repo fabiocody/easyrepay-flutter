@@ -1,7 +1,8 @@
 import 'package:easyrepay/app_localizations.dart';
 import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/redux/actions.dart';
-import 'package:easyrepay/redux/model.dart';
+import 'package:easyrepay/redux/model/app_state.dart';
+import 'package:easyrepay/redux/model/person.dart';
 import 'package:easyrepay/views/person_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -39,7 +40,7 @@ class PeopleList extends StatelessWidget {
         builder: (context, people) => ListView(
           padding: const EdgeInsets.only(top: 4),
           children: people.map(
-            (person) => PersonRow(person)
+            (person) => PersonRow(store, person)
           ).toList()
         ),
       );
@@ -106,7 +107,7 @@ class PeopleList extends StatelessWidget {
   }
 
   void _saveNewPerson(BuildContext context) {
-    store.dispatch(SaveNewPersonAction(_textFieldController.text));
+    store.dispatch(AddPersonAction(_textFieldController.text));
     _textFieldController.clear();
     Navigator.of(context).pop();
   }

@@ -1,6 +1,8 @@
 import 'package:easyrepay/app_localizations.dart';
 import 'package:easyrepay/helpers.dart';
-import 'package:easyrepay/model.dart';
+import 'package:easyrepay/redux/model/person.dart';
+import 'package:easyrepay/redux/model/transaction.dart';
+import 'package:easyrepay/redux/model/transaction_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:vibrate/vibrate.dart';
@@ -73,20 +75,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
               items: TransactionType.values.map((value) {
                 return DropdownMenuItem(
                   value: value,
-                  child: Text(() {
-                    switch (value) {
-                      case TransactionType.credit:
-                        return AppLocalizations.of(context).translate('Credit');
-                      case TransactionType.debt:
-                        return AppLocalizations.of(context).translate('Debt');
-                      case TransactionType.settleCredit:
-                        return AppLocalizations.of(context).translate('Settle credit');
-                      case TransactionType.settleDebt:
-                        return AppLocalizations.of(context).translate('Settle debt');
-                      default:
-                        return '';
-                    }
-                  }())
+                  child: Text(value.string(context))
                 );
               }).toList(),
             )
@@ -180,7 +169,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
   }
 
   void _save(BuildContext context) {
-    setState(() {
+    /*setState(() {
       widget.transaction.type = _type;
       widget.transaction.amount = AppLocalizations.of(context).amountTextFieldFormatter.parse(_amountController.text);
       widget.transaction.description = _descriptionController.text;
@@ -190,8 +179,8 @@ class _TransactionDetailState extends State<TransactionDetail> {
         widget.person.transactions.add(widget.transaction);
       }
       widget.person.sortTransactions();
-    });
-    DataStore.shared().save();
+    });*/
+    //DataStore.shared().save();
     Navigator.of(context).pop();
   }
 }

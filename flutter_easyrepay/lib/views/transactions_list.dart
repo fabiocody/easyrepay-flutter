@@ -1,33 +1,33 @@
 import 'package:easyrepay/app_localizations.dart';
 import 'package:easyrepay/helpers.dart';
-import 'package:easyrepay/model.dart';
+import 'package:easyrepay/redux/actions.dart';
+import 'package:easyrepay/redux/model/app_state.dart';
+import 'package:easyrepay/redux/model/person.dart';
+import 'package:easyrepay/redux/model/transaction.dart';
 import 'package:easyrepay/views/transaction_detail.dart';
 import 'package:easyrepay/views/transaction_row.dart';
 import 'package:flutter/material.dart';
+import 'package:redux/redux.dart';
 import 'package:vibrate/vibrate.dart';
 
 
-class TransactionsList extends StatefulWidget {
+class TransactionsList extends StatelessWidget {
+  final Store<AppState> store;
   final Person person;
-  TransactionsList(this.person);
-  State createState() => _TransactionsListState();
-}
 
-
-class _TransactionsListState extends State<TransactionsList> {
-  bool showCompleted = false;
+  TransactionsList(this.store, this.person);
 
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.person.name),
+        title: Text(person.name),
         actions: <Widget>[
           IconButton(
-            icon: Icon(showCompleted ? Icons.check_circle : Icons.check_circle_outline),
+            icon: Icon(store.state.showCompleted ? Icons.check_circle : Icons.check_circle_outline),
             tooltip: AppLocalizations.of(context).translate('Show completed'),
             onPressed: () {
               vibrate(FeedbackType.success);
-              setState(() => showCompleted = !showCompleted);
+              store.dispatch(ToggleShowCompletedAction());
             },
           ),
           IconButton(
@@ -49,7 +49,7 @@ class _TransactionsListState extends State<TransactionsList> {
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.of(context).push(
             MaterialPageRoute<void>(
-              builder: (BuildContext context) => TransactionDetail(widget.person, Transaction())
+              builder: (BuildContext context) => TransactionDetail(person, Transaction.initial())
             )
           ),
         tooltip: AppLocalizations.of(context).translate('New transaction'),
@@ -60,9 +60,9 @@ class _TransactionsListState extends State<TransactionsList> {
   }
 
   Widget _buildTransactionsList(BuildContext context) {
-    List<Transaction> transactions = widget.person.transactions;
-    if (!showCompleted) {
-      transactions = widget.person.transactions
+    List<Transaction> transactions = person.transactions;
+    if (store.state.showCompleted) {
+      transactions = person.transactions
         .where((transaction) => !transaction.completed)
         .toList();
     }
@@ -74,7 +74,7 @@ class _TransactionsListState extends State<TransactionsList> {
           Card(
             child: Column(
               children: transactions.map(
-                (t) => TransactionRow(widget.person, t, showCompleted, () => setState(() => null))
+                (t) => TransactionRow(store, person, t)
               ).toList(), 
             ),
           ),
@@ -91,7 +91,7 @@ class _TransactionsListState extends State<TransactionsList> {
                 child: Column(
                   children: [
                     Text(AppLocalizations.of(context).translate('Debt'), style: Theme.of(context).textTheme.title),
-                    widget.person.getDebtAmountText(context)
+                    person.getDebtAmountText(context)
                   ],
                 ),
               ))),
@@ -100,7 +100,7 @@ class _TransactionsListState extends State<TransactionsList> {
                 child: Column(
                   children: [
                     Text(AppLocalizations.of(context).translate('Credit'), style: Theme.of(context).textTheme.title),
-                    widget.person.getCreditAmountText(context)
+                    person.getCreditAmountText(context)
                   ],
                 ),
               ))),
@@ -113,7 +113,7 @@ class _TransactionsListState extends State<TransactionsList> {
                 child: Column(
                   children: [
                     Text(AppLocalizations.of(context).translate('Total'), style: Theme.of(context).textTheme.title),
-                    widget.person.getTotalAmountText(context)
+                    person.getTotalAmountText(context)
                   ],
                 ),
               ))),

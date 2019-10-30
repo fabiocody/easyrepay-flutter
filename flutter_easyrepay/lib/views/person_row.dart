@@ -1,14 +1,18 @@
 import 'package:easyrepay/app_localizations.dart';
 import 'package:easyrepay/helpers.dart';
-import 'package:easyrepay/redux/model.dart';
+import 'package:easyrepay/redux/actions.dart';
+import 'package:easyrepay/redux/model/app_state.dart';
+import 'package:easyrepay/redux/model/person.dart';
 import 'package:easyrepay/views/transactions_list.dart';
 import 'package:flutter/material.dart';
+import 'package:redux/redux.dart';
 import 'package:vibrate/vibrate.dart';
 
 class PersonRow extends StatelessWidget {
+  final Store<AppState> store;
   final Person person;
 
-  PersonRow(this.person);
+  PersonRow(this.store, this.person);
 
   Widget build(BuildContext context) {
     var nameSplit = person.name.split(' ');
@@ -44,7 +48,7 @@ class PersonRow extends StatelessWidget {
         onTap: () {
           Navigator.of(context).push(
             MaterialPageRoute<void>(
-              builder: (BuildContext context) => TransactionsList(person)
+              builder: (BuildContext context) => TransactionsList(store, person)
             )
           );
         },
@@ -91,14 +95,14 @@ class PersonRow extends StatelessWidget {
     if (action == BottomSheetItems.getShared(context).rename) {
       await _editPersonDialog(context);
     } else if (action == BottomSheetItems.getShared(context).allCompleted) {
-      person.transactions.forEach((t) => t.completed = true);
+      store.dispatch(AllTransactionsCompletedAction(person));
+      //person.transactions.forEach((t) => t.completed = true);
     } else if (action == BottomSheetItems.getShared(context).removeAllCompleted) {
       person.transactions.removeWhere((t) => t.completed);
     } else if (action == BottomSheetItems.getShared(context).delete) {
-      DataStore.shared().people.remove(person);
+      store.dispatch(RemovePersonAction(person));
+      //DataStore.shared().people.remove(person);
     }
-    DataStore.shared().save();
-    updateState();
     Navigator.of(context).pop();
   }
 
@@ -140,9 +144,7 @@ class PersonRow extends StatelessWidget {
   }
 
   void _saveEditedPerson(TextEditingController controller, BuildContext context) {
-    person.name = controller.text;
-    DataStore.shared().sortPeople();
-    DataStore.shared().save();
+    store.dispatch(EditPersonAction(person, person.copyWith(name: controller.text)));
     controller.clear();
     Navigator.of(context).pop();
   }
