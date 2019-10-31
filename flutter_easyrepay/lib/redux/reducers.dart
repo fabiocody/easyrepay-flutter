@@ -8,8 +8,9 @@ import 'package:flutter/foundation.dart';
 AppState appReducers(AppState state, dynamic action) {
   if (action is FetchDataAction) {
     if (kReleaseMode)
+      return AppState.initial();
+    else
       return AppState.debug();
-    return state;   // TODO Remove
   } else if (action is AddPersonAction) {
     List<Person> ppl = List.from(state.people)
       ..add(Person.initial(action.name))
@@ -24,11 +25,13 @@ AppState appReducers(AppState state, dynamic action) {
   } else if (action is EditPersonAction) {
     List<Person> ppl = List.from(state.people)
       ..remove(action.oldPerson)
-      ..add(action.newPerson);
+      ..add(action.newPerson)
+      ..sort((p1, p2) => p1.name.compareTo(p2.name));
     return state.copyWith(people: ppl);
   } else if (action is AddTransactionAction) {
     List<Transaction> tt = List.from(state.transactions)
-      ..add(action.transaction);
+      ..add(action.transaction)
+      ..sort((t1, t2) => t1.date.compareTo(t2.date));
     return state.copyWith(transactions: tt);
   } else if (action is RemoveTransactionAction) {
     List<Transaction> tt = List.from(state.transactions)
@@ -37,7 +40,8 @@ AppState appReducers(AppState state, dynamic action) {
   } else if (action is EditTransactionAction) {
     List<Transaction> tt = List.from(state.transactions)
       ..remove(action.oldTransaction)
-      ..add(action.newTransaction);
+      ..add(action.newTransaction)
+      ..sort((t1, t2) => t1.date.compareTo(t2.date));
     return state.copyWith(transactions: tt);
   } else if (action is AllTransactionsCompletedAction) {
     List<Transaction> tt = List.from(state.transactions);

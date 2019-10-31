@@ -1,7 +1,5 @@
 import 'package:easyrepay/app_localizations.dart';
-import 'package:easyrepay/proto/easyrepay.pb.dart';
 import 'package:easyrepay/redux/model/transaction_type.dart';
-import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
@@ -17,9 +15,9 @@ class Transaction {
 
   Transaction(this.id, this.personID, this.type, this.amount, this.description, this.completed, this.date);
 
-  factory Transaction.initial({type, amount=0.0, description='', completed=false, date}) => 
+  factory Transaction.initial({personID, type, double amount=0.0, description='', completed=false, date}) =>
     Transaction(Uuid().v4(), 
-                Uuid().v4(),
+                personID ?? Uuid().v4(),
                 type == null ? TransactionType.credit : type, 
                 amount, 
                 description, 
@@ -28,25 +26,6 @@ class Transaction {
 
   Transaction copyWith({String personID, TransactionType type, double amount, String description, bool completed, DateTime date}) =>
     Transaction(this.id, personID ?? this.personID, type ?? this.type, amount ?? this.amount, description ?? this.description, completed ?? this.completed, date ?? this.date);
-
-  /*factory Transaction.fromPB(PBTransaction pb) =>
-    Transaction(pb.id,
-                TransactionType.fromPB(pb.type),
-                pb.amount,
-                pb.description,
-                pb.completed,
-                DateTime.fromMillisecondsSinceEpoch(pb.timestamp.toInt() * 1000));*/
-
-  /*PBTransaction get protobuf {
-    var t = PBTransaction();
-    t.id = id;
-    t.type = type.protobuf;
-    t.amount = amount;
-    t.description = description;
-    t.completed = completed;
-    t.timestamp = Int64(date.millisecondsSinceEpoch ~/ 1000);
-    return t;
-  }*/
 
   Text getAmountText(BuildContext context) {
     return Text(

@@ -1,4 +1,5 @@
 import 'package:easyrepay/app_localizations.dart';
+import 'package:fixnum/fixnum.dart';
 import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/proto/easyrepay.pb.dart';
 import 'package:easyrepay/redux/model/person.dart';
@@ -20,33 +21,51 @@ class AppState {
 
   factory AppState.debug() {
     var ppl = [];
-    /*Person p;
-    p = Person.initial('Brooklyn Thompson');
-    p.transactions.add(Transaction.initial(type: TransactionType.debt, amount: 4.5, description: 'Pizza'));
-    p.transactions.add(Transaction.initial(type: TransactionType.credit, amount: 15, description: 'Pocket money'));
-    p.transactions.add(Transaction.initial(type: TransactionType.credit, amount: 7, description: 'Lunch', completed: true));
+    var tt = [];
+    var p = Person.initial('Brooklyn Thompson');
+    tt.add(Transaction.initial(personID: p.id, type: TransactionType.debt, amount: 4.5, description: 'Pizza'));
+    tt.add(Transaction.initial(personID: p.id, type: TransactionType.credit, amount: 15, description: 'Pocket money'));
+    tt.add(Transaction.initial(personID: p.id, type: TransactionType.credit, amount: 7, description: 'Lunch', completed: true));
     ppl.add(p);
     p = Person.initial('Steve Wilkins');
     ppl.add(p);
     p = Person.initial('Arthur Ford');
-    p.transactions.add(Transaction.initial(type: TransactionType.debt, amount: 7.8, description: 'Pens'));
+    tt.add(Transaction.initial(personID: p.id, type: TransactionType.debt, amount: 7.8, description: 'Pens'));
     ppl.add(p);
     p = Person.initial('Liam Mcmillan');
-    p.transactions.add(Transaction.initial(type: TransactionType.debt, amount: 4.99, description: 'Some debt'));
-    p.transactions.add(Transaction.initial(type: TransactionType.settleDebt, amount: 4.99, description: 'Some debt'));
-    p.transactions.add(Transaction.initial(type: TransactionType.credit, amount: 9.99, description: 'Some credit'));
-    p.transactions.add(Transaction.initial(type: TransactionType.settleCredit, amount: 9.99, description: 'Some credit'));
+    tt.add(Transaction.initial(personID: p.id, type: TransactionType.debt, amount: 4.99, description: 'Some debt'));
+    tt.add(Transaction.initial(personID: p.id, type: TransactionType.settleDebt, amount: 4.99, description: 'Some debt'));
+    tt.add(Transaction.initial(personID: p.id, type: TransactionType.credit, amount: 9.99, description: 'Some credit'));
+    tt.add(Transaction.initial(personID: p.id, type: TransactionType.settleCredit, amount: 9.99, description: 'Some credit'));
     ppl.add(p);
     p = Person.initial('Maggie Nicholls');
-    p.transactions.add(Transaction.initial(type: TransactionType.debt, amount: 12, description: 'CDs'));
+    tt.add(Transaction.initial(personID: p.id, type: TransactionType.debt, amount: 12, description: 'CDs'));
     ppl.add(p);
-    ppl.sort((p1, p2) => p1.name.compareTo(p2.name));*/
-    return AppState(ppl, [], false);
+    ppl.sort((p1, p2) => p1.name.compareTo(p2.name));
+    tt.sort((t1, t2) => t1.date.compareTo(t2.date));
+    return AppState(ppl, tt, false);
   }
 
-  /*factory AppState.fromPB(PBDataStore pb) {
-    return AppState(pb.people.map((p) => Person.fromPB(p)).toList(), false);
-  }*/
+  factory AppState.fromPB(PBDataStore pb) {
+    var ppl = [];
+    var tt = [];
+    for (PBPerson p in pb.people) {
+      ppl.add(Person(p.id,
+                     p.name,
+                     p.reminderActive,
+                     DateTime.fromMillisecondsSinceEpoch(p.reminderTimestamp.toInt() * 1000)));
+      for (PBTransaction t in p.transactions) {
+        tt.add(Transaction(t.id,
+                           p.id,
+                           TransactionType.fromPB(t.type),
+                           t.amount,
+                           t.description,
+                           t.completed,
+                           DateTime.fromMillisecondsSinceEpoch(t.timestamp.toInt() * 1000)));
+      }
+    }
+    return AppState(ppl, tt, false);
+  }
 
   AppState copyWith({List<Person> people, List<Transaction> transactions, bool showCompleted}) {
     var ppl = people == null ? this.people : people;
@@ -54,11 +73,29 @@ class AppState {
     return AppState(ppl, tt, showCompleted ?? this.showCompleted);
   }
 
-  /*PBDataStore get protobuf {
+  PBDataStore get protobuf {
     var store = PBDataStore();
-    store.people.addAll(people.map((p) => p.protobuf));
+    for (Person p in people) {
+      PBPerson pb = PBPerson();
+      pb.id = p.id;
+      pb.name = p.name;
+      pb.reminderActive = p.reminderActive;
+      pb.reminderTimestamp = Int64(p.reminderDate.millisecondsSinceEpoch ~/ 1000);
+      store.people.add(pb);
+    }
+    for (Transaction t in transactions) {
+      PBTransaction pb = PBTransaction();
+      pb.id = t.id;
+      pb.type = t.type.protobuf;
+      pb.amount = t.amount;
+      pb.description = t.description;
+      pb.completed = t.completed;
+      pb.timestamp = Int64(t.date.millisecondsSinceEpoch ~/ 1000);
+      PBPerson pbPerson = store.people.firstWhere((p) => p.id == t.personID);
+      pbPerson?.transactions?.add(pb);
+    }
     return store;
-  }*/
+  }
 
   List<Transaction> getTransactionsOf(Person p) => transactions
     .where((t) => t.personID == p.id)

@@ -23,13 +23,16 @@ class TransactionsList extends StatelessWidget {
       appBar: AppBar(
         title: Text(person.name),
         actions: <Widget>[
-          IconButton(
-            icon: Icon(store.state.showCompleted ? Icons.check_circle : Icons.check_circle_outline),
-            tooltip: AppLocalizations.of(context).translate('Show completed'),
-            onPressed: () {
-              vibrate(FeedbackType.success);
-              store.dispatch(ToggleShowCompletedAction());
-            },
+          StoreConnector<AppState, bool>(
+            converter: (store) => store.state.showCompleted,
+            builder: (context, value) => IconButton(
+              icon: Icon(value ? Icons.check_circle : Icons.check_circle_outline),
+              tooltip: AppLocalizations.of(context).translate('Show completed'),
+              onPressed: () {
+                vibrate(FeedbackType.success);
+                store.dispatch(ToggleShowCompletedAction());
+              },
+            ),
           ),
           IconButton(
             icon: Icon(Icons.add_alert),
@@ -61,90 +64,91 @@ class TransactionsList extends StatelessWidget {
   }
 
   Widget _buildTransactionsList(BuildContext context) {
-    List<Transaction> transactions = store.state.getTransactionsOf(person);
-    if (store.state.showCompleted) {
-      transactions = transactions
-        .where((transaction) => !transaction.completed)
-        .toList();
-    }
-    if (transactions.isNotEmpty) {
-      final double dividerIndent = 4;
-      return StoreConnector<AppState, List<Transaction>>(
-        converter: (store) => store.state.getTransactionsOf(person),
-        builder: (context, transactions) => ListView(
-          padding: const EdgeInsets.only(top: 4),
-          children: [
-            Card(
-              child: Column(
-                children: transactions.map(
-                  (t) => TransactionRow(store, person, t)
-                ).toList(), 
+    final double dividerIndent = 4;
+    return StoreConnector<AppState, List<Transaction>>(
+      converter: (store) {
+        var tt = store.state.getTransactionsOf(person);
+        if (!store.state.showCompleted)
+          tt = tt.where((t) => !t.completed).toList();
+        return tt;
+      },
+      builder: (context, transactions) {
+        if (transactions.isNotEmpty) {
+          return ListView(
+            padding: const EdgeInsets.only(top: 4),
+            children: [
+              Card(
+                child: Column(
+                  children: transactions.map(
+                    (t) => TransactionRow(store, person, t)
+                  ).toList(),
+                ),
               ),
-            ),
-            Divider(
-              indent: dividerIndent,
-              endIndent: dividerIndent,
-              color: Theme.of(context).textTheme.caption.color
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Expanded(child: Card(child: Container(
-                  padding: const EdgeInsets.all(8),
-                  child: Column(
-                    children: [
-                      Text(AppLocalizations.of(context).translate('Debt'), style: Theme.of(context).textTheme.title),
-                      store.state.getDebtAmountText(person, context)
-                    ],
-                  ),
-                ))),
-                Expanded(child: Card(child: Container(
-                  padding: const EdgeInsets.all(8),
-                  child: Column(
-                    children: [
-                      Text(AppLocalizations.of(context).translate('Credit'), style: Theme.of(context).textTheme.title),
-                      store.state.getCreditAmountText(person, context)
-                    ],
-                  ),
-                ))),
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(child: Card(child: Container(
-                  padding: const EdgeInsets.all(8),
-                  child: Column(
-                    children: [
-                      Text(AppLocalizations.of(context).translate('Total'), style: Theme.of(context).textTheme.title),
-                      store.state.getTotalAmountText(person, context)
-                    ],
-                  ),
-                ))),
-              ],
-            )
-          ],
-        ),
-      );
-    } else {
-      return Center(child: Row(
-        children: <Widget>[
-          Text(
-            AppLocalizations.of(context).translate('Tap on '),
-            style: Theme.of(context).textTheme.title.copyWith(color: Theme.of(context).textTheme.caption.color),
-          ),
-          Icon(
-            Icons.add_circle,
-            color: Theme.of(context).accentColor,
-            size: Theme.of(context).textTheme.title.fontSize,
-          ),
-          Text(
-            AppLocalizations.of(context).translate(' to add a transaction'),
-            style: Theme.of(context).textTheme.title.copyWith(color: Theme.of(context).textTheme.caption.color)
-          )
-        ],
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-      ));
-    }
+              Divider(
+                indent: dividerIndent,
+                endIndent: dividerIndent,
+                color: Theme.of(context).textTheme.caption.color
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Expanded(child: Card(child: Container(
+                    padding: const EdgeInsets.all(8),
+                    child: Column(
+                      children: [
+                        Text(AppLocalizations.of(context).translate('Debt'), style: Theme.of(context).textTheme.title),
+                        store.state.getDebtAmountText(person, context)
+                      ],
+                    ),
+                  ))),
+                  Expanded(child: Card(child: Container(
+                    padding: const EdgeInsets.all(8),
+                    child: Column(
+                      children: [
+                        Text(AppLocalizations.of(context).translate('Credit'), style: Theme.of(context).textTheme.title),
+                        store.state.getCreditAmountText(person, context)
+                      ],
+                    ),
+                  ))),
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(child: Card(child: Container(
+                    padding: const EdgeInsets.all(8),
+                    child: Column(
+                      children: [
+                        Text(AppLocalizations.of(context).translate('Total'), style: Theme.of(context).textTheme.title),
+                        store.state.getTotalAmountText(person, context)
+                      ],
+                    ),
+                  ))),
+                ],
+              )
+            ],
+          );
+        } else {
+          return Center(child: Row(
+            children: <Widget>[
+              Text(
+                AppLocalizations.of(context).translate('Tap on '),
+                style: Theme.of(context).textTheme.title.copyWith(color: Theme.of(context).textTheme.caption.color),
+              ),
+              Icon(
+                Icons.add_circle,
+                color: Theme.of(context).accentColor,
+                size: Theme.of(context).textTheme.title.fontSize,
+              ),
+              Text(
+                AppLocalizations.of(context).translate(' to add a transaction'),
+                style: Theme.of(context).textTheme.title.copyWith(color: Theme.of(context).textTheme.caption.color)
+              )
+            ],
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+          ));
+        }
+      }
+    );
   }
 }
