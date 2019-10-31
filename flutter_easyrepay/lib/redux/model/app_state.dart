@@ -46,6 +46,8 @@ class AppState {
     return AppState(ppl, tt, false);
   }
 
+  factory AppState.local() => AppState.initial();   // TODO: Read local data
+
   factory AppState.fromPB(PBDataStore pb) {
     var ppl = [];
     var tt = [];

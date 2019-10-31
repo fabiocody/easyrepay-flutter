@@ -1,16 +1,15 @@
 import 'package:easyrepay/redux/actions.dart';
 import 'package:easyrepay/redux/model/app_state.dart';
 import 'package:easyrepay/redux/model/person.dart';
+import 'package:easyrepay/redux/model/time_travel.dart';
 import 'package:easyrepay/redux/model/transaction.dart';
 import 'package:flutter/foundation.dart';
 
 
 AppState appReducers(AppState state, dynamic action) {
+  TimeTravel.shared.record(state);
   if (action is FetchDataAction) {
-    if (kReleaseMode)
-      return AppState.initial();
-    else
-      return AppState.debug();
+    return kReleaseMode ? AppState.local() : AppState.debug();
   } else if (action is AddPersonAction) {
     List<Person> ppl = List.from(state.people)
       ..add(Person.initial(action.name))
@@ -61,6 +60,8 @@ AppState appReducers(AppState state, dynamic action) {
     return state.copyWith(transactions: tt);
   } else if (action is ToggleShowCompletedAction) {
     return state.copyWith(showCompleted: !state.showCompleted);
+  } else if (action is UndoAction) {
+    return TimeTravel.shared.undo(state);
   }
   return state;
 }

@@ -5,9 +5,7 @@ This is the [Flutter](https://flutter.dev) porting of EasyRepay, and app that al
 ## TODO
 
 - Animations.
-- Localization.
-- Do not clone immutable objects.
-- Flatten (normalize) data structure ([link](https://redux.js.org/recipes/structuring-reducers/normalizing-state-shape)).
+- Undo.
 
 ## Credits
 
