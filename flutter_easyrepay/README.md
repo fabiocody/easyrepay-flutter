@@ -5,7 +5,7 @@ This is the [Flutter](https://flutter.dev) porting of EasyRepay, and app that al
 ## TODO
 
 - Animations.
-- Undo.
+- BUG: avatar throws RangeError (possible solution: check that the name is not empty before getting the initials).
 
 ## Credits
 
