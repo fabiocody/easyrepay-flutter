@@ -3,6 +3,7 @@ import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/redux/actions.dart';
 import 'package:easyrepay/redux/model/app_state.dart';
 import 'package:easyrepay/redux/model/person.dart';
+import 'package:easyrepay/redux/model/time_travel.dart';
 import 'package:easyrepay/redux/model/transaction.dart';
 import 'package:easyrepay/views/transaction_detail.dart';
 import 'package:easyrepay/views/transaction_row.dart';
@@ -22,43 +23,61 @@ class TransactionsList extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(person.name),
-        actions: <Widget>[
-          StoreConnector<AppState, bool>(
-            converter: (store) => store.state.showCompleted,
-            builder: (context, value) => IconButton(
-              icon: Icon(value ? Icons.check_circle : Icons.check_circle_outline),
-              tooltip: AppLocalizations.of(context).translate('Show completed'),
-              onPressed: () {
-                vibrate(FeedbackType.success);
-                store.dispatch(ToggleShowCompletedAction());
-              },
+      ),
+      bottomNavigationBar: BottomAppBar(
+        shape: AutomaticNotchedShape(ContinuousRectangleBorder(), StadiumBorder()),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(width: 12,),
+            IconButton(
+              icon: Icon(Icons.undo),
+              tooltip: AppLocalizations.of(context).translate('Undo'),
+              onPressed: TimeTravel.shared.canUndo ? () => store.dispatch(UndoAction()) : null,
             ),
-          ),
-          IconButton(
-            icon: Icon(Icons.add_alert),
-            tooltip: AppLocalizations.of(context).translate('Reminder'),
-            onPressed: () {
-              vibrate(FeedbackType.error);
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: Text(AppLocalizations.of(context).translate('Work in progress')),
-                  content: Text(AppLocalizations.of(context).translate('This feature is not implemented yet.')),
-                )
-              );
-            }
-          )
-        ],
+            Spacer(),
+            StoreConnector<AppState, bool>(
+              converter: (store) => store.state.showCompleted,
+              builder: (context, value) => IconButton(
+                icon: Icon(value ? Icons.check_circle : Icons.check_circle_outline),
+                tooltip: AppLocalizations.of(context).translate('Show completed'),
+                onPressed: () {
+                  vibrate(FeedbackType.success);
+                  store.dispatch(ToggleShowCompletedAction());
+                },
+              ),
+            ),
+            IconButton(
+              icon: Icon(Icons.add_alert),
+              tooltip: AppLocalizations.of(context).translate('Reminder'),
+              onPressed: () {
+                vibrate(FeedbackType.error);
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: Text(AppLocalizations.of(context).translate('Work in progress')),
+                    content: Text(AppLocalizations.of(context).translate('This feature is not implemented yet.')),
+                  )
+                );
+              }
+            ),
+            SizedBox(width: 12,),
+          ],
+        ),
+        color: DarkColors.surfaceOverlay,
+        notchMargin: 6,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.of(context).push(
-            MaterialPageRoute<void>(
-              builder: (BuildContext context) => TransactionDetail(store, person, Transaction.initial())
-            )
-          ),
-        tooltip: AppLocalizations.of(context).translate('New transaction'),
         child: Icon(Icons.add),
+        //icon: Icon(Icons.add),
+        //label: Text(AppLocalizations.of(context).translate('Add transaction')),
+        tooltip: AppLocalizations.of(context).translate('Add transaction'),
+        onPressed: () => Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            builder: (BuildContext context) => TransactionDetail(store, person, Transaction.initial())
+          )),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: _buildTransactionsList(context),
     );
   }

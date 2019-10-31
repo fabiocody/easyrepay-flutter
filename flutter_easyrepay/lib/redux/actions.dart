@@ -2,9 +2,6 @@ import 'package:easyrepay/redux/model/person.dart';
 import 'package:easyrepay/redux/model/transaction.dart';
 
 
-class FetchDataAction {}
-
-
 class AddPersonAction {
   final String name;
   AddPersonAction(this.name);

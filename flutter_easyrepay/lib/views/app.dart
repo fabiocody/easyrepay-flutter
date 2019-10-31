@@ -1,6 +1,5 @@
 import 'package:easyrepay/app_localizations.dart';
 import 'package:easyrepay/helpers.dart';
-import 'package:easyrepay/redux/actions.dart';
 import 'package:easyrepay/redux/model/app_state.dart';
 import 'package:easyrepay/views/people_list.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +19,6 @@ class App extends StatelessWidget {
       child: MaterialApp(
         title: 'EasyRepay',
         home: StoreBuilder<AppState>(
-          onInit: (store) => store.dispatch(FetchDataAction()),
           builder: (context, store) => PeopleList(store),
         ),
         theme: lightTheme,

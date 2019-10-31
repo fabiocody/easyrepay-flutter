@@ -1,5 +1,5 @@
 {
-    "Add person": "Aggiungi persona",
+    "Add person": "Nuova persona",
     "transaction": "transazione",
     "transactions": "transazioni",
     "New person": "Nuova persona",
@@ -9,7 +9,7 @@
     "Reminder": "Promemoria",
     "Work in progress": "Lavori in corso",
     "This feature is not implemented yet.": "Questa funzionalità non è ancora disponibile.",
-    "New transaction": "Nuova transazione",
+    "Add transaction": "Nuova transazione",
     "Debt": "Debito",
     "Credit": "Credito",
     "Settle debt": "Saldo debito",
@@ -31,5 +31,6 @@
     "Mark as completed": "Segna come completata",
     "Mark all transactions as completed": "Segna tutte le transazioni come completate",
     "Remove all completed transactions": "Rimuovi tutte le transazioni completate",
-    "Delete": "Elimina"
+    "Delete": "Elimina",
+    "Undo": "Annulla"
 }

@@ -7,9 +7,11 @@ class TimeTravel {
   static TimeTravel _shared = TimeTravel();
   static TimeTravel get shared => _shared;
 
+  bool get canUndo => _undoStack.isNotEmpty;
+
   void record(AppState state) =>
     _undoStack.add(state);
 
   AppState undo(AppState state) =>
-    _undoStack.isNotEmpty ? _undoStack.removeLast() : state;
+    canUndo ? _undoStack.removeLast() : state;
 }

@@ -5,6 +5,7 @@ import 'package:easyrepay/proto/easyrepay.pb.dart';
 import 'package:easyrepay/redux/model/person.dart';
 import 'package:easyrepay/redux/model/transaction.dart';
 import 'package:easyrepay/redux/model/transaction_type.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 
@@ -17,7 +18,9 @@ class AppState {
     this.people = List.unmodifiable(List.from(people)),
     this.transactions = List.unmodifiable(List.from(transactions));
 
-  factory AppState.initial() => AppState([], [], false);
+  factory AppState.empty() => AppState([], [], false);
+
+  factory AppState.initial() => kReleaseMode ? AppState.local() : AppState.debug();
 
   factory AppState.debug() {
     var ppl = [];
@@ -46,7 +49,7 @@ class AppState {
     return AppState(ppl, tt, false);
   }
 
-  factory AppState.local() => AppState.initial();   // TODO: Read local data
+  factory AppState.local() => AppState.empty();   // TODO: Read local data
 
   factory AppState.fromPB(PBDataStore pb) {
     var ppl = [];
