@@ -45,7 +45,7 @@ class TransactionRow extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute<void>(
-            builder: (BuildContext context) => TransactionDetail(person, transaction)
+            builder: (BuildContext context) => TransactionDetail(store, person, transaction)
           )
         );
       },
@@ -86,7 +86,7 @@ class TransactionRow extends StatelessWidget {
     if (action == BottomSheetItems.getShared(context).completed) {
       store.dispatch(TransactionCompletedAction(transaction));
     } else if (action == BottomSheetItems.getShared(context).delete) {
-      store.dispatch(RemoveTransactionAction(transaction, person));
+      store.dispatch(RemoveTransactionAction(transaction));
     }
     Navigator.of(context).pop();
   }

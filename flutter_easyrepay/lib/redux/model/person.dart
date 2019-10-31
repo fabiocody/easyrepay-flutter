@@ -1,11 +1,5 @@
-import 'package:easyrepay/app_localizations.dart';
-import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/proto/easyrepay.pb.dart';
-import 'package:easyrepay/redux/model/app_state.dart';
-import 'package:easyrepay/redux/model/transaction.dart';
-import 'package:easyrepay/redux/model/transaction_type.dart';
 import 'package:fixnum/fixnum.dart';
-import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 
@@ -38,7 +32,9 @@ class Person {
     return p;
   }
 
-  Person copyWith({String name, bool reminderActive, DateTime reminderDate}) {
-    return Person(id, name ?? this.name, reminderActive ?? this.reminderActive, reminderDate ?? this.reminderDate);
-  }
+  Person copyWith({String name, bool reminderActive, DateTime reminderDate}) =>
+    Person(this.id, name ?? this.name, reminderActive ?? this.reminderActive, reminderDate ?? this.reminderDate);
+
+  bool operator ==(o) => o is Person && id == o.id;
+  int get hashCode => id.hashCode;
 }

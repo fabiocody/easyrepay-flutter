@@ -1,17 +1,21 @@
 import 'package:easyrepay/app_localizations.dart';
 import 'package:easyrepay/helpers.dart';
+import 'package:easyrepay/redux/actions.dart';
+import 'package:easyrepay/redux/model/app_state.dart';
 import 'package:easyrepay/redux/model/person.dart';
 import 'package:easyrepay/redux/model/transaction.dart';
 import 'package:easyrepay/redux/model/transaction_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:redux/redux.dart';
 import 'package:vibrate/vibrate.dart';
 
 
 class TransactionDetail extends StatefulWidget {
+  final Store<AppState> store;
   final Transaction transaction;
   final Person person;
-  TransactionDetail(this.person, this.transaction);
+  TransactionDetail(this.store, this.person, this.transaction);
   State createState() => _TransactionDetailState();
 }
 
@@ -169,18 +173,17 @@ class _TransactionDetailState extends State<TransactionDetail> {
   }
 
   void _save(BuildContext context) {
-    /*setState(() {
-      widget.transaction.type = _type;
-      widget.transaction.amount = AppLocalizations.of(context).amountTextFieldFormatter.parse(_amountController.text);
-      widget.transaction.description = _descriptionController.text;
-      widget.transaction.completed = _completed;
-      widget.transaction.date = _date;
-      if (!widget.person.transactions.contains(widget.transaction)) {
-        widget.person.transactions.add(widget.transaction);
-      }
-      widget.person.sortTransactions();
-    });*/
-    //DataStore.shared().save();
+    final t = widget.transaction.copyWith(
+      type: _type,
+      amount: AppLocalizations.of(context).amountTextFieldFormatter.parse(_amountController.text),
+      description: _descriptionController.text,
+      completed: _completed,
+      date: _date,
+    );
+    if (widget.store.state.transactions.contains(widget.transaction))
+      widget.store.dispatch(EditTransactionAction(widget.transaction, t));
+    else
+      widget.store.dispatch(AddTransactionAction(t.copyWith(personID: widget.person.id)));
     Navigator.of(context).pop();
   }
 }

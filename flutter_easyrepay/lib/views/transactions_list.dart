@@ -7,6 +7,7 @@ import 'package:easyrepay/redux/model/transaction.dart';
 import 'package:easyrepay/views/transaction_detail.dart';
 import 'package:easyrepay/views/transaction_row.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:vibrate/vibrate.dart';
 
@@ -49,7 +50,7 @@ class TransactionsList extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.of(context).push(
             MaterialPageRoute<void>(
-              builder: (BuildContext context) => TransactionDetail(person, Transaction.initial())
+              builder: (BuildContext context) => TransactionDetail(store, person, Transaction.initial())
             )
           ),
         tooltip: AppLocalizations.of(context).translate('New transaction'),
@@ -62,64 +63,67 @@ class TransactionsList extends StatelessWidget {
   Widget _buildTransactionsList(BuildContext context) {
     List<Transaction> transactions = store.state.getTransactionsOf(person);
     if (store.state.showCompleted) {
-      transactions = store.state.getTransactionsOf(person)
+      transactions = transactions
         .where((transaction) => !transaction.completed)
         .toList();
     }
     if (transactions.isNotEmpty) {
       final double dividerIndent = 4;
-      return ListView(
-        padding: const EdgeInsets.only(top: 4),
-        children: [
-          Card(
-            child: Column(
-              children: transactions.map(
-                (t) => TransactionRow(store, person, t)
-              ).toList(), 
+      return StoreConnector<AppState, List<Transaction>>(
+        converter: (store) => store.state.getTransactionsOf(person),
+        builder: (context, transactions) => ListView(
+          padding: const EdgeInsets.only(top: 4),
+          children: [
+            Card(
+              child: Column(
+                children: transactions.map(
+                  (t) => TransactionRow(store, person, t)
+                ).toList(), 
+              ),
             ),
-          ),
-          Divider(
-            indent: dividerIndent,
-            endIndent: dividerIndent,
-            color: Theme.of(context).textTheme.caption.color
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Expanded(child: Card(child: Container(
-                padding: const EdgeInsets.all(8),
-                child: Column(
-                  children: [
-                    Text(AppLocalizations.of(context).translate('Debt'), style: Theme.of(context).textTheme.title),
-                    store.state.getDebtAmountText(person, context)
-                  ],
-                ),
-              ))),
-              Expanded(child: Card(child: Container(
-                padding: const EdgeInsets.all(8),
-                child: Column(
-                  children: [
-                    Text(AppLocalizations.of(context).translate('Credit'), style: Theme.of(context).textTheme.title),
-                    store.state.getCreditAmountText(person, context)
-                  ],
-                ),
-              ))),
-            ],
-          ),
-          Row(
-            children: [
-              Expanded(child: Card(child: Container(
-                padding: const EdgeInsets.all(8),
-                child: Column(
-                  children: [
-                    Text(AppLocalizations.of(context).translate('Total'), style: Theme.of(context).textTheme.title),
-                    store.state.getTotalAmountText(person, context)
-                  ],
-                ),
-              ))),
-            ],
-          )
-        ],
+            Divider(
+              indent: dividerIndent,
+              endIndent: dividerIndent,
+              color: Theme.of(context).textTheme.caption.color
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Expanded(child: Card(child: Container(
+                  padding: const EdgeInsets.all(8),
+                  child: Column(
+                    children: [
+                      Text(AppLocalizations.of(context).translate('Debt'), style: Theme.of(context).textTheme.title),
+                      store.state.getDebtAmountText(person, context)
+                    ],
+                  ),
+                ))),
+                Expanded(child: Card(child: Container(
+                  padding: const EdgeInsets.all(8),
+                  child: Column(
+                    children: [
+                      Text(AppLocalizations.of(context).translate('Credit'), style: Theme.of(context).textTheme.title),
+                      store.state.getCreditAmountText(person, context)
+                    ],
+                  ),
+                ))),
+              ],
+            ),
+            Row(
+              children: [
+                Expanded(child: Card(child: Container(
+                  padding: const EdgeInsets.all(8),
+                  child: Column(
+                    children: [
+                      Text(AppLocalizations.of(context).translate('Total'), style: Theme.of(context).textTheme.title),
+                      store.state.getTotalAmountText(person, context)
+                    ],
+                  ),
+                ))),
+              ],
+            )
+          ],
+        ),
       );
     } else {
       return Center(child: Row(

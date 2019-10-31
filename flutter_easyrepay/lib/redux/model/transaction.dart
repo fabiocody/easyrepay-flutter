@@ -17,7 +17,7 @@ class Transaction {
 
   Transaction(this.id, this.personID, this.type, this.amount, this.description, this.completed, this.date);
 
-  factory Transaction.initial({type, amount=0, description='', completed=false, date}) => 
+  factory Transaction.initial({type, amount=0.0, description='', completed=false, date}) => 
     Transaction(Uuid().v4(), 
                 Uuid().v4(),
                 type == null ? TransactionType.credit : type, 
@@ -26,8 +26,8 @@ class Transaction {
                 completed, 
                 date ?? DateTime.now());
 
- Transaction clone() =>
-    Transaction(id, personID, type, amount, description, completed, date);
+  Transaction copyWith({String personID, TransactionType type, double amount, String description, bool completed, DateTime date}) =>
+    Transaction(this.id, personID ?? this.personID, type ?? this.type, amount ?? this.amount, description ?? this.description, completed ?? this.completed, date ?? this.date);
 
   /*factory Transaction.fromPB(PBTransaction pb) =>
     Transaction(pb.id,
@@ -56,4 +56,7 @@ class Transaction {
       )
     );
   }
+
+  bool operator ==(o) => o is Transaction && id == o.id;
+  int get hashCode => id.hashCode;
 }
