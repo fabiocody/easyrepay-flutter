@@ -8,16 +8,18 @@ import 'package:uuid/uuid.dart';
 
 class Transaction {
   final String id;
+  final String personID;
   final TransactionType type;
   final double amount;
   final String description;
   final bool completed;
   final DateTime date;
 
-  Transaction(this.id, this.type, this.amount, this.description, this.completed, this.date);
+  Transaction(this.id, this.personID, this.type, this.amount, this.description, this.completed, this.date);
 
   factory Transaction.initial({type, amount=0, description='', completed=false, date}) => 
     Transaction(Uuid().v4(), 
+                Uuid().v4(),
                 type == null ? TransactionType.credit : type, 
                 amount, 
                 description, 
@@ -25,17 +27,17 @@ class Transaction {
                 date ?? DateTime.now());
 
  Transaction clone() =>
-    Transaction(id, type, amount, description, completed, date);
+    Transaction(id, personID, type, amount, description, completed, date);
 
-  factory Transaction.fromPB(PBTransaction pb) =>
+  /*factory Transaction.fromPB(PBTransaction pb) =>
     Transaction(pb.id,
                 TransactionType.fromPB(pb.type),
                 pb.amount,
                 pb.description,
                 pb.completed,
-                DateTime.fromMillisecondsSinceEpoch(pb.timestamp.toInt() * 1000));
+                DateTime.fromMillisecondsSinceEpoch(pb.timestamp.toInt() * 1000));*/
 
-  PBTransaction get protobuf {
+  /*PBTransaction get protobuf {
     var t = PBTransaction();
     t.id = id;
     t.type = type.protobuf;
@@ -44,7 +46,7 @@ class Transaction {
     t.completed = completed;
     t.timestamp = Int64(date.millisecondsSinceEpoch ~/ 1000);
     return t;
-  }
+  }*/
 
   Text getAmountText(BuildContext context) {
     return Text(

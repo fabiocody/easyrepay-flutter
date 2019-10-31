@@ -58,4 +58,10 @@ class TransactionCompletedAction {
 }
 
 
+class RemoveCompletedTransactionsAction {
+  final Person person;
+  RemoveCompletedTransactionsAction(this.person);
+}
+
+
 class ToggleShowCompletedAction {}

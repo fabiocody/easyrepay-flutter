@@ -60,9 +60,9 @@ class TransactionsList extends StatelessWidget {
   }
 
   Widget _buildTransactionsList(BuildContext context) {
-    List<Transaction> transactions = person.transactions;
+    List<Transaction> transactions = store.state.getTransactionsOf(person);
     if (store.state.showCompleted) {
-      transactions = person.transactions
+      transactions = store.state.getTransactionsOf(person)
         .where((transaction) => !transaction.completed)
         .toList();
     }
@@ -91,7 +91,7 @@ class TransactionsList extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(AppLocalizations.of(context).translate('Debt'), style: Theme.of(context).textTheme.title),
-                    person.getDebtAmountText(context)
+                    store.state.getDebtAmountText(person, context)
                   ],
                 ),
               ))),
@@ -100,7 +100,7 @@ class TransactionsList extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(AppLocalizations.of(context).translate('Credit'), style: Theme.of(context).textTheme.title),
-                    person.getCreditAmountText(context)
+                    store.state.getCreditAmountText(person, context)
                   ],
                 ),
               ))),
@@ -113,7 +113,7 @@ class TransactionsList extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(AppLocalizations.of(context).translate('Total'), style: Theme.of(context).textTheme.title),
-                    person.getTotalAmountText(context)
+                    store.state.getTotalAmountText(person, context)
                   ],
                 ),
               ))),

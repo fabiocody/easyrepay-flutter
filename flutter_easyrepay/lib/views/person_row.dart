@@ -11,8 +11,10 @@ import 'package:vibrate/vibrate.dart';
 class PersonRow extends StatelessWidget {
   final Store<AppState> store;
   final Person person;
+  final int transactionCount;
 
-  PersonRow(this.store, this.person);
+  PersonRow(this.store, this.person):
+    this.transactionCount = store.state.getTransactionCountOf(person);
 
   Widget build(BuildContext context) {
     var nameSplit = person.name.split(' ');
@@ -30,7 +32,7 @@ class PersonRow extends StatelessWidget {
               children: <Widget>[
                 Text(person.name),
                 Text(
-                  '${person.transactionsCount} ' + (person.transactions.length == 1
+                  '$transactionCount ' + (transactionCount == 1
                     ? AppLocalizations.of(context).translate('transaction')
                     : AppLocalizations.of(context).translate('transactions')),
                   style: Theme.of(context).textTheme.caption
@@ -38,7 +40,7 @@ class PersonRow extends StatelessWidget {
               ],
             ),
             Spacer(),
-            person.getTotalAmountTextTile(context)
+            store.state.getTotalAmountTextTile(person, context)
           ],
         ),
         trailing: Icon(
@@ -96,12 +98,10 @@ class PersonRow extends StatelessWidget {
       await _editPersonDialog(context);
     } else if (action == BottomSheetItems.getShared(context).allCompleted) {
       store.dispatch(AllTransactionsCompletedAction(person));
-      //person.transactions.forEach((t) => t.completed = true);
     } else if (action == BottomSheetItems.getShared(context).removeAllCompleted) {
-      person.transactions.removeWhere((t) => t.completed);
+      store.dispatch(RemoveCompletedTransactionsAction(person));
     } else if (action == BottomSheetItems.getShared(context).delete) {
       store.dispatch(RemovePersonAction(person));
-      //DataStore.shared().people.remove(person);
     }
     Navigator.of(context).pop();
   }
