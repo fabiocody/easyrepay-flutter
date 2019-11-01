@@ -6,8 +6,14 @@ import 'package:easyrepay/redux/model/transaction.dart';
 
 
 AppState appReducers(AppState state, dynamic action) {
-  if (!(action is UndoAction)) TimeTravel.shared.record(state);
-  if (action is AddPersonAction) {
+  if (! (action is UndoAction || action is LoadDataAction || action is LoadingFinishedAction)) 
+    TimeTravel.shared.record(state);
+  if (action is LoadDataAction) {
+    AppState.load().then((state) => action.store.dispatch(LoadingFinishedAction(state)));
+    return state.copyWith(isLoading: true, save: false);
+  } else if (action is LoadingFinishedAction) {
+    return action.state;
+  } else if (action is AddPersonAction) {
     List<Person> ppl = List.from(state.people)
       ..add(Person.initial(action.name))
       ..sort((p1, p2) => p1.name.compareTo(p2.name));
@@ -58,7 +64,9 @@ AppState appReducers(AppState state, dynamic action) {
   } else if (action is ToggleShowCompletedAction) {
     return state.copyWith(showCompleted: !state.showCompleted);
   } else if (action is UndoAction) {
-    return TimeTravel.shared.undo(state);
+    final AppState undoState = TimeTravel.shared.undo(state);
+    undoState.save();
+    return undoState;
   }
   return state;
 }

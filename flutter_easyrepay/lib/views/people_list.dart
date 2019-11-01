@@ -49,7 +49,7 @@ class PeopleList extends StatelessWidget {
         onPressed: () => _newPersonDialog(context),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      body: _buildPeopleList(context),
+      body: store.state.isLoading ? Center(child: CircularProgressIndicator(),) : _buildPeopleList(context),
     );
   }
 

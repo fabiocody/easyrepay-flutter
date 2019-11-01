@@ -1,5 +1,19 @@
+import 'package:easyrepay/redux/model/app_state.dart';
 import 'package:easyrepay/redux/model/person.dart';
 import 'package:easyrepay/redux/model/transaction.dart';
+import 'package:redux/redux.dart';
+
+
+class LoadDataAction {
+  final Store<AppState> store;
+  LoadDataAction(this.store);
+}
+
+
+class LoadingFinishedAction {
+  final AppState state;
+  LoadingFinishedAction(this.state);
+}
 
 
 class AddPersonAction {
