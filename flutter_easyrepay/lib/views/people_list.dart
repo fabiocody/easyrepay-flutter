@@ -1,31 +1,21 @@
 import 'package:easyrepay/app_localizations.dart';
 import 'package:easyrepay/helpers.dart';
-import 'package:easyrepay/model.dart';
+import 'package:easyrepay/redux/actions.dart';
+import 'package:easyrepay/redux/model/app_state.dart';
+import 'package:easyrepay/redux/model/person.dart';
+import 'package:easyrepay/redux/model/time_travel.dart';
 import 'package:easyrepay/views/person_row.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
 
 
-class PeopleList extends StatefulWidget {
-  final DataStore store = DataStore.shared();
-  State createState() => _PeopleListState();
-}
+class PeopleList extends StatelessWidget {
 
+  final Store<AppState> store;
+  final TextEditingController _textFieldController = TextEditingController();
 
-class _PeopleListState extends State<PeopleList> {
-
-  TextEditingController _textFieldController = TextEditingController();
-
-  void initState() {
-    super.initState();
-    if (kReleaseMode) {
-      widget.store.fillWithLocalData()
-        .then((v) => setState(() => null));
-    } else {
-      widget.store.fillWithDebugData()
-        .then((v) => setState(() => null));
-    }
-  }
+  PeopleList(this.store);
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,22 +25,44 @@ class _PeopleListState extends State<PeopleList> {
           textScaleFactor: 1.2,
         ),
       ),
-      body: _buildPeopleList(context),
+      bottomNavigationBar: BottomAppBar(
+        shape: AutomaticNotchedShape(ContinuousRectangleBorder(), StadiumBorder()),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(width: 12,),
+            IconButton(
+              icon: Icon(Icons.undo),
+              tooltip: AppLocalizations.of(context).translate('Undo'),
+              onPressed: TimeTravel.shared.canUndo ? () => store.dispatch(UndoAction()) : null
+            ),
+          ],
+        ),
+        color: DarkColors.surfaceOverlay,
+        notchMargin: 6,
+      ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _newPersonDialog(context),
-        tooltip: AppLocalizations.of(context).translate('Add person'),
         child: Icon(Icons.add),
-      )
+        //icon: Icon(Icons.add),
+        //label: Text(AppLocalizations.of(context).translate('Add person')),
+        tooltip: AppLocalizations.of(context).translate('Add person'),
+        onPressed: () => _newPersonDialog(context),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      body: store.state.isLoading ? Center(child: CircularProgressIndicator(),) : _buildPeopleList(context),
     );
   }
 
   Widget _buildPeopleList(BuildContext context) {
-    if (widget.store.people.isNotEmpty) {
-      return ListView(
-        padding: const EdgeInsets.only(top: 4),
-        children: widget.store.people.map(
-          (person) => PersonRow(person, () => setState(() => null))
-        ).toList()
+    if (store.state.people.isNotEmpty) {
+      return StoreConnector<AppState, List<Person>>(
+        converter: (store) => store.state.people,
+        builder: (context, people) => ListView(
+          padding: const EdgeInsets.only(top: 4),
+          children: people.map(
+            (person) => PersonRow(store, person)
+          ).toList()
+        ),
       );
     } else {
       return Center(child: Row(
@@ -88,7 +100,7 @@ class _PeopleListState extends State<PeopleList> {
             keyboardType: TextInputType.text,
             textCapitalization: TextCapitalization.words,
             keyboardAppearance: Theme.of(context).brightness,
-            onEditingComplete: _saveNewPerson,
+            onEditingComplete: () => _saveNewPerson(context),
           ),
           actions: <Widget>[
             FlatButton(
@@ -106,7 +118,7 @@ class _PeopleListState extends State<PeopleList> {
                   color: DarkColors.lightGreen,
                 )
               ),
-              onPressed: _saveNewPerson,
+              onPressed: () => _saveNewPerson(context),
             ),
           ],
         );
@@ -114,12 +126,8 @@ class _PeopleListState extends State<PeopleList> {
     );
   }
 
-  void _saveNewPerson() {
-    setState(() {
-      widget.store.people.add(Person(_textFieldController.text));
-      widget.store.sortPeople();
-    });
-    widget.store.save();
+  void _saveNewPerson(BuildContext context) {
+    store.dispatch(AddPersonAction(_textFieldController.text));
     _textFieldController.clear();
     Navigator.of(context).pop();
   }

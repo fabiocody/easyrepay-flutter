@@ -1,15 +1,20 @@
 import 'package:easyrepay/app_localizations.dart';
 import 'package:easyrepay/helpers.dart';
-import 'package:easyrepay/model.dart';
+import 'package:easyrepay/redux/actions.dart';
+import 'package:easyrepay/redux/model/app_state.dart';
+import 'package:easyrepay/redux/model/person.dart';
 import 'package:easyrepay/views/transactions_list.dart';
 import 'package:flutter/material.dart';
+import 'package:redux/redux.dart';
 import 'package:vibrate/vibrate.dart';
 
 class PersonRow extends StatelessWidget {
+  final Store<AppState> store;
   final Person person;
-  final Function updateState;
+  final int transactionCount;
 
-  PersonRow(this.person, this.updateState);
+  PersonRow(this.store, this.person):
+    this.transactionCount = store.state.getTransactionCountOf(person);
 
   Widget build(BuildContext context) {
     var nameSplit = person.name.split(' ');
@@ -17,7 +22,7 @@ class PersonRow extends StatelessWidget {
       child: ListTile(
         contentPadding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
         leading: CircleAvatar(
-          child: Text(nameSplit.sublist(0, nameSplit.length > 3 ? 3 : nameSplit.length).map((s) => s[0]).join(''))
+          child: Text(nameSplit.sublist(0, nameSplit.length > 3 ? 3 : nameSplit.length).map((s) => s.length > 0 ? s[0] : '').join(''))
         ),
         title: Row(
           children: <Widget>[
@@ -27,7 +32,7 @@ class PersonRow extends StatelessWidget {
               children: <Widget>[
                 Text(person.name),
                 Text(
-                  '${person.transactionsCount} ' + (person.transactions.length == 1
+                  '$transactionCount ' + (transactionCount == 1
                     ? AppLocalizations.of(context).translate('transaction')
                     : AppLocalizations.of(context).translate('transactions')),
                   style: Theme.of(context).textTheme.caption
@@ -35,7 +40,7 @@ class PersonRow extends StatelessWidget {
               ],
             ),
             Spacer(),
-            person.getTotalAmountTextTile(context)
+            store.state.getTotalAmountTextTile(person, context)
           ],
         ),
         trailing: Icon(
@@ -45,7 +50,7 @@ class PersonRow extends StatelessWidget {
         onTap: () {
           Navigator.of(context).push(
             MaterialPageRoute<void>(
-              builder: (BuildContext context) => TransactionsList(person)
+              builder: (BuildContext context) => TransactionsList(store, person)
             )
           );
         },
@@ -84,6 +89,7 @@ class PersonRow extends StatelessWidget {
       builder: (context) => ListView(
         children: menuItems,
         shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
       )
     );
   }
@@ -92,14 +98,12 @@ class PersonRow extends StatelessWidget {
     if (action == BottomSheetItems.getShared(context).rename) {
       await _editPersonDialog(context);
     } else if (action == BottomSheetItems.getShared(context).allCompleted) {
-      person.transactions.forEach((t) => t.completed = true);
+      store.dispatch(AllTransactionsCompletedAction(person));
     } else if (action == BottomSheetItems.getShared(context).removeAllCompleted) {
-      person.transactions.removeWhere((t) => t.completed);
+      store.dispatch(RemoveCompletedTransactionsAction(person));
     } else if (action == BottomSheetItems.getShared(context).delete) {
-      DataStore.shared().people.remove(person);
+      store.dispatch(RemovePersonAction(person));
     }
-    DataStore.shared().save();
-    updateState();
     Navigator.of(context).pop();
   }
 
@@ -141,9 +145,7 @@ class PersonRow extends StatelessWidget {
   }
 
   void _saveEditedPerson(TextEditingController controller, BuildContext context) {
-    person.name = controller.text;
-    DataStore.shared().sortPeople();
-    DataStore.shared().save();
+    store.dispatch(EditPersonAction(person, person.copyWith(name: controller.text)));
     controller.clear();
     Navigator.of(context).pop();
   }

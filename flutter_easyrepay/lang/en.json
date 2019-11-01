@@ -9,13 +9,13 @@
     "Reminder": "Reminder",
     "Work in progress": "Work in progress",
     "This feature is not implemented yet.": "This feature is not implemented yet.",
-    "New transaction": "New transaction",
+    "Add transaction": "Add transaction",
     "Debt": "Debt",
     "Credit": "Credit",
     "Settle debt": "Settle debt",
     "Settle credit": "Settle credit",
     "Total": "Total",
-    "Tap on ": "Tap on ",
+    "Tap on ": "Tap ",
     " to add a transaction": " to add a transaction",
     " to add a person": " to add a person",
     "Transaction": "Transaction",
@@ -31,5 +31,6 @@
     "Mark as completed": "Mark as completed",
     "Mark all transactions as completed": "Mark all transactions as completed",
     "Remove all completed transactions": "Remove all completed transactions",
-    "Delete": "Delete"
+    "Delete": "Delete",
+    "Undo": "Undo"
 }

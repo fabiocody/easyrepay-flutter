@@ -1,146 +1,173 @@
 import 'package:easyrepay/app_localizations.dart';
 import 'package:easyrepay/helpers.dart';
-import 'package:easyrepay/model.dart';
+import 'package:easyrepay/redux/actions.dart';
+import 'package:easyrepay/redux/model/app_state.dart';
+import 'package:easyrepay/redux/model/person.dart';
+import 'package:easyrepay/redux/model/time_travel.dart';
+import 'package:easyrepay/redux/model/transaction.dart';
 import 'package:easyrepay/views/transaction_detail.dart';
 import 'package:easyrepay/views/transaction_row.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
 import 'package:vibrate/vibrate.dart';
 
 
-class TransactionsList extends StatefulWidget {
+class TransactionsList extends StatelessWidget {
+  final Store<AppState> store;
   final Person person;
-  TransactionsList(this.person);
-  State createState() => _TransactionsListState();
-}
 
-
-class _TransactionsListState extends State<TransactionsList> {
-  bool showCompleted = false;
+  TransactionsList(this.store, this.person);
 
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.person.name),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(showCompleted ? Icons.check_circle : Icons.check_circle_outline),
-            tooltip: AppLocalizations.of(context).translate('Show completed'),
-            onPressed: () {
-              vibrate(FeedbackType.success);
-              setState(() => showCompleted = !showCompleted);
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.add_alert),
-            tooltip: AppLocalizations.of(context).translate('Reminder'),
-            onPressed: () {
-              vibrate(FeedbackType.error);
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: Text(AppLocalizations.of(context).translate('Work in progress')),
-                  content: Text(AppLocalizations.of(context).translate('This feature is not implemented yet.')),
-                )
-              );
-            }
-          )
-        ],
+        title: Text(person.name),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        shape: AutomaticNotchedShape(ContinuousRectangleBorder(), StadiumBorder()),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(width: 12,),
+            IconButton(
+              icon: Icon(Icons.undo),
+              tooltip: AppLocalizations.of(context).translate('Undo'),
+              onPressed: TimeTravel.shared.canUndo ? () => store.dispatch(UndoAction()) : null,
+            ),
+            Spacer(),
+            StoreConnector<AppState, bool>(
+              converter: (store) => store.state.showCompleted,
+              builder: (context, value) => IconButton(
+                icon: Icon(value ? Icons.check_circle : Icons.check_circle_outline),
+                tooltip: AppLocalizations.of(context).translate('Show completed'),
+                onPressed: () {
+                  vibrate(FeedbackType.success);
+                  store.dispatch(ToggleShowCompletedAction());
+                },
+              ),
+            ),
+            IconButton(
+              icon: Icon(Icons.add_alert),
+              tooltip: AppLocalizations.of(context).translate('Reminder'),
+              onPressed: () {
+                vibrate(FeedbackType.error);
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: Text(AppLocalizations.of(context).translate('Work in progress')),
+                    content: Text(AppLocalizations.of(context).translate('This feature is not implemented yet.')),
+                  )
+                );
+              }
+            ),
+            SizedBox(width: 12,),
+          ],
+        ),
+        color: DarkColors.surfaceOverlay,
+        notchMargin: 6,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.of(context).push(
-            MaterialPageRoute<void>(
-              builder: (BuildContext context) => TransactionDetail(widget.person, Transaction())
-            )
-          ),
-        tooltip: AppLocalizations.of(context).translate('New transaction'),
         child: Icon(Icons.add),
+        //icon: Icon(Icons.add),
+        //label: Text(AppLocalizations.of(context).translate('Add transaction')),
+        tooltip: AppLocalizations.of(context).translate('Add transaction'),
+        onPressed: () => Navigator.of(context).push(
+          MaterialPageRoute<void>(
+            builder: (BuildContext context) => TransactionDetail(store, person, Transaction.initial())
+          )),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       body: _buildTransactionsList(context),
     );
   }
 
   Widget _buildTransactionsList(BuildContext context) {
-    List<Transaction> transactions = widget.person.transactions;
-    if (!showCompleted) {
-      transactions = widget.person.transactions
-        .where((transaction) => !transaction.completed)
-        .toList();
-    }
-    if (transactions.isNotEmpty) {
-      final double dividerIndent = 4;
-      return ListView(
-        padding: const EdgeInsets.only(top: 4),
-        children: [
-          Card(
-            child: Column(
-              children: transactions.map(
-                (t) => TransactionRow(widget.person, t, showCompleted, () => setState(() => null))
-              ).toList(), 
-            ),
-          ),
-          Divider(
-            indent: dividerIndent,
-            endIndent: dividerIndent,
-            color: Theme.of(context).textTheme.caption.color
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+    final double dividerIndent = 4;
+    return StoreConnector<AppState, List<Transaction>>(
+      converter: (store) {
+        var tt = store.state.getTransactionsOf(person);
+        if (!store.state.showCompleted)
+          tt = tt.where((t) => !t.completed).toList();
+        return tt;
+      },
+      builder: (context, transactions) {
+        if (transactions.isNotEmpty) {
+          return ListView(
+            padding: const EdgeInsets.only(top: 4),
             children: [
-              Expanded(child: Card(child: Container(
-                padding: const EdgeInsets.all(8),
+              Card(
                 child: Column(
-                  children: [
-                    Text(AppLocalizations.of(context).translate('Debt'), style: Theme.of(context).textTheme.title),
-                    widget.person.getDebtAmountText(context)
-                  ],
+                  children: transactions.map(
+                    (t) => TransactionRow(store, person, t)
+                  ).toList(),
                 ),
-              ))),
-              Expanded(child: Card(child: Container(
-                padding: const EdgeInsets.all(8),
-                child: Column(
-                  children: [
-                    Text(AppLocalizations.of(context).translate('Credit'), style: Theme.of(context).textTheme.title),
-                    widget.person.getCreditAmountText(context)
-                  ],
-                ),
-              ))),
+              ),
+              Divider(
+                indent: dividerIndent,
+                endIndent: dividerIndent,
+                color: Theme.of(context).textTheme.caption.color
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Expanded(child: Card(child: Container(
+                    padding: const EdgeInsets.all(8),
+                    child: Column(
+                      children: [
+                        Text(AppLocalizations.of(context).translate('Debt'), style: Theme.of(context).textTheme.title),
+                        store.state.getDebtAmountText(person, context)
+                      ],
+                    ),
+                  ))),
+                  Expanded(child: Card(child: Container(
+                    padding: const EdgeInsets.all(8),
+                    child: Column(
+                      children: [
+                        Text(AppLocalizations.of(context).translate('Credit'), style: Theme.of(context).textTheme.title),
+                        store.state.getCreditAmountText(person, context)
+                      ],
+                    ),
+                  ))),
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(child: Card(child: Container(
+                    padding: const EdgeInsets.all(8),
+                    child: Column(
+                      children: [
+                        Text(AppLocalizations.of(context).translate('Total'), style: Theme.of(context).textTheme.title),
+                        store.state.getTotalAmountText(person, context)
+                      ],
+                    ),
+                  ))),
+                ],
+              )
             ],
-          ),
-          Row(
-            children: [
-              Expanded(child: Card(child: Container(
-                padding: const EdgeInsets.all(8),
-                child: Column(
-                  children: [
-                    Text(AppLocalizations.of(context).translate('Total'), style: Theme.of(context).textTheme.title),
-                    widget.person.getTotalAmountText(context)
-                  ],
-                ),
-              ))),
+          );
+        } else {
+          return Center(child: Row(
+            children: <Widget>[
+              Text(
+                AppLocalizations.of(context).translate('Tap on '),
+                style: Theme.of(context).textTheme.title.copyWith(color: Theme.of(context).textTheme.caption.color),
+              ),
+              Icon(
+                Icons.add_circle,
+                color: Theme.of(context).accentColor,
+                size: Theme.of(context).textTheme.title.fontSize,
+              ),
+              Text(
+                AppLocalizations.of(context).translate(' to add a transaction'),
+                style: Theme.of(context).textTheme.title.copyWith(color: Theme.of(context).textTheme.caption.color)
+              )
             ],
-          )
-        ],
-      );
-    } else {
-      return Center(child: Row(
-        children: <Widget>[
-          Text(
-            AppLocalizations.of(context).translate('Tap on '),
-            style: Theme.of(context).textTheme.title.copyWith(color: Theme.of(context).textTheme.caption.color),
-          ),
-          Icon(
-            Icons.add_circle,
-            color: Theme.of(context).accentColor,
-            size: Theme.of(context).textTheme.title.fontSize,
-          ),
-          Text(
-            AppLocalizations.of(context).translate(' to add a transaction'),
-            style: Theme.of(context).textTheme.title.copyWith(color: Theme.of(context).textTheme.caption.color)
-          )
-        ],
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-      ));
-    }
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+          ));
+        }
+      }
+    );
   }
 }

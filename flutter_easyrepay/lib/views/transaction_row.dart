@@ -1,22 +1,26 @@
 import 'package:easyrepay/helpers.dart';
-import 'package:easyrepay/model.dart';
 import 'package:easyrepay/app_localizations.dart';
+import 'package:easyrepay/redux/actions.dart';
+import 'package:easyrepay/redux/model/app_state.dart';
+import 'package:easyrepay/redux/model/person.dart';
+import 'package:easyrepay/redux/model/transaction.dart';
 import 'package:easyrepay/views/transaction_detail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:redux/redux.dart';
 import 'package:vibrate/vibrate.dart';
 
+
 class TransactionRow extends StatelessWidget {
+  final Store<AppState> store;
   final Person person;
   final Transaction transaction;
-  final bool showCompleted;
-  final Function updateState;
 
-  TransactionRow(this.person, this.transaction, this.showCompleted, this.updateState);
+  TransactionRow(this.store, this.person, this.transaction);
 
   Widget build(BuildContext context) {
     return ListTile(
-      leading: showCompleted ? _getCompletedIcon(context) : null,
+      leading: store.state.showCompleted ? _getCompletedIcon(context) : null,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
@@ -41,7 +45,7 @@ class TransactionRow extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute<void>(
-            builder: (BuildContext context) => TransactionDetail(person, transaction)
+            builder: (BuildContext context) => TransactionDetail(store, person, transaction)
           )
         );
       },
@@ -74,18 +78,17 @@ class TransactionRow extends StatelessWidget {
       builder: (context) => ListView(
         children: menuItems,
         shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
       )
     );
   }
 
   void _menuAction(String action, BuildContext context) async {
     if (action == BottomSheetItems.getShared(context).completed) {
-      transaction.completed = true;
+      store.dispatch(TransactionCompletedAction(transaction));
     } else if (action == BottomSheetItems.getShared(context).delete) {
-      person.transactions.remove(transaction);
+      store.dispatch(RemoveTransactionAction(transaction));
     }
-    DataStore.shared().save();
-    updateState();
     Navigator.of(context).pop();
   }
 }
