@@ -12,7 +12,7 @@ import 'package:path_provider/path_provider.dart';
 
 
 class AppState {
-  static final isRelease = !kReleaseMode;
+  static final isRelease = kReleaseMode;
   final List<Person> people;
   final List<Transaction> transactions;
   final bool showCompleted;
