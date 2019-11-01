@@ -22,7 +22,7 @@ class PersonRow extends StatelessWidget {
       child: ListTile(
         contentPadding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
         leading: CircleAvatar(
-          child: Text(nameSplit.sublist(0, nameSplit.length > 3 ? 3 : nameSplit.length).map((s) => s[0]).join(''))
+          child: Text(nameSplit.sublist(0, nameSplit.length > 3 ? 3 : nameSplit.length).map((s) => s.length > 0 ? s[0] : '').join(''))
         ),
         title: Row(
           children: <Widget>[
