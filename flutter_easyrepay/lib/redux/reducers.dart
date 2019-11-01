@@ -10,7 +10,7 @@ AppState appReducers(AppState state, dynamic action) {
     TimeTravel.shared.record(state);
   if (action is LoadDataAction) {
     AppState.load().then((state) => action.store.dispatch(LoadingFinishedAction(state)));
-    return state.copyWith(isLoading: true, save: false);
+    return state.copyWith(isLoading: true, needSave: false);
   } else if (action is LoadingFinishedAction) {
     return action.state;
   } else if (action is AddPersonAction) {

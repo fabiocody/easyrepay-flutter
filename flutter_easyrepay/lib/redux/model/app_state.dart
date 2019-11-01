@@ -18,13 +18,13 @@ class AppState {
   final bool showCompleted;
   final bool isLoading;
 
-  AppState(people, transactions, this.showCompleted, this.isLoading, {bool needsSave=true}):
+  AppState(people, transactions, this.showCompleted, this.isLoading, {bool needSave=true}):
       this.people = List.unmodifiable(people),
       this.transactions = List.unmodifiable(transactions) {
-    if (needsSave) save();
+    if (needSave) save();
   }
 
-  factory AppState.initial() => AppState([], [], false, false, needsSave: false);
+  factory AppState.initial() => AppState([], [], false, false, needSave: false);
 
   factory AppState.debug() {
     var ppl = [];
@@ -50,7 +50,7 @@ class AppState {
     ppl.add(p);
     ppl.sort((p1, p2) => p1.name.compareTo(p2.name));
     tt.sort((t1, t2) => t1.date.compareTo(t2.date));
-    return AppState(ppl, tt, false, false, needsSave: false);
+    return AppState(ppl, tt, false, false, needSave: false);
   }
 
   factory AppState.fromPB(PBDataStore pb) {
@@ -74,10 +74,10 @@ class AppState {
     return AppState(ppl, tt, false, false);
   }
 
-  AppState copyWith({List<Person> people, List<Transaction> transactions, bool showCompleted, bool isLoading, bool save=true}) {
+  AppState copyWith({List<Person> people, List<Transaction> transactions, bool showCompleted, bool isLoading, bool needSave=true}) {
     var ppl = people == null ? this.people : people;
     var tt = transactions == null ? this.transactions : transactions;
-    return AppState(ppl, tt, showCompleted ?? this.showCompleted, isLoading ?? this.isLoading, needsSave: save);
+    return AppState(ppl, tt, showCompleted ?? this.showCompleted, isLoading ?? this.isLoading, needSave: needSave);
   }
 
   PBDataStore get protobuf {
