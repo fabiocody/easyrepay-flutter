@@ -78,6 +78,7 @@ class TransactionRow extends StatelessWidget {
       builder: (context) => ListView(
         children: menuItems,
         shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
       )
     );
   }
