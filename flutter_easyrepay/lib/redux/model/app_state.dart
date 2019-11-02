@@ -27,9 +27,9 @@ class AppState {
   factory AppState.initial() => AppState([], [], false, false, needSave: false);
 
   factory AppState.debug() {
-    var ppl = [];
-    var tt = [];
-    var p = Person.initial('Brooklyn Thompson');
+    List<Person> ppl = [];
+    List<Transaction> tt = [];
+    Person p = Person.initial('Brooklyn Thompson');
     tt.add(Transaction.initial(personID: p.id, type: TransactionType.debt, amount: 4.5, description: 'Pizza'));
     tt.add(Transaction.initial(personID: p.id, type: TransactionType.credit, amount: 15, description: 'Pocket money'));
     tt.add(Transaction.initial(personID: p.id, type: TransactionType.credit, amount: 7, description: 'Lunch', completed: true));

@@ -64,13 +64,11 @@ class TransactionsList extends StatelessWidget {
             SizedBox(width: 12,),
           ],
         ),
-        color: DarkColors.surfaceOverlay,
+        color: Theme.of(context).primaryColor,
         notchMargin: 6,
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        //icon: Icon(Icons.add),
-        //label: Text(AppLocalizations.of(context).translate('Add transaction')),
         tooltip: AppLocalizations.of(context).translate('Add transaction'),
         onPressed: () => Navigator.of(context).push(
           MaterialPageRoute<void>(

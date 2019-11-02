@@ -57,6 +57,7 @@ var lightTheme = ThemeData(
 
 var darkTheme = ThemeData(
   brightness: Brightness.dark,
+  primaryColor: DarkColors.topBottomBar,
   primaryColorDark: DarkColors.lightGreen,
   accentColor: DarkColors.lightGreen,
   toggleableActiveColor: DarkColors.lightGreen,
