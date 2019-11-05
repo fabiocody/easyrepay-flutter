@@ -81,7 +81,7 @@ class AppState {
       .fold(0.0, _sumFold);
     return Text(
       AppLocalizations.of(context).currencyFormatter.format(amount.abs()),
-      style: Theme.of(context).textTheme.display1.copyWith(color: DarkColors.lightGreen)
+      style: Theme.of(context).textTheme.headline.copyWith(color: DarkColors.lightGreen)
     );
   }
 
@@ -91,7 +91,7 @@ class AppState {
       .fold(0.0, _sumFold);
     return Text(
       AppLocalizations.of(context).currencyFormatter.format(amount.abs()),
-      style: Theme.of(context).textTheme.display1.copyWith(color: DarkColors.orange)
+      style: Theme.of(context).textTheme.headline.copyWith(color: DarkColors.orange)
     );
   }
 
@@ -101,7 +101,7 @@ class AppState {
       .fold(0.0, _sumFold);
     return Text(
       AppLocalizations.of(context).currencyFormatter.format(amount.abs()),
-      style: Theme.of(context).textTheme.display1.copyWith(
+      style: Theme.of(context).textTheme.headline.copyWith(
         color: amount.isNegative ? DarkColors.orange : DarkColors.lightGreen
       )
     );

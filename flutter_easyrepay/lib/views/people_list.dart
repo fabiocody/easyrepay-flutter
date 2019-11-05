@@ -37,8 +37,8 @@ class PeopleList extends StatelessWidget {
             ),
           ],
         ),
-        color: Theme.of(context).primaryColor,
-        notchMargin: 6,
+        color: Theme.of(context).brightness == Brightness.dark ? Theme.of(context).primaryColor : null,
+        notchMargin: 4,
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),

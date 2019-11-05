@@ -66,7 +66,7 @@ class _TransactionsListState extends State<TransactionsList> {
           ],
         ),
         color: Theme.of(context).primaryColor,
-        notchMargin: 6,
+        notchMargin: 4,
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
@@ -93,17 +93,18 @@ class _TransactionsListState extends State<TransactionsList> {
           return ListView(
             padding: const EdgeInsets.only(top: 4),
             children: [
-              Card(
-                child: Column(
-                  children: transactions
-                    .map((t) => TransactionRow(widget.store, widget.person, t, showCompleted))
-                    .toList(),
-                ),
-              ),
-              Divider(
-                indent: dividerIndent,
-                endIndent: dividerIndent,
-                color: Theme.of(context).textTheme.caption.color
+              Row(
+                children: [
+                  Expanded(child: Card(child: Container(
+                    padding: const EdgeInsets.all(8),
+                    child: Column(
+                      children: [
+                        Text(AppLocalizations.of(context).translate('Total'), style: Theme.of(context).textTheme.title),
+                        widget.store.state.getTotalAmountText(widget.person, context)
+                      ],
+                    ),
+                  ))),
+                ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -128,19 +129,18 @@ class _TransactionsListState extends State<TransactionsList> {
                   ))),
                 ],
               ),
-              Row(
-                children: [
-                  Expanded(child: Card(child: Container(
-                    padding: const EdgeInsets.all(8),
-                    child: Column(
-                      children: [
-                        Text(AppLocalizations.of(context).translate('Total'), style: Theme.of(context).textTheme.title),
-                        widget.store.state.getTotalAmountText(widget.person, context)
-                      ],
-                    ),
-                  ))),
-                ],
-              )
+              Divider(
+                indent: dividerIndent,
+                endIndent: dividerIndent,
+                color: Theme.of(context).textTheme.caption.color
+              ),
+              Card(
+                child: Column(
+                  children: transactions
+                    .map((t) => TransactionRow(widget.store, widget.person, t, showCompleted))
+                    .toList(),
+                ),
+              ),
             ],
           );
         } else {
