@@ -36,6 +36,6 @@ class Transaction {
     );
   }
 
-  bool operator ==(o) => o is Transaction && id == o.id;
+  bool operator ==(o) => o is Transaction && id == o.id && personID == o.personID && type == o.type && amount == o.amount && description == o.description && completed == o.completed && date == o.date;
   int get hashCode => id.hashCode;
 }

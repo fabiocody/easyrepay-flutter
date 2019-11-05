@@ -45,7 +45,7 @@ class AppState {
     return AppState(ppl, tt, null);
   }
 
-  AppState copyWith({List<Person> people, List<Transaction> transactions, bool showCompleted, bool needSave=true, AppState prevState}) {
+  AppState copyWith({List<Person> people, List<Transaction> transactions, bool showCompleted, bool needSave=true}) {
     return AppState(people ?? this.people, transactions ?? this.transactions, this);
   }
 

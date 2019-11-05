@@ -83,13 +83,12 @@ class _TransactionsListState extends State<TransactionsList> {
 
   Widget _buildTransactionsList(BuildContext context) {
     final double dividerIndent = 4;
-    /*final List<Transaction> transactions = widget.store.state.getTransactionsOf(widget.person)
-      .where((t) => showCompleted ? true : !t.completed).toList();*/
     return StoreConnector<AppState, List<Transaction>>(
       converter: (store) {
         return store.state.getTransactionsOf(widget.person);
       },
-      builder: (context, transactions) {
+      builder: (context, allTransactions) {
+        final List<Transaction> transactions = allTransactions.where((t) => showCompleted ? true : !t.completed).toList();
         if (transactions.isNotEmpty) {
           return ListView(
             padding: const EdgeInsets.only(top: 4),
@@ -97,7 +96,6 @@ class _TransactionsListState extends State<TransactionsList> {
               Card(
                 child: Column(
                   children: transactions
-                    .where((t) => showCompleted ? true : !t.completed)
                     .map((t) => TransactionRow(widget.store, widget.person, t, showCompleted))
                     .toList(),
                 ),

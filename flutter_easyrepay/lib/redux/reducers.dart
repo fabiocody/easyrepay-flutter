@@ -91,4 +91,6 @@ AppState _onRemoveCompletedTransactions(AppState state, RemoveCompletedTransacti
 }
 
 
-AppState _onUndo(AppState state, UndoAction action) => state.prevState;
+AppState _onUndo(AppState state, UndoAction action) {
+  return state.canUndo ? state.prevState : state;
+}

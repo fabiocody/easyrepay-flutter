@@ -15,6 +15,6 @@ class Person {
   Person copyWith({String name, bool reminderActive, DateTime reminderDate}) =>
     Person(this.id, name ?? this.name, reminderActive ?? this.reminderActive, reminderDate ?? this.reminderDate);
 
-  bool operator ==(o) => o is Person && id == o.id;
+  bool operator ==(o) => o is Person && id == o.id && name == o.name;
   int get hashCode => id.hashCode;
 }
