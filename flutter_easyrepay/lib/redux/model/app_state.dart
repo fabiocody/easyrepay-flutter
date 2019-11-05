@@ -1,32 +1,25 @@
-import 'dart:io';
 import 'package:easyrepay/app_localizations.dart';
-import 'package:fixnum/fixnum.dart';
 import 'package:easyrepay/helpers.dart';
-import 'package:easyrepay/proto/easyrepay.pb.dart';
 import 'package:easyrepay/redux/model/person.dart';
 import 'package:easyrepay/redux/model/transaction.dart';
 import 'package:easyrepay/redux/model/transaction_type.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 
 
 class AppState {
-  static final isRelease = kReleaseMode;
   final List<Person> people;
   final List<Transaction> transactions;
   final bool showCompleted;
-  final bool isLoading;
+  final AppState prevState;
 
-  AppState(people, transactions, this.showCompleted, this.isLoading, {bool needSave=true}):
+  AppState(people, transactions, this.showCompleted, this.prevState):
       this.people = List.unmodifiable(people),
-      this.transactions = List.unmodifiable(transactions) {
-    if (needSave) save();
-  }
+      this.transactions = List.unmodifiable(transactions);
 
-  factory AppState.initial() => AppState([], [], false, false, needSave: false);
+  factory AppState.initial() => kReleaseMode ? AppState([], [], false, null) : AppState._debug();
 
-  factory AppState.debug() {
+  factory AppState._debug() {
     List<Person> ppl = [];
     List<Transaction> tt = [];
     Person p = Person.initial('Brooklyn Thompson');
@@ -50,90 +43,14 @@ class AppState {
     ppl.add(p);
     ppl.sort((p1, p2) => p1.name.compareTo(p2.name));
     tt.sort((t1, t2) => t1.date.compareTo(t2.date));
-    return AppState(ppl, tt, false, false, needSave: false);
+    return AppState(ppl, tt, false, null);
   }
 
-  factory AppState.fromPB(PBDataStore pb) {
-    var ppl = [];
-    var tt = [];
-    for (PBPerson p in pb.people) {
-      ppl.add(Person(p.id,
-                     p.name,
-                     p.reminderActive,
-                     DateTime.fromMillisecondsSinceEpoch(p.reminderTimestamp.toInt() * 1000)));
-      for (PBTransaction t in p.transactions) {
-        tt.add(Transaction(t.id,
-                           p.id,
-                           TransactionType.fromPB(t.type),
-                           t.amount,
-                           t.description,
-                           t.completed,
-                           DateTime.fromMillisecondsSinceEpoch(t.timestamp.toInt() * 1000)));
-      }
-    }
-    return AppState(ppl, tt, false, false);
+  AppState copyWith({List<Person> people, List<Transaction> transactions, bool showCompleted, bool needSave=true, AppState prevState}) {
+    return AppState(people ?? this.people, transactions ?? this.transactions, showCompleted ?? this.showCompleted, this);
   }
 
-  AppState copyWith({List<Person> people, List<Transaction> transactions, bool showCompleted, bool isLoading, bool needSave=true}) {
-    var ppl = people == null ? this.people : people;
-    var tt = transactions == null ? this.transactions : transactions;
-    return AppState(ppl, tt, showCompleted ?? this.showCompleted, isLoading ?? this.isLoading, needSave: needSave);
-  }
-
-  PBDataStore get protobuf {
-    var store = PBDataStore();
-    for (Person p in people) {
-      PBPerson pb = PBPerson();
-      pb.id = p.id;
-      pb.name = p.name;
-      pb.reminderActive = p.reminderActive;
-      if (p.reminderDate != null) pb.reminderTimestamp = Int64(p.reminderDate.millisecondsSinceEpoch ~/ 1000);
-      store.people.add(pb);
-    }
-    for (Transaction t in transactions) {
-      PBTransaction pb = PBTransaction();
-      pb.id = t.id;
-      pb.type = t.type.protobuf;
-      pb.amount = t.amount;
-      pb.description = t.description;
-      pb.completed = t.completed;
-      pb.timestamp = Int64(t.date.millisecondsSinceEpoch ~/ 1000);
-      PBPerson pbPerson = store.people.firstWhere((p) => p.id == t.personID);
-      pbPerson?.transactions?.add(pb);
-    }
-    return store;
-  }
-
-  static Future<AppState> load() async =>
-    isRelease ? _loadLocal() : Future<AppState>.value(AppState.debug());
-
-  void save() async {
-    if (isRelease) _saveLocal();
-  }
-
-  static Future<File> get _localFile async {
-    final directory = await getApplicationDocumentsDirectory();
-    final path = directory.path;
-    return File('$path/easyrepay_datastore.pb');
-  }
-
-  static Future<AppState> _loadLocal() async {
-    try {
-      final file = await _localFile;
-      final bytes = await file.readAsBytes();
-      final pbStore = PBDataStore.fromBuffer(bytes);
-      return AppState.fromPB(pbStore);
-    } catch (e) {
-      print(e);
-      return AppState.initial();
-    }
-  }
-
-  void _saveLocal() async {
-    final file = await _localFile;
-    file.writeAsBytes(protobuf.writeToBuffer());
-    print('SAVED');
-  }
+  bool get canUndo => prevState != null;
 
   List<Transaction> getTransactionsOf(Person p) => transactions
     .where((t) => t.personID == p.id)

@@ -3,7 +3,6 @@ import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/redux/actions.dart';
 import 'package:easyrepay/redux/model/app_state.dart';
 import 'package:easyrepay/redux/model/person.dart';
-import 'package:easyrepay/redux/model/time_travel.dart';
 import 'package:easyrepay/views/person_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -34,7 +33,7 @@ class PeopleList extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.undo),
               tooltip: AppLocalizations.of(context).translate('Undo'),
-              onPressed: TimeTravel.shared.canUndo ? () => store.dispatch(UndoAction()) : null
+              onPressed: store.state.canUndo ? () => store.dispatch(UndoAction()) : null
             ),
           ],
         ),
@@ -47,7 +46,7 @@ class PeopleList extends StatelessWidget {
         onPressed: () => _newPersonDialog(context),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      body: store.state.isLoading ? Center(child: CircularProgressIndicator(),) : _buildPeopleList(context),
+      body: _buildPeopleList(context),
     );
   }
 

@@ -3,7 +3,6 @@ import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/redux/actions.dart';
 import 'package:easyrepay/redux/model/app_state.dart';
 import 'package:easyrepay/redux/model/person.dart';
-import 'package:easyrepay/redux/model/time_travel.dart';
 import 'package:easyrepay/redux/model/transaction.dart';
 import 'package:easyrepay/views/transaction_detail.dart';
 import 'package:easyrepay/views/transaction_row.dart';
@@ -33,7 +32,7 @@ class TransactionsList extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.undo),
               tooltip: AppLocalizations.of(context).translate('Undo'),
-              onPressed: TimeTravel.shared.canUndo ? () => store.dispatch(UndoAction()) : null,
+              onPressed: store.state.canUndo ? () => store.dispatch(UndoAction()) : null,
             ),
             Spacer(),
             StoreConnector<AppState, bool>(
