@@ -7,13 +7,6 @@ import 'package:easyrepay/redux/model/transaction_type.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter/foundation.dart';
 import 'package:redux_persist/redux_persist.dart';
-import 'package:redux_persist_flutter/redux_persist_flutter.dart';
-
-
-final persistor = Persistor<AppState>(
-  storage: FlutterStorage(location: FlutterSaveLocation.documentFile),
-  serializer: ProtobufSerializer(),
-);
 
 
 class ProtobufSerializer implements StateSerializer<AppState> {
