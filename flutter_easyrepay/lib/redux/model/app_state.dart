@@ -10,14 +10,13 @@ import 'package:flutter/material.dart';
 class AppState {
   final List<Person> people;
   final List<Transaction> transactions;
-  final bool showCompleted;
   final AppState prevState;
 
-  AppState(people, transactions, this.showCompleted, this.prevState):
+  AppState(people, transactions, this.prevState):
       this.people = List.unmodifiable(people),
       this.transactions = List.unmodifiable(transactions);
 
-  factory AppState.initial() => kReleaseMode ? AppState([], [], false, null) : AppState._debug();
+  factory AppState.initial() => kReleaseMode ? AppState([], [], null) : AppState._debug();
 
   factory AppState._debug() {
     List<Person> ppl = [];
@@ -43,11 +42,11 @@ class AppState {
     ppl.add(p);
     ppl.sort((p1, p2) => p1.name.compareTo(p2.name));
     tt.sort((t1, t2) => t1.date.compareTo(t2.date));
-    return AppState(ppl, tt, false, null);
+    return AppState(ppl, tt, null);
   }
 
   AppState copyWith({List<Person> people, List<Transaction> transactions, bool showCompleted, bool needSave=true, AppState prevState}) {
-    return AppState(people ?? this.people, transactions ?? this.transactions, showCompleted ?? this.showCompleted, this);
+    return AppState(people ?? this.people, transactions ?? this.transactions, this);
   }
 
   bool get canUndo => prevState != null;

@@ -58,7 +58,4 @@ class RemoveCompletedTransactionsAction {
 }
 
 
-class ToggleShowCompletedAction {}
-
-
 class UndoAction {}

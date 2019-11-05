@@ -38,7 +38,7 @@ class ProtobufSerializer implements StateSerializer<AppState> {
       }
     }
     debugPrint('Loaded state from persistent store.');
-    return AppState(ppl, tt, false, null);
+    return AppState(ppl, tt, null);
   }
 
   Uint8List encode(AppState state) {

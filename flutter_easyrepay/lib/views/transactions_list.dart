@@ -12,16 +12,21 @@ import 'package:redux/redux.dart';
 import 'package:vibrate/vibrate.dart';
 
 
-class TransactionsList extends StatelessWidget {
+class TransactionsList extends StatefulWidget {
   final Store<AppState> store;
   final Person person;
-
   TransactionsList(this.store, this.person);
+  State createState() => _TransactionsListState();
+}
+
+
+class _TransactionsListState extends State<TransactionsList> {
+  bool showCompleted = false;
 
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(person.name),
+        title: Text(widget.person.name),
       ),
       bottomNavigationBar: BottomAppBar(
         shape: AutomaticNotchedShape(ContinuousRectangleBorder(), StadiumBorder()),
@@ -32,19 +37,16 @@ class TransactionsList extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.undo),
               tooltip: AppLocalizations.of(context).translate('Undo'),
-              onPressed: store.state.canUndo ? () => store.dispatch(UndoAction()) : null,
+              onPressed: widget.store.state.canUndo ? () => widget.store.dispatch(UndoAction()) : null,
             ),
             Spacer(),
-            StoreConnector<AppState, bool>(
-              converter: (store) => store.state.showCompleted,
-              builder: (context, value) => IconButton(
-                icon: Icon(value ? Icons.check_circle : Icons.check_circle_outline),
-                tooltip: AppLocalizations.of(context).translate('Show completed'),
-                onPressed: () {
-                  vibrate(FeedbackType.success);
-                  store.dispatch(ToggleShowCompletedAction());
-                },
-              ),
+            IconButton(
+              icon: Icon(showCompleted ? Icons.check_circle : Icons.check_circle_outline),
+              tooltip: AppLocalizations.of(context).translate('Show completed'),
+              onPressed: () {
+                vibrate(FeedbackType.success);
+                setState(() => showCompleted = !showCompleted);
+              },
             ),
             IconButton(
               icon: Icon(Icons.add_alert),
@@ -71,7 +73,7 @@ class TransactionsList extends StatelessWidget {
         tooltip: AppLocalizations.of(context).translate('Add transaction'),
         onPressed: () => Navigator.of(context).push(
           MaterialPageRoute<void>(
-            builder: (BuildContext context) => TransactionDetail(store, person, Transaction.initial())
+            builder: (BuildContext context) => TransactionDetail(widget.store, widget.person, Transaction.initial())
           )),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -81,12 +83,11 @@ class TransactionsList extends StatelessWidget {
 
   Widget _buildTransactionsList(BuildContext context) {
     final double dividerIndent = 4;
+    /*final List<Transaction> transactions = widget.store.state.getTransactionsOf(widget.person)
+      .where((t) => showCompleted ? true : !t.completed).toList();*/
     return StoreConnector<AppState, List<Transaction>>(
       converter: (store) {
-        var tt = store.state.getTransactionsOf(person);
-        if (!store.state.showCompleted)
-          tt = tt.where((t) => !t.completed).toList();
-        return tt;
+        return store.state.getTransactionsOf(widget.person);
       },
       builder: (context, transactions) {
         if (transactions.isNotEmpty) {
@@ -95,9 +96,10 @@ class TransactionsList extends StatelessWidget {
             children: [
               Card(
                 child: Column(
-                  children: transactions.map(
-                    (t) => TransactionRow(store, person, t)
-                  ).toList(),
+                  children: transactions
+                    .where((t) => showCompleted ? true : !t.completed)
+                    .map((t) => TransactionRow(widget.store, widget.person, t, showCompleted))
+                    .toList(),
                 ),
               ),
               Divider(
@@ -113,7 +115,7 @@ class TransactionsList extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(AppLocalizations.of(context).translate('Debt'), style: Theme.of(context).textTheme.title),
-                        store.state.getDebtAmountText(person, context)
+                        widget.store.state.getDebtAmountText(widget.person, context)
                       ],
                     ),
                   ))),
@@ -122,7 +124,7 @@ class TransactionsList extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(AppLocalizations.of(context).translate('Credit'), style: Theme.of(context).textTheme.title),
-                        store.state.getCreditAmountText(person, context)
+                        widget.store.state.getCreditAmountText(widget.person, context)
                       ],
                     ),
                   ))),
@@ -135,7 +137,7 @@ class TransactionsList extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(AppLocalizations.of(context).translate('Total'), style: Theme.of(context).textTheme.title),
-                        store.state.getTotalAmountText(person, context)
+                        widget.store.state.getTotalAmountText(widget.person, context)
                       ],
                     ),
                   ))),

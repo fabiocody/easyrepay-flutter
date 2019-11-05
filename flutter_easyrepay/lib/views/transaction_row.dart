@@ -15,12 +15,13 @@ class TransactionRow extends StatelessWidget {
   final Store<AppState> store;
   final Person person;
   final Transaction transaction;
+  final bool showCompleted;
 
-  TransactionRow(this.store, this.person, this.transaction);
+  TransactionRow(this.store, this.person, this.transaction, this.showCompleted);
 
   Widget build(BuildContext context) {
     return ListTile(
-      leading: store.state.showCompleted ? _getCompletedIcon(context) : null,
+      leading: showCompleted ? _getCompletedIcon(context) : null,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
