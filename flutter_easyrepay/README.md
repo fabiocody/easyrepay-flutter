@@ -5,7 +5,6 @@ This is the [Flutter](https://flutter.dev) porting of EasyRepay, and app that al
 ## TODO
 
 - Animations.
-- Change debt, credit and total cards in transactions list.
 
 ## Credits
 
