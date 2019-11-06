@@ -25,7 +25,6 @@ class PeopleList extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        shape: AutomaticNotchedShape(ContinuousRectangleBorder(), StadiumBorder()),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[

@@ -4,7 +4,10 @@ This is the [Flutter](https://flutter.dev) porting of EasyRepay, and app that al
 
 ## TODO
 
-- Animations.
+- List animations.
+- Master-detail on tablet.
+- Fix amount textfield allowing to select on the left.
+- Calculator.
 
 ## Credits
 

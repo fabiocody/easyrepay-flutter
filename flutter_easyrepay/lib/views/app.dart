@@ -46,14 +46,14 @@ class App extends StatelessWidget {
 }
 
 
-var primarySwatch = Colors.green;
+final  primarySwatch = Colors.green;
 
-var lightTheme = ThemeData(
+final lightTheme = ThemeData(
   brightness: Brightness.light,
   primarySwatch: primarySwatch,
 );
 
-var darkTheme = ThemeData(
+final darkTheme = ThemeData(
   brightness: Brightness.dark,
   primaryColor: DarkColors.topBottomBar,
   primaryColorDark: DarkColors.lightGreen,

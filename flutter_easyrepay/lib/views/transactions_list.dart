@@ -29,7 +29,6 @@ class _TransactionsListState extends State<TransactionsList> {
         title: Text(widget.person.name),
       ),
       bottomNavigationBar: BottomAppBar(
-        shape: AutomaticNotchedShape(ContinuousRectangleBorder(), StadiumBorder()),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
