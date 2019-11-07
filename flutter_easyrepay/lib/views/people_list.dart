@@ -4,6 +4,7 @@ import 'package:easyrepay/redux/actions.dart';
 import 'package:easyrepay/redux/model/app_state.dart';
 import 'package:easyrepay/redux/model/person.dart';
 import 'package:easyrepay/views/person_row.dart';
+import 'package:easyrepay/views/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
@@ -52,12 +53,18 @@ class PeopleList extends StatelessWidget {
     if (store.state.people.isNotEmpty) {
       return StoreConnector<AppState, List<Person>>(
         converter: (store) => store.state.people,
-        builder: (context, people) => ListView(
+        builder: (context, people) => AnimatedList(
+          key: peopleListKey,
+          padding: const EdgeInsets.only(top: 4),
+          initialItemCount: people.length,
+          itemBuilder: (context, index, animation) => PersonRow(store, people[index], animation),
+        ),
+        /*builder: (context, people) => ListView(
           padding: const EdgeInsets.only(top: 4),
           children: people.map(
             (person) => PersonRow(store, person)
           ).toList()
-        ),
+        ),*/
       );
     } else {
       return Center(child: Row(
@@ -122,8 +129,11 @@ class PeopleList extends StatelessWidget {
   }
 
   void _saveNewPerson(BuildContext context) {
-    store.dispatch(AddPersonAction(_textFieldController.text));
+    final Person person = Person.initial(_textFieldController.text);
     _textFieldController.clear();
+    store.dispatch(AddPersonAction(person));
+    final int index = store.state.people.indexOf(person);
+    peopleListKey.currentState.insertItem(index);
     Navigator.of(context).pop();
   }
 

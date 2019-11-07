@@ -1,8 +1,8 @@
 import 'package:easyrepay/app_localizations.dart';
-import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/redux/model/person.dart';
 import 'package:easyrepay/redux/model/transaction.dart';
 import 'package:easyrepay/redux/model/transaction_type.dart';
+import 'package:easyrepay/views/theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 

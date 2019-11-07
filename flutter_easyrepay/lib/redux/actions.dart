@@ -3,8 +3,8 @@ import 'package:easyrepay/redux/model/transaction.dart';
 
 
 class AddPersonAction {
-  final String name;
-  AddPersonAction(this.name);
+  final Person person;
+  AddPersonAction(this.person);
 }
 
 

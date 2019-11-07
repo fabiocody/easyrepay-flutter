@@ -28,7 +28,8 @@ void main() {
 
     test('add person', () {
       final AppState initialState = AppState.initial();
-      final action = AddPersonAction(_getTestPersonName());
+      final Person person = Person.initial(_getTestPersonName());
+      final action = AddPersonAction(person);
       final AppState state = appReducer(initialState, action);
       expect(state.people.length, initialState.people.length + 1);
       expect(state.transactions.length, initialState.transactions.length);

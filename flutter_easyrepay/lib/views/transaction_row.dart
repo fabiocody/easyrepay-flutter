@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 import 'package:vibrate/vibrate.dart';
 
+import 'theme.dart';
+
 
 class TransactionRow extends StatelessWidget {
   final Store<AppState> store;

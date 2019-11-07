@@ -1,6 +1,6 @@
 import 'package:easyrepay/app_localizations.dart';
-import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/proto/easyrepay.pb.dart';
+import 'package:easyrepay/views/theme.dart';
 import 'package:flutter/material.dart';
 
 

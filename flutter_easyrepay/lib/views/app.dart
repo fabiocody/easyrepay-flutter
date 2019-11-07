@@ -1,12 +1,13 @@
 import 'package:easyrepay/app_localizations.dart';
-import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/redux/model/app_state.dart';
 import 'package:easyrepay/views/people_list.dart';
+import 'package:easyrepay/views/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+
 
 class App extends StatelessWidget {
   final Store<AppState> store;
@@ -43,23 +44,4 @@ class App extends StatelessWidget {
         },
       ),
     );
-}
-
-
-final  primarySwatch = Colors.green;
-
-final lightTheme = ThemeData(
-  brightness: Brightness.light,
-  primarySwatch: primarySwatch,
-);
-
-final darkTheme = ThemeData(
-  brightness: Brightness.dark,
-  primaryColor: DarkColors.topBottomBar,
-  primaryColorDark: DarkColors.lightGreen,
-  accentColor: DarkColors.lightGreen,
-  toggleableActiveColor: DarkColors.lightGreen,
-  canvasColor: DarkColors.darkGrey,
-  cardColor: DarkColors.surfaceOverlay,
-  dialogBackgroundColor: DarkColors.surfaceOverlay,
-);
+} 
