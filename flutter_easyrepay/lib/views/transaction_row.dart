@@ -62,7 +62,7 @@ class TransactionRow extends StatelessWidget {
       ),
       if (transaction.completed) ListTile(
         title: Text(BottomSheetItems.getShared(context).notCompleted),
-        leading: Icon(Icons.check_circle_outline),
+        leading: Icon(Icons.panorama_fish_eye),
         onTap: () => _menuAction(BottomSheetItems.getShared(context).notCompleted, context),
       ),
       ListTile(

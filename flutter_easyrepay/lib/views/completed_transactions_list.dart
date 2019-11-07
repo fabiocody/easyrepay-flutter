@@ -15,7 +15,6 @@ class CompletedTransactionsList extends StatelessWidget {
   CompletedTransactionsList(this.store, this.person);
 
   Widget build(BuildContext context) {
-    print('build');
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context).translate('Completed transactions')),
@@ -39,11 +38,9 @@ class CompletedTransactionsList extends StatelessWidget {
   }
 
   Widget _buildTransactionsList(BuildContext context) {
-    print('_buildTransactionsList');
     return StoreConnector<AppState, List<Transaction>>(
       converter: (store) => store.state.getCompletedTransactionsOf(person),
       builder: (context, transactions) {
-        print('builder');
         var view = ListView(
           padding: const EdgeInsets.only(top: 4),
           children: [
