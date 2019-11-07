@@ -70,6 +70,7 @@ class BottomSheetItems {
   BuildContext context;
   String _rename;
   String _completed;
+  String _notCompleted;
   String _allCompleted;
   String _removeAllCompleted;
   String _delete;
@@ -88,6 +89,7 @@ class BottomSheetItems {
     final localizations = AppLocalizations.of(context);
     _rename = localizations.translate('Rename');
     _completed = localizations.translate('Mark as completed');
+    _notCompleted = localizations.translate('Mark as not completed');
     _allCompleted = localizations.translate('Mark all transactions as completed');
     _removeAllCompleted = localizations.translate('Remove all completed transactions');
     _delete = localizations.translate('Delete');
@@ -95,6 +97,7 @@ class BottomSheetItems {
 
   String get rename => _rename;
   String get completed => _completed;
+  String get notCompleted => _notCompleted;
   String get allCompleted => _allCompleted;
   String get removeAllCompleted => _removeAllCompleted;
   String get delete => _delete;

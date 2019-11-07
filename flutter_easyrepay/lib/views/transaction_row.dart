@@ -15,13 +15,11 @@ class TransactionRow extends StatelessWidget {
   final Store<AppState> store;
   final Person person;
   final Transaction transaction;
-  final bool showCompleted;
 
-  TransactionRow(this.store, this.person, this.transaction, this.showCompleted);
+  TransactionRow(this.store, this.person, this.transaction);
 
   Widget build(BuildContext context) {
     return ListTile(
-      leading: showCompleted ? _getCompletedIcon(context) : null,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
@@ -54,19 +52,18 @@ class TransactionRow extends StatelessWidget {
     );
   }
 
-  Widget _getCompletedIcon(BuildContext context) {
-    return transaction.completed 
-      ? Icon(Icons.check_circle_outline, color: DarkColors.lightGreen)
-      : Icon(Icons.panorama_fish_eye, color: Theme.of(context).textTheme.caption.color);
-  }
-
   void _showMenu(BuildContext context) async {
     vibrate(FeedbackType.heavy);
     final menuItems = [
-      ListTile(
+      if (!transaction.completed) ListTile(
         title: Text(BottomSheetItems.getShared(context).completed),
         leading: Icon(Icons.check_circle),
         onTap: () => _menuAction(BottomSheetItems.getShared(context).completed, context),
+      ),
+      if (transaction.completed) ListTile(
+        title: Text(BottomSheetItems.getShared(context).notCompleted),
+        leading: Icon(Icons.check_circle_outline),
+        onTap: () => _menuAction(BottomSheetItems.getShared(context).notCompleted, context),
       ),
       ListTile(
         title: Text(BottomSheetItems.getShared(context).delete, style: TextStyle(color: DarkColors.orange)),
@@ -87,6 +84,8 @@ class TransactionRow extends StatelessWidget {
   void _menuAction(String action, BuildContext context) async {
     if (action == BottomSheetItems.getShared(context).completed) {
       store.dispatch(TransactionCompletedAction(transaction));
+    } else if (action == BottomSheetItems.getShared(context).notCompleted) {
+      store.dispatch(TransactionNotCompletedAction(transaction));
     } else if (action == BottomSheetItems.getShared(context).delete) {
       store.dispatch(RemoveTransactionAction(transaction));
     }

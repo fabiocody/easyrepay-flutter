@@ -29,8 +29,10 @@
     "Date": "Data",
     "Rename": "Rinomina",
     "Mark as completed": "Segna come completata",
+    "Mark as not completed": "Segna come non completata",
     "Mark all transactions as completed": "Segna tutte le transazioni come completate",
     "Remove all completed transactions": "Rimuovi tutte le transazioni completate",
     "Delete": "Elimina",
-    "Undo": "Annulla"
+    "Undo": "Annulla",
+    "Completed transactions": "Transazioni completate"
 }

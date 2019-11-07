@@ -4,6 +4,7 @@ import 'package:easyrepay/redux/actions.dart';
 import 'package:easyrepay/redux/model/app_state.dart';
 import 'package:easyrepay/redux/model/person.dart';
 import 'package:easyrepay/redux/model/transaction.dart';
+import 'package:easyrepay/views/completed_transactions_list.dart';
 import 'package:easyrepay/views/transaction_detail.dart';
 import 'package:easyrepay/views/transaction_row.dart';
 import 'package:flutter/material.dart';
@@ -12,23 +13,19 @@ import 'package:redux/redux.dart';
 import 'package:vibrate/vibrate.dart';
 
 
-class TransactionsList extends StatefulWidget {
+class TransactionsList extends StatelessWidget {
   final Store<AppState> store;
   final Person person;
+  
   TransactionsList(this.store, this.person);
-  State createState() => _TransactionsListState();
-}
-
-
-class _TransactionsListState extends State<TransactionsList> {
-  bool showCompleted = false;
-
+  
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.person.name),
+        title: Text(person.name),
       ),
       bottomNavigationBar: BottomAppBar(
+        color: Theme.of(context).brightness == Brightness.dark ? Theme.of(context).primaryColor : null,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
@@ -36,16 +33,19 @@ class _TransactionsListState extends State<TransactionsList> {
             IconButton(
               icon: Icon(Icons.undo),
               tooltip: AppLocalizations.of(context).translate('Undo'),
-              onPressed: widget.store.state.canUndo ? () => widget.store.dispatch(UndoAction()) : null,
+              onPressed: store.state.canUndo ? () => store.dispatch(UndoAction()) : null,
             ),
             Spacer(),
-            IconButton(
-              icon: Icon(showCompleted ? Icons.check_circle : Icons.check_circle_outline),
-              tooltip: AppLocalizations.of(context).translate('Show completed'),
-              onPressed: () {
-                vibrate(FeedbackType.success);
-                setState(() => showCompleted = !showCompleted);
-              },
+            StoreConnector<AppState, bool>(
+              converter: (store) => store.state.getCompletedTransactionsCountOf(person) > 0,
+              builder: (context, value) => IconButton(
+                icon: Icon(value ? Icons.check_circle : Icons.check_circle_outline),
+                tooltip: AppLocalizations.of(context).translate('Show completed'),
+                onPressed: value ? () => Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => CompletedTransactionsList(store, person))
+                )
+                : null,
+              ),
             ),
             IconButton(
               icon: Icon(Icons.add_alert),
@@ -64,15 +64,13 @@ class _TransactionsListState extends State<TransactionsList> {
             SizedBox(width: 12,),
           ],
         ),
-        color: Theme.of(context).primaryColor,
-        notchMargin: 4,
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         tooltip: AppLocalizations.of(context).translate('Add transaction'),
         onPressed: () => Navigator.of(context).push(
           MaterialPageRoute<void>(
-            builder: (BuildContext context) => TransactionDetail(widget.store, widget.person, Transaction.initial())
+            builder: (BuildContext context) => TransactionDetail(store, person, Transaction.initial())
           )),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -83,11 +81,8 @@ class _TransactionsListState extends State<TransactionsList> {
   Widget _buildTransactionsList(BuildContext context) {
     final double dividerIndent = 4;
     return StoreConnector<AppState, List<Transaction>>(
-      converter: (store) {
-        return store.state.getTransactionsOf(widget.person);
-      },
-      builder: (context, allTransactions) {
-        final List<Transaction> transactions = allTransactions.where((t) => showCompleted ? true : !t.completed).toList();
+      converter: (store) => store.state.getTransactionsOf(person),
+      builder: (context, transactions) {
         if (transactions.isNotEmpty) {
           return ListView(
             padding: const EdgeInsets.only(top: 4),
@@ -99,7 +94,7 @@ class _TransactionsListState extends State<TransactionsList> {
                     child: Column(
                       children: [
                         Text(AppLocalizations.of(context).translate('Total'), style: Theme.of(context).textTheme.title),
-                        widget.store.state.getTotalAmountText(widget.person, context)
+                        store.state.getTotalAmountText(person, context)
                       ],
                     ),
                   ))),
@@ -113,7 +108,7 @@ class _TransactionsListState extends State<TransactionsList> {
                     child: Column(
                       children: [
                         Text(AppLocalizations.of(context).translate('Debt'), style: Theme.of(context).textTheme.title),
-                        widget.store.state.getDebtAmountText(widget.person, context)
+                        store.state.getDebtAmountText(person, context)
                       ],
                     ),
                   ))),
@@ -122,7 +117,7 @@ class _TransactionsListState extends State<TransactionsList> {
                     child: Column(
                       children: [
                         Text(AppLocalizations.of(context).translate('Credit'), style: Theme.of(context).textTheme.title),
-                        widget.store.state.getCreditAmountText(widget.person, context)
+                        store.state.getCreditAmountText(person, context)
                       ],
                     ),
                   ))),
@@ -136,7 +131,7 @@ class _TransactionsListState extends State<TransactionsList> {
               Card(
                 child: Column(
                   children: transactions
-                    .map((t) => TransactionRow(widget.store, widget.person, t, showCompleted))
+                    .map((t) => TransactionRow(store, person, t))
                     .toList(),
                 ),
               ),

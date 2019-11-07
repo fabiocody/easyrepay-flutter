@@ -14,6 +14,7 @@ final appReducer = combineReducers<AppState>([
   TypedReducer<AppState, EditTransactionAction>(_onEditTransaction),
   TypedReducer<AppState, AllTransactionsCompletedAction>(_onAllTransactionsCompleted),
   TypedReducer<AppState, TransactionCompletedAction>(_onTransactionCompleted),
+  TypedReducer<AppState, TransactionNotCompletedAction>(_onTransactionNotCompleted),
   TypedReducer<AppState, RemoveCompletedTransactionsAction>(_onRemoveCompletedTransactions),
   TypedReducer<AppState, UndoAction>(_onUndo),
 ]);
@@ -80,6 +81,14 @@ AppState _onTransactionCompleted(AppState state, TransactionCompletedAction acti
   List<Transaction> tt = List.from(state.transactions)
     ..remove(action.transaction)
     ..add(action.transaction.copyWith(completed: true));
+  return state.copyWith(transactions: tt);
+}
+
+
+AppState _onTransactionNotCompleted(AppState state, TransactionNotCompletedAction action) {
+  List<Transaction> tt = List.from(state.transactions)
+    ..remove(action.transaction)
+    ..add(action.transaction.copyWith(completed: false));
   return state.copyWith(transactions: tt);
 }
 

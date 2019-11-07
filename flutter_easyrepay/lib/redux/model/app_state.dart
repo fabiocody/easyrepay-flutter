@@ -52,13 +52,16 @@ class AppState {
   bool get canUndo => prevState != null;
 
   List<Transaction> getTransactionsOf(Person p) => transactions
-    .where((t) => t.personID == p.id)
+    .where((t) => t.personID == p.id && !t.completed)
     .toList();
 
-  int getTransactionCountOf(Person p) => transactions
-    .where((t) => t.personID == p.id)
-    .where((t) => !t.completed)
-    .length;
+  List<Transaction> getCompletedTransactionsOf(Person p) => transactions
+    .where((t) => t.personID == p.id && t.completed)
+    .toList();
+
+  int getTransactionCountOf(Person p) => getTransactionsOf(p).length;
+
+  int getCompletedTransactionsCountOf(Person p) => getCompletedTransactionsOf(p).length;
 
   double _sumFold(double value, Transaction t) =>
     t.type.addOrSub(value, t.amount);

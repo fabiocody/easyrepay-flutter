@@ -52,6 +52,12 @@ class TransactionCompletedAction {
 }
 
 
+class TransactionNotCompletedAction {
+  final Transaction transaction;
+  TransactionNotCompletedAction(this.transaction);
+}
+
+
 class RemoveCompletedTransactionsAction {
   final Person person;
   RemoveCompletedTransactionsAction(this.person);

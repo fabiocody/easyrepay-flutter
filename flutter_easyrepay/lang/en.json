@@ -29,8 +29,10 @@
     "Date": "Date",
     "Rename": "Rename",
     "Mark as completed": "Mark as completed",
+    "Mark as not completed": "Mark as not completed",
     "Mark all transactions as completed": "Mark all transactions as completed",
     "Remove all completed transactions": "Remove all completed transactions",
     "Delete": "Delete",
-    "Undo": "Undo"
+    "Undo": "Undo",
+    "Completed transactions": "Completed transactions"
 }
