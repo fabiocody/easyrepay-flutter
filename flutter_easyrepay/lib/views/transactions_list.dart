@@ -129,11 +129,13 @@ class TransactionsList extends StatelessWidget {
                 color: Theme.of(context).textTheme.caption.color
               ),
               Card(
-                child: Column(
-                  children: transactions
-                    .map((t) => TransactionRow(store, person, t))
-                    .toList(),
-                ),
+                child: AnimatedList(
+                  key: transactionsListKey,
+                  physics: NeverScrollableScrollPhysics(),
+                  initialItemCount: transactions.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index, animation) => TransactionRow(store, person, transactions[index], animation),
+                )
               ),
             ],
           );

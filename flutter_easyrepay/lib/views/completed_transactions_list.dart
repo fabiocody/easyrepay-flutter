@@ -1,4 +1,5 @@
 import 'package:easyrepay/app_localizations.dart';
+import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/redux/actions.dart';
 import 'package:easyrepay/redux/model/app_state.dart';
 import 'package:easyrepay/redux/model/person.dart';
@@ -41,23 +42,24 @@ class CompletedTransactionsList extends StatelessWidget {
     return StoreConnector<AppState, List<Transaction>>(
       converter: (store) => store.state.getCompletedTransactionsOf(person),
       builder: (context, transactions) {
-        var view = ListView(
-          padding: const EdgeInsets.only(top: 4),
-          children: [
-            Card(
-              child: Column(
-                children: transactions
-                  .map((t) => TransactionRow(store, person, t))
-                  .toList(),
-              ),
-            ),
-          ],
-        );
         Future.delayed(Duration(milliseconds: 1)).then((value) {
           if (store.state.getCompletedTransactionsCountOf(person) <= 0) 
             Navigator.of(context).pop();
         });
-        return view;
+        return ListView(
+          padding: const EdgeInsets.only(top: 4),
+          children: [
+            Card(
+              child: AnimatedList(
+                key: completedTransactionsListKey,
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                initialItemCount: transactions.length,
+                itemBuilder: (context, index, animation) => TransactionRow(store, person, transactions[index], animation),
+              )
+            ),
+          ],
+        );
       }
     );
   }

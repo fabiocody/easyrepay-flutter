@@ -140,7 +140,7 @@ void main() {
       for (Person p in initialState.people)
         expect(state.people.contains(p), true);
       for (Transaction t in initialState.transactions)
-        expect(state.transactions.contains(t), t == transaction ? false : true);
+        expect(state.transactions.contains(t), true);
     });
 
     test('remove completed transactions', () {
