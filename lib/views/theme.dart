@@ -16,6 +16,7 @@ final darkTheme = ThemeData(
   canvasColor: DarkColors.darkGrey,
   cardColor: DarkColors.surfaceOverlay,
   dialogBackgroundColor: DarkColors.surfaceOverlay,
+  fontFamily: 'Avenir'
 );
 
 

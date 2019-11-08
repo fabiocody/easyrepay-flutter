@@ -55,6 +55,17 @@ flutter:
 
   assets:
     - assets/lang/
+    - assets/fonts/
+
+  fonts:
+    - family: RobotoSlab
+      fonts:
+        - asset: assets/fonts/RobotoSlab-Regular.ttf
+        - asset: assets/fonts/RobotoSlab-Bold.ttf
+          weight: 700
+    - family: Avenir
+      fonts:
+        - asset: assets/fonts/Avenir-Regular.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

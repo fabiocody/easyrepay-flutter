@@ -32,6 +32,7 @@ class Transaction {
       AppLocalizations.of(context).currencyFormatter.format(amount.abs()),
       style: Theme.of(context).textTheme.title.copyWith(
         color: type.color,
+        fontFamily: 'RobotoSlab',
       )
     );
   }
