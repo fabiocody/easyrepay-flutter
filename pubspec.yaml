@@ -61,8 +61,6 @@ flutter:
     - family: RobotoSlab
       fonts:
         - asset: assets/fonts/RobotoSlab-Regular.ttf
-        - asset: assets/fonts/RobotoSlab-Bold.ttf
-          weight: 700
     - family: Avenir
       fonts:
         - asset: assets/fonts/Avenir-Regular.ttf
