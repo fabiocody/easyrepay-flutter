@@ -411,3 +411,6 @@ fabric.properties
 !/gradle/wrapper/gradle-wrapper.jar
 
 # End of https://www.gitignore.io/api/dart,linux,swift,xcode,macos,gradle,kotlin,flutter,windows,androidstudio,visualstudiocode
+
+
+.pubspec.old.yaml
