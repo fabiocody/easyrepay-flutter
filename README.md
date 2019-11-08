@@ -1,10 +1,9 @@
 # EasyRepay
 
-This is the [Flutter](https://flutter.dev) porting of EasyRepay, and app that allows you to write down all the money that you lend or borrow.
+This is the [Flutter](https://flutter.dev) implementation of EasyRepay, an app that allows you to write down all the money that you lend or borrow.
 
 ## TODO
 
-- List animations.
 - Master-detail on tablet.
 - Fix amount textfield allowing to select on the left.
 - Calculator.
