@@ -102,7 +102,7 @@ class TransactionRow extends StatelessWidget {
       completedTransactionsListKey.currentState.removeItem(index, (context, animation) => TransactionRow(store, person, transaction, animation));
       transactions = store.state.getTransactionsOf(person);
       index = transactions.indexOf(transaction);
-      transactionsListKey.currentState.insertItem(index);
+      transactionsListKey?.currentState?.insertItem(index);
     } else if (action == BottomSheetItems.getShared(context).delete) {
       final List<Transaction> transactions = transaction.completed ? store.state.getCompletedTransactionsOf(person) : store.state.getTransactionsOf(person);
       final int index = transactions.indexOf(transaction);

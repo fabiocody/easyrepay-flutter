@@ -1,5 +1,4 @@
 import 'package:easyrepay/app_localizations.dart';
-import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/redux/actions.dart';
 import 'package:easyrepay/redux/model/app_state.dart';
 import 'package:easyrepay/redux/model/person.dart';
@@ -8,7 +7,6 @@ import 'package:easyrepay/redux/model/transaction_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:redux/redux.dart';
-import 'package:vibrate/vibrate.dart';
 
 
 class TransactionDetail extends StatefulWidget {
@@ -25,7 +23,6 @@ class _TransactionDetailState extends State<TransactionDetail> {
   TransactionType _type;
   TextEditingController _amountController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
-  bool _completed;
   DateTime _date;
   bool _initialized = false;
 
@@ -33,7 +30,6 @@ class _TransactionDetailState extends State<TransactionDetail> {
     super.initState();
     _type = widget.transaction.type;
     _descriptionController.text = widget.transaction.description;
-    _completed = widget.transaction.completed;
     _date = widget.transaction.date;
   }
 
@@ -45,13 +41,11 @@ class _TransactionDetailState extends State<TransactionDetail> {
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context).translate('Transaction')),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.save),
-            tooltip: AppLocalizations.of(context).translate('Save'),
-            onPressed: () => _save(context),
-          )
-        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.save),
+        tooltip: AppLocalizations.of(context).translate('Save'),
+        onPressed: () => _save(context),
       ),
       body: _buildTransactionDetail(context)
     );
@@ -113,31 +107,6 @@ class _TransactionDetailState extends State<TransactionDetail> {
           ),
           textCapitalization: TextCapitalization.sentences,
         ),
-        InputDecorator(
-          decoration: InputDecoration(
-            icon: const Icon(Icons.check_circle_outline),
-            contentPadding: const EdgeInsets.symmetric(vertical: 6)
-          ),
-          //isEmpty: true,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                AppLocalizations.of(context).translate('Completed'),
-                style: Theme.of(context).textTheme.subhead,
-              ),
-              Switch(
-                value: _completed,
-                onChanged: (newValue) {
-                  vibrate(FeedbackType.medium);
-                  setState(() {
-                    _completed = newValue;
-                  });
-                },
-              )
-            ],
-          ),
-        ),
         InkWell(
           child: InputDecorator(
             decoration: InputDecoration(
@@ -177,7 +146,6 @@ class _TransactionDetailState extends State<TransactionDetail> {
       type: _type,
       amount: AppLocalizations.of(context).amountTextFieldFormatter.parse(_amountController.text),
       description: _descriptionController.text,
-      completed: _completed,
       date: _date,
     );
     if (widget.store.state.transactions.contains(widget.transaction))
