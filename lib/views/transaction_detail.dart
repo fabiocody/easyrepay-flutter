@@ -89,7 +89,8 @@ class _TransactionDetailState extends State<TransactionDetail> {
           ),
           keyboardType: TextInputType.number,
           inputFormatters: [
-            WhitelistingTextInputFormatter.digitsOnly
+            WhitelistingTextInputFormatter.digitsOnly,
+            LengthLimitingTextInputFormatter(8),
           ],
           onChanged: (String text) {
             var value = AppLocalizations.of(context).amountTextFieldFormatter.parse(text);
@@ -156,7 +157,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
       t = t.copyWith(personID: widget.person.id);
       widget.store.dispatch(AddTransactionAction(t));
       final int index = widget.store.state.getTransactionsOf(widget.person).indexOf(t);
-      transactionsListKey.currentState.insertItem(index);
+      transactionsListKey?.currentState?.insertItem(index);
     }
     Navigator.of(context).pop();
   }
