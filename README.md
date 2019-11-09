@@ -1,11 +1,12 @@
 # EasyRepay
 
+[![Build Status](https://travis-ci.com/fabiocody/easyrepay-flutter.svg?token=vreerFzSmcFLsbiVv8aF&branch=master)](https://travis-ci.com/fabiocody/easyrepay-flutter)
+
 This is the [Flutter](https://flutter.dev) implementation of EasyRepay, an app that allows you to write down all the money that you lend or borrow.
 
 ## TODO
 
 - Master-detail on tablet.
-- Fix amount textfield allowing to select on the left.
 - Calculator.
 
 ## Credits

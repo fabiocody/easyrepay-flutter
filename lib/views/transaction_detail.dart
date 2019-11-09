@@ -1,4 +1,5 @@
 import 'package:easyrepay/app_localizations.dart';
+import 'package:easyrepay/helpers.dart';
 import 'package:easyrepay/redux/actions.dart';
 import 'package:easyrepay/redux/model/app_state.dart';
 import 'package:easyrepay/redux/model/person.dart';
@@ -95,6 +96,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
             if (value != null) {
               value /= 100;
               _amountController.text = AppLocalizations.of(context).amountTextFieldFormatter.format(value);
+              _amountController.selection = TextSelection.fromPosition(TextPosition(offset: _amountController.text.length));
             }
           },
         ),
@@ -142,16 +144,20 @@ class _TransactionDetailState extends State<TransactionDetail> {
   }
 
   void _save(BuildContext context) {
-    final t = widget.transaction.copyWith(
+    Transaction t = widget.transaction.copyWith(
       type: _type,
       amount: AppLocalizations.of(context).amountTextFieldFormatter.parse(_amountController.text),
       description: _descriptionController.text,
       date: _date,
     );
-    if (widget.store.state.transactions.contains(widget.transaction))
+    if (widget.store.state.transactions.contains(widget.transaction)) {
       widget.store.dispatch(EditTransactionAction(widget.transaction, t));
-    else
-      widget.store.dispatch(AddTransactionAction(t.copyWith(personID: widget.person.id)));
+    } else {
+      t = t.copyWith(personID: widget.person.id);
+      widget.store.dispatch(AddTransactionAction(t));
+      final int index = widget.store.state.getTransactionsOf(widget.person).indexOf(t);
+      transactionsListKey.currentState.insertItem(index);
+    }
     Navigator.of(context).pop();
   }
 }

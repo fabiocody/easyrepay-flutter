@@ -16,7 +16,6 @@ class AppLocalizations {
     _amountTextFieldFormatter = NumberFormat(null, locale.toString());
     _amountTextFieldFormatter.maximumFractionDigits = 2;
     _amountTextFieldFormatter.minimumFractionDigits = 2;
-    _amountTextFieldFormatter.maximumIntegerDigits = 12;
   }
 
   static AppLocalizations of(BuildContext context) {
