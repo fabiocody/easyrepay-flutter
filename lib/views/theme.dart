@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 
 final  primarySwatch = Colors.green;
 
+class FontFamilies {
+  static final primary = 'Varela';
+  static final numbers = 'Varela';
+}
+
 final lightTheme = ThemeData(
   brightness: Brightness.light,
   primarySwatch: primarySwatch,
@@ -16,6 +21,7 @@ final darkTheme = ThemeData(
   canvasColor: DarkColors.darkGrey,
   cardColor: DarkColors.surfaceOverlay,
   dialogBackgroundColor: DarkColors.surfaceOverlay,
+  fontFamily: FontFamilies.primary,
 );
 
 

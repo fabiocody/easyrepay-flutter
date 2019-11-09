@@ -74,7 +74,7 @@ class AppState {
       AppLocalizations.of(context).currencyFormatter.format(amount.abs()),
       style: Theme.of(context).textTheme.title.copyWith(
         color: amount.isNegative ? DarkColors.orange : DarkColors.lightGreen,
-        fontFamily: 'RobotoSlab'
+        fontFamily: FontFamilies.numbers,
       )
     );
   }
@@ -87,7 +87,7 @@ class AppState {
       AppLocalizations.of(context).currencyFormatter.format(amount.abs()),
       style: Theme.of(context).textTheme.headline.copyWith(
         color: DarkColors.lightGreen,
-        fontFamily: 'RobotoSlab'
+        fontFamily: FontFamilies.numbers,
       )
     );
   }
@@ -100,7 +100,7 @@ class AppState {
       AppLocalizations.of(context).currencyFormatter.format(amount.abs()),
       style: Theme.of(context).textTheme.headline.copyWith(
         color: DarkColors.orange,
-        fontFamily: 'RobotoSlab'
+        fontFamily: FontFamilies.numbers,
       )
     );
   }
@@ -113,7 +113,7 @@ class AppState {
       AppLocalizations.of(context).currencyFormatter.format(amount.abs()),
       style: Theme.of(context).textTheme.headline.copyWith(
         color: amount.isNegative ? DarkColors.orange : DarkColors.lightGreen,
-        fontFamily: 'RobotoSlab'
+        fontFamily: FontFamilies.numbers,
       )
     );
   }

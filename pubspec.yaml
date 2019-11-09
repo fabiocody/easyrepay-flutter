@@ -61,6 +61,15 @@ flutter:
     - family: RobotoSlab
       fonts:
         - asset: assets/fonts/RobotoSlab-Regular.ttf
+    - family: SF
+      fonts:
+        - asset: assets/fonts/SFCompactRounded.ttf
+    - family: GillSans
+      fonts:
+        - asset: assets/fonts/GillSans.ttc
+    - family: Varela
+      fonts:
+        - asset: assets/fonts/VarelaRound-Regular.otf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

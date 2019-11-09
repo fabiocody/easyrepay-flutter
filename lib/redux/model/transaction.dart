@@ -1,5 +1,6 @@
 import 'package:easyrepay/app_localizations.dart';
 import 'package:easyrepay/redux/model/transaction_type.dart';
+import 'package:easyrepay/views/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
@@ -32,7 +33,7 @@ class Transaction {
       AppLocalizations.of(context).currencyFormatter.format(amount.abs()),
       style: Theme.of(context).textTheme.title.copyWith(
         color: type.color,
-        fontFamily: 'RobotoSlab',
+        fontFamily: FontFamilies.numbers,
       )
     );
   }
