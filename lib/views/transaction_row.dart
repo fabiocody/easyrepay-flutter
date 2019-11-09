@@ -101,7 +101,7 @@ class TransactionRow extends StatelessWidget {
       store.dispatch(TransactionNotCompletedAction(transaction));
       completedTransactionsListKey.currentState.removeItem(index, (context, animation) => TransactionRow(store, person, transaction, animation));
       transactions = store.state.getTransactionsOf(person);
-      index = transactions.indexOf(transaction);
+      index = transactions.indexWhere((t) => t.id == transaction.id);
       transactionsListKey?.currentState?.insertItem(index);
     } else if (action == BottomSheetItems.getShared(context).delete) {
       final List<Transaction> transactions = transaction.completed ? store.state.getCompletedTransactionsOf(person) : store.state.getTransactionsOf(person);
