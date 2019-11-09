@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 final  primarySwatch = Colors.green;
 
 class FontFamilies {
-  static final primary = 'Varela';
-  static final numbers = 'Varela';
+  static final primary = '';
+  static final numbers = '';
 }
 
 final lightTheme = ThemeData(
