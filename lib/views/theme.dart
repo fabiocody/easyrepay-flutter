@@ -34,7 +34,7 @@ class DarkColors {
   static const yellow = Color.fromRGBO(0xff, 0xcf, 0x44, 1);
   static const purple = Color.fromRGBO(0xb1, 0x5d, 0xff, 1);
   static const blue = Color.fromRGBO(0x72, 0xde, 0xff, 1);
-  static const darkGrey = Color.fromRGBO(0x12, 0x12, 0x12, 1);
-  static const surfaceOverlay = Color.fromRGBO(0x1a, 0x1a, 0x1a, 1);
-  static const topBottomBar = Color.fromRGBO(0x1d, 0x1d, 0x1d, 1);
+  static const darkGrey = Color.fromRGBO(0x04, 0x04, 0x04, 1);
+  static const surfaceOverlay = Color.fromRGBO(0x14, 0x14, 0x14, 1);
+  static const topBottomBar = Color.fromRGBO(0x18, 0x18, 0x18, 1);
 }
