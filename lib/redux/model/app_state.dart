@@ -70,10 +70,11 @@ class AppState {
     var amount = getTransactionsOf(p)
       .where((t) => !t.completed)
       .fold(0.0, _sumFold);
+    var color = amount == 0 ? Colors.white : (amount.isNegative ? DarkColors.orange : DarkColors.lightGreen);
     return Text(
       AppLocalizations.of(context).currencyFormatter.format(amount.abs()),
       style: Theme.of(context).textTheme.title.copyWith(
-        color: amount.isNegative ? DarkColors.orange : DarkColors.lightGreen,
+        color: color,
         fontFamily: FontFamilies.numbers,
       )
     );
@@ -109,10 +110,11 @@ class AppState {
     var amount = getTransactionsOf(p)
       .where((t) => !t.completed)
       .fold(0.0, _sumFold);
+    var color = amount == 0 ? Colors.white : (amount.isNegative ? DarkColors.orange : DarkColors.lightGreen);
     return Text(
       AppLocalizations.of(context).currencyFormatter.format(amount.abs()),
       style: Theme.of(context).textTheme.headline.copyWith(
-        color: amount.isNegative ? DarkColors.orange : DarkColors.lightGreen,
+        color: color,
         fontFamily: FontFamilies.numbers,
       )
     );

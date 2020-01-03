@@ -415,3 +415,4 @@ fabric.properties
 
 coverage/
 .pubspec.old.yaml
+.flutter-plugins-dependencies
