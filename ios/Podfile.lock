@@ -20,11 +20,7 @@ EXTERNAL SOURCES:
   devicelocale:
     :path: ".symlinks/plugins/devicelocale/ios"
   Flutter:
-<<<<<<< Updated upstream
-    :path: ".symlinks/flutter/ios-release"
-=======
     :path: Flutter
->>>>>>> Stashed changes
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
   shared_preferences:
@@ -41,4 +37,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 1b66dae606f75376c5f2135a8290850eeb09ae83
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.1
