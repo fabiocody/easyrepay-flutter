@@ -6,6 +6,18 @@ This is the [Flutter](https://flutter.dev) implementation of EasyRepay, an app t
 
 ![Screenshots](https://github.com/fabiocody/easyrepay-flutter/raw/master/screenshots.png)
 
+## Build and run (macOS)
+
+In order to build and run the app on the Mac, you need to have the [Flutter SDK](https://flutter.dev) installed. In this section, we will only consider iOS as the target platform, so you will also need Xcode and [CocoaPods](https://cocoapods.org) to be installed.
+
+```bash
+git clone https://github.com/fabiocody/easyrepay-flutter.git
+
+flutter pub get
+
+flutter run
+```
+
 ## TODO
 
 - Master-detail on tablet.
