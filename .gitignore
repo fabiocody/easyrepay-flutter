@@ -1,6 +1,6 @@
 
-# Created by https://www.gitignore.io/api/dart,linux,swift,xcode,macos,gradle,kotlin,flutter,windows,androidstudio,visualstudiocode
-# Edit at https://www.gitignore.io/?templates=dart,linux,swift,xcode,macos,gradle,kotlin,flutter,windows,androidstudio,visualstudiocode
+# Created by https://www.toptal.com/developers/gitignore/api/windows,macos,linux,flutter,dart,visualstudiocode,androidstudio,xcode,swift,swiftpm,swiftpackagemanager,gradle,kotlin,java
+# Edit at https://www.toptal.com/developers/gitignore?templates=windows,macos,linux,flutter,dart,visualstudiocode,androidstudio,xcode,swift,swiftpm,swiftpackagemanager,gradle,kotlin,java
 
 ### Dart ###
 # See https://www.dartlang.org/guides/libraries/private-files
@@ -29,8 +29,10 @@ doc/api/
 # Flutter/Dart/Pub related
 **/doc/api/
 .flutter-plugins
+.flutter-plugins-dependencies
 .pub-cache/
 .pub/
+lib/generated_plugin_registrant.dart
 
 # Android related
 **/android/**/gradle-wrapper.jar
@@ -38,6 +40,7 @@ doc/api/
 **/android/captures/
 **/android/gradlew
 **/android/gradlew.bat
+**/android/key.properties
 **/android/local.properties
 **/android/**/GeneratedPluginRegistrant.java
 
@@ -60,10 +63,12 @@ doc/api/
 **/ios/.generated/
 **/ios/Flutter/App.framework
 **/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
 **/ios/Flutter/Generated.xcconfig
 **/ios/Flutter/app.flx
 **/ios/Flutter/app.zip
 **/ios/Flutter/flutter_assets/
+**/ios/Flutter/flutter_export_environment.sh
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
 
@@ -74,7 +79,7 @@ doc/api/
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 
-### Kotlin ###
+### Java ###
 # Compiled class file
 *.class
 
@@ -98,6 +103,19 @@ doc/api/
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+### Kotlin ###
+# Compiled class file
+
+# Log file
+
+# BlueJ files
+
+# Mobile Tools for Java (J2ME)
+
+# Package Files #
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 
 ### Linux ###
 *~
@@ -147,10 +165,16 @@ Temporary Items
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
 
-## Build generated
-DerivedData/
+## User settings
+xcuserdata/
 
-## Various settings
+## compatibility with Xcode 8 and earlier (ignoring not required starting Xcode 9)
+*.xcscmblueprint
+*.xccheckout
+
+## compatibility with Xcode 3 and earlier (ignoring not required starting Xcode 4)
+DerivedData/
+*.moved-aside
 *.pbxuser
 !default.pbxuser
 *.mode1v3
@@ -159,15 +183,11 @@ DerivedData/
 !default.mode2v3
 *.perspectivev3
 !default.perspectivev3
-xcuserdata/
-
-## Other
-*.moved-aside
-*.xccheckout
-*.xcscmblueprint
 
 ## Obj-C/Swift specific
 *.hmap
+
+## App packaging
 *.ipa
 *.dSYM.zip
 *.dSYM
@@ -181,9 +201,12 @@ playground.xcworkspace
 # Packages/
 # Package.pins
 # Package.resolved
+# *.xcodeproj
+# Xcode automatically generates this directory with a .xcworkspacedata file and xcuserdata
+# hence it is not needed unless you have added a package configuration file to your project
+# .swiftpm
+
 .build/
-# Add this line if you want to avoid checking in Xcode SPM integration.
-# .swiftpm/xcode
 
 # CocoaPods
 # We recommend against adding the Pods directory to your .gitignore. However
@@ -197,15 +220,15 @@ playground.xcworkspace
 # Add this line if you want to avoid checking in source code from Carthage dependencies.
 # Carthage/Checkouts
 
-Carthage/Build
+Carthage/Build/
 
 # Accio dependency management
 Dependencies/
 .accio/
 
 # fastlane
-# It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
-# screenshots whenever they are needed.
+# It is recommended to not store the screenshots in the git repo.
+# Instead, use fastlane to re-generate the screenshots whenever they are needed.
 # For more information about the recommended setup visit:
 # https://docs.fastlane.tools/best-practices/source-control/#source-control
 
@@ -220,12 +243,22 @@ fastlane/test_output
 
 iOSInjectionProject/
 
+### SwiftPackageManager ###
+Packages
+xcuserdata
+*.xcodeproj
+
+
+### SwiftPM ###
+
+
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+*.code-workspace
 
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
@@ -261,20 +294,17 @@ $RECYCLE.BIN/
 # Xcode
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
 
-## User settings
 
-## compatibility with Xcode 8 and earlier (ignoring not required starting Xcode 9)
 
-## compatibility with Xcode 3 and earlier (ignoring not required starting Xcode 4)
 
-## Xcode Patch
+## Gcc Patch
+/*.gcno
+
+### Xcode Patch ###
 *.xcodeproj/*
 !*.xcodeproj/project.pbxproj
 !*.xcodeproj/xcshareddata/
 !*.xcworkspace/contents.xcworkspacedata
-/*.gcno
-
-### Xcode Patch ###
 **/xcshareddata/WorkspaceSettings.xcsettings
 
 ### Gradle ###
@@ -410,9 +440,4 @@ fabric.properties
 
 !/gradle/wrapper/gradle-wrapper.jar
 
-# End of https://www.gitignore.io/api/dart,linux,swift,xcode,macos,gradle,kotlin,flutter,windows,androidstudio,visualstudiocode
-
-
-coverage/
-.pubspec.old.yaml
-.flutter-plugins-dependencies
+# End of https://www.toptal.com/developers/gitignore/api/windows,macos,linux,flutter,dart,visualstudiocode,androidstudio,xcode,swift,swiftpm,swiftpackagemanager,gradle,kotlin,java
