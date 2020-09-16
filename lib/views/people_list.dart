@@ -71,16 +71,16 @@ class PeopleList extends StatelessWidget {
         children: <Widget>[
           Text(
             AppLocalizations.of(context).translate('Tap on '),
-            style: Theme.of(context).textTheme.title.copyWith(color: Theme.of(context).textTheme.caption.color),
+            style: Theme.of(context).textTheme.headline6.copyWith(color: Theme.of(context).textTheme.caption.color),
           ),
           Icon(
             Icons.add_circle,
             color: Theme.of(context).accentColor,
-            size: Theme.of(context).textTheme.title.fontSize,
+            size: Theme.of(context).textTheme.headline6.fontSize,
           ),
           Text(
             AppLocalizations.of(context).translate(' to add a person'),
-            style: Theme.of(context).textTheme.title.copyWith(color: Theme.of(context).textTheme.caption.color)
+            style: Theme.of(context).textTheme.headline6.copyWith(color: Theme.of(context).textTheme.caption.color)
           )
         ],
         mainAxisAlignment: MainAxisAlignment.center,

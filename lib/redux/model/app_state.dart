@@ -73,7 +73,7 @@ class AppState {
     var color = amount == 0 ? Colors.white : (amount.isNegative ? DarkColors.orange : DarkColors.lightGreen);
     return Text(
       AppLocalizations.of(context).currencyFormatter.format(amount.abs()),
-      style: Theme.of(context).textTheme.title.copyWith(
+      style: Theme.of(context).textTheme.headline6.copyWith(
         color: color,
         fontFamily: FontFamilies.numbers,
       )
@@ -86,7 +86,7 @@ class AppState {
       .fold(0.0, _sumFold);
     return Text(
       AppLocalizations.of(context).currencyFormatter.format(amount.abs()),
-      style: Theme.of(context).textTheme.headline.copyWith(
+      style: Theme.of(context).textTheme.headline5.copyWith(
         color: DarkColors.lightGreen,
         fontFamily: FontFamilies.numbers,
       )
@@ -99,7 +99,7 @@ class AppState {
       .fold(0.0, _sumFold);
     return Text(
       AppLocalizations.of(context).currencyFormatter.format(amount.abs()),
-      style: Theme.of(context).textTheme.headline.copyWith(
+      style: Theme.of(context).textTheme.headline5.copyWith(
         color: DarkColors.orange,
         fontFamily: FontFamilies.numbers,
       )
@@ -113,7 +113,7 @@ class AppState {
     var color = amount == 0 ? Colors.white : (amount.isNegative ? DarkColors.orange : DarkColors.lightGreen);
     return Text(
       AppLocalizations.of(context).currencyFormatter.format(amount.abs()),
-      style: Theme.of(context).textTheme.headline.copyWith(
+      style: Theme.of(context).textTheme.headline5.copyWith(
         color: color,
         fontFamily: FontFamilies.numbers,
       )

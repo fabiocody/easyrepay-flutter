@@ -118,7 +118,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
             ),
             child: Text(
               AppLocalizations.dateFormatOf(context, _date),
-              style: Theme.of(context).textTheme.subhead,
+              style: Theme.of(context).textTheme.subtitle1,
             ),
           ),
           onTap: () => _showDateTimePicker(context),

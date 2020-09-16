@@ -31,7 +31,7 @@ class Transaction {
   Text getAmountText(BuildContext context) {
     return Text(
       AppLocalizations.of(context).currencyFormatter.format(amount.abs()),
-      style: Theme.of(context).textTheme.title.copyWith(
+      style: Theme.of(context).textTheme.headline6.copyWith(
         color: type.color,
         fontFamily: FontFamilies.numbers,
       )
