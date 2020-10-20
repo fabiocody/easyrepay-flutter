@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-final  primarySwatch = Colors.green;
+final primarySwatch = Colors.green;
 
 class FontFamilies {
   static final primary = '';
@@ -24,7 +24,6 @@ final darkTheme = ThemeData(
   fontFamily: FontFamilies.primary,
 );
 
-
 class DarkColors {
   static const lightGreen = Color.fromRGBO(0x1e, 0xb9, 0x80, 1);
   static const green = Color.fromRGBO(0x00, 0x7d, 0x52, 1);
@@ -34,7 +33,7 @@ class DarkColors {
   static const yellow = Color.fromRGBO(0xff, 0xcf, 0x44, 1);
   static const purple = Color.fromRGBO(0xb1, 0x5d, 0xff, 1);
   static const blue = Color.fromRGBO(0x72, 0xde, 0xff, 1);
-  static const darkGrey = Color.fromRGBO(0x12, 0x12, 0x12, 1);
-  static const surfaceOverlay = Color.fromRGBO(0x1a, 0x1a, 0x1a, 1);
-  static const topBottomBar = Color.fromRGBO(0x1d, 0x1d, 0x1d, 1);
+  static const darkGrey = Color.fromRGBO(0x04, 0x04, 0x04, 1);
+  static const surfaceOverlay = Color.fromRGBO(0x14, 0x14, 0x14, 1);
+  static const topBottomBar = Color.fromRGBO(0x18, 0x18, 0x18, 1);
 }
