@@ -1,6 +1,6 @@
 
-# Created by https://www.toptal.com/developers/gitignore/api/windows,macos,linux,flutter,dart,visualstudiocode,androidstudio,android,xcode,swift,gradle,kotlin,java
-# Edit at https://www.toptal.com/developers/gitignore?templates=windows,macos,linux,flutter,dart,visualstudiocode,androidstudio,android,xcode,swift,gradle,kotlin,java
+# Created by https://www.toptal.com/developers/gitignore/api/windows,macos,linux,flutter,dart,visualstudiocode,androidstudio,intellij+all,android,xcode,swift,gradle,kotlin,java,objective-c
+# Edit at https://www.toptal.com/developers/gitignore?templates=windows,macos,linux,flutter,dart,visualstudiocode,androidstudio,intellij+all,android,xcode,swift,gradle,kotlin,java,objective-c
 
 ### Android ###
 # Built application files
@@ -173,6 +173,93 @@ lib/generated_plugin_registrant.dart
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 
+### Intellij+all ###
+# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
+# Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
+
+# User-specific stuff
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+
+# Generated files
+.idea/**/contentModel.xml
+
+# Sensitive or high-churn files
+.idea/**/dataSources/
+.idea/**/dataSources.ids
+.idea/**/dataSources.local.xml
+.idea/**/sqlDataSources.xml
+.idea/**/dynamic.xml
+.idea/**/uiDesigner.xml
+.idea/**/dbnavigator.xml
+
+# Gradle
+.idea/**/gradle.xml
+.idea/**/libraries
+
+# Gradle and Maven with auto-import
+# When using Gradle or Maven with auto-import, you should exclude module files,
+# since they will be recreated, and may cause churn.  Uncomment if using
+# auto-import.
+# .idea/artifacts
+# .idea/compiler.xml
+# .idea/jarRepositories.xml
+# .idea/modules.xml
+# .idea/*.iml
+# .idea/modules
+# *.iml
+# *.ipr
+
+# CMake
+cmake-build-*/
+
+# Mongo Explorer plugin
+.idea/**/mongoSettings.xml
+
+# File-based project format
+*.iws
+
+# IntelliJ
+
+# mpeltonen/sbt-idea plugin
+.idea_modules/
+
+# JIRA plugin
+atlassian-ide-plugin.xml
+
+# Cursive Clojure plugin
+.idea/replstate.xml
+
+# Crashlytics plugin (for Android Studio and IntelliJ)
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+fabric.properties
+
+# Editor-based Rest Client
+.idea/httpRequests
+
+# Android studio 3.1+ serialized cache file
+.idea/caches/build_file_checksums.ser
+
+### Intellij+all Patch ###
+# Ignores the whole .idea folder and all .iml files
+# See https://github.com/joeblau/gitignore.io/issues/186 and https://github.com/joeblau/gitignore.io/issues/360
+
+.idea/
+
+# Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-249601023
+
+modules.xml
+.idea/misc.xml
+*.ipr
+
+# Sonarlint plugin
+.idea/sonarlint
+
 ### Java ###
 # Compiled class file
 
@@ -252,7 +339,7 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-### Swift ###
+### Objective-C ###
 # Xcode
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
@@ -284,6 +371,45 @@ DerivedData/
 *.dSYM.zip
 *.dSYM
 
+# CocoaPods
+# We recommend against adding the Pods directory to your .gitignore. However
+# you should judge for yourself, the pros and cons are mentioned at:
+# https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
+# Pods/
+# Add this line if you want to avoid checking in source code from the Xcode workspace
+# *.xcworkspace
+
+# Carthage
+# Add this line if you want to avoid checking in source code from Carthage dependencies.
+# Carthage/Checkouts
+
+Carthage/Build/
+
+# fastlane
+# It is recommended to not store the screenshots in the git repo.
+# Instead, use fastlane to re-generate the screenshots whenever they are needed.
+# For more information about the recommended setup visit:
+# https://docs.fastlane.tools/best-practices/source-control/#source-control
+
+fastlane/screenshots/**/*.png
+
+# Code Injection
+# After new code Injection tools there's a generated folder /iOSInjectionProject
+# https://github.com/johnno1962/injectionforxcode
+
+iOSInjectionProject/
+
+### Objective-C Patch ###
+
+### Swift ###
+# Xcode
+# gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
+
+
+
+
+
+
 ## Playgrounds
 timeline.xctimeline
 playground.xcworkspace
@@ -312,7 +438,6 @@ playground.xcworkspace
 # Add this line if you want to avoid checking in source code from Carthage dependencies.
 # Carthage/Checkouts
 
-Carthage/Build/
 
 # Accio dependency management
 Dependencies/
@@ -324,13 +449,11 @@ Dependencies/
 # For more information about the recommended setup visit:
 # https://docs.fastlane.tools/best-practices/source-control/#source-control
 
-fastlane/screenshots/**/*.png
 
 # Code Injection
 # After new code Injection tools there's a generated folder /iOSInjectionProject
 # https://github.com/johnno1962/injectionforxcode
 
-iOSInjectionProject/
 
 ### VisualStudioCode ###
 .vscode/*
@@ -434,7 +557,6 @@ gradle-app.setting
 /*/out
 /*/*/build
 /*/*/production
-*.ipr
 *.swp
 
 # Keystore files
@@ -452,7 +574,6 @@ gradle-app.setting
 obj/
 
 # IntelliJ IDEA
-*.iws
 /out/
 
 # User-specific configurations
@@ -463,7 +584,6 @@ obj/
 .idea/compiler.xml
 .idea/copyright/profiles_settings.xml
 .idea/encodings.xml
-.idea/misc.xml
 .idea/scopes/scope_settings.xml
 .idea/vcs.xml
 .idea/jsLibraryMappings.xml
@@ -492,22 +612,16 @@ obj/
 ## Plugin-specific files:
 
 # mpeltonen/sbt-idea plugin
-.idea_modules/
 
 # JIRA plugin
-atlassian-ide-plugin.xml
 
 # Mongo Explorer plugin
 .idea/mongoSettings.xml
 
 # Crashlytics plugin (for Android Studio and IntelliJ)
-com_crashlytics_export_strings.xml
-crashlytics.properties
-crashlytics-build.properties
-fabric.properties
 
 ### AndroidStudio Patch ###
 
 !/gradle/wrapper/gradle-wrapper.jar
 
-# End of https://www.toptal.com/developers/gitignore/api/windows,macos,linux,flutter,dart,visualstudiocode,androidstudio,android,xcode,swift,gradle,kotlin,java
+# End of https://www.toptal.com/developers/gitignore/api/windows,macos,linux,flutter,dart,visualstudiocode,androidstudio,intellij+all,android,xcode,swift,gradle,kotlin,java,objective-c
