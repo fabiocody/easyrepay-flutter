@@ -30,4 +30,4 @@ if len(argv) > 1 and argv[1] in ['--debug', '--release', '--profile']:
     args = ' ' + argv[1]
 else:
     args = ''
-run(('/usr/local/bin/flutter build ios' + args).split(), check=False)
+run(('flutter build ios' + args).split(), check=False)
