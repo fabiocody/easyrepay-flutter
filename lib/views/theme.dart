@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-final  primarySwatch = Colors.green;
+final primarySwatch = Colors.green;
 
 class FontFamilies {
   static final primary = '';
@@ -23,7 +23,6 @@ final darkTheme = ThemeData(
   dialogBackgroundColor: DarkColors.surfaceOverlay,
   fontFamily: FontFamilies.primary,
 );
-
 
 class DarkColors {
   static const lightGreen = Color.fromRGBO(0x1e, 0xb9, 0x80, 1);
