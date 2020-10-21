@@ -1,6 +1,5 @@
 import 'package:uuid/uuid.dart';
 
-
 class Person {
   final String id;
   final String name;
@@ -9,11 +8,10 @@ class Person {
 
   Person(this.id, this.name, this.reminderActive, this.reminderDate);
 
-  factory Person.initial(String name) => 
-    Person(Uuid().v4(), name, false, null);
+  factory Person.initial(String name) => Person(Uuid().v4(), name, false, null);
 
   Person copyWith({String name, bool reminderActive, DateTime reminderDate}) =>
-    Person(this.id, name ?? this.name, reminderActive ?? this.reminderActive, reminderDate ?? this.reminderDate);
+      Person(this.id, name ?? this.name, reminderActive ?? this.reminderActive, reminderDate ?? this.reminderDate);
 
   bool operator ==(o) => o is Person && id == o.id && name == o.name;
   int get hashCode => id.hashCode;

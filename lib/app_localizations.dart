@@ -42,10 +42,11 @@ class AppLocalizations {
 
   NumberFormat get amountTextFieldFormatter => _amountTextFieldFormatter;
 
-  static String dateFormatOf(BuildContext context, DateTime date) => 
-    MaterialLocalizations.of(context).formatMediumDate(date) + ' ' + MaterialLocalizations.of(context).formatTimeOfDay(TimeOfDay.fromDateTime(date));
+  static String dateFormatOf(BuildContext context, DateTime date) =>
+      MaterialLocalizations.of(context).formatMediumDate(date) +
+      ' ' +
+      MaterialLocalizations.of(context).formatTimeOfDay(TimeOfDay.fromDateTime(date));
 }
-
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
@@ -64,7 +65,6 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
   bool shouldReload(_AppLocalizationsDelegate old) => false;
 }
 
-
 class BottomSheetItems {
   BuildContext context;
   String _rename;
@@ -79,8 +79,7 @@ class BottomSheetItems {
   static BottomSheetItems getShared(BuildContext context) {
     if (_shared == null)
       _shared = BottomSheetItems(context);
-    else if (_shared.context != context)
-      _shared = BottomSheetItems(context);
+    else if (_shared.context != context) _shared = BottomSheetItems(context);
     return _shared;
   }
 

@@ -12,7 +12,6 @@ import 'package:vibrate/vibrate.dart';
 
 import 'theme.dart';
 
-
 class TransactionRow extends StatelessWidget {
   final Store<AppState> store;
   final Person person;
@@ -21,72 +20,69 @@ class TransactionRow extends StatelessWidget {
 
   TransactionRow(this.store, this.person, this.transaction, this.animation);
 
-  Widget build(BuildContext context) =>
-    SlideTransition(
-      position: animation.drive(Tween<Offset>(
-        begin: Offset(1, 0),
-        end: Offset.zero,
-      )),
-      child: ListTile(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Column(
-              children: <Widget>[
-                Text(transaction.description),
-                Text(
-                  AppLocalizations.dateFormatOf(context, transaction.date),
-                  style: Theme.of(context).textTheme.caption,
-                )
-              ],
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-            ),
-            transaction.getAmountText(context),
-          ],
+  Widget build(BuildContext context) => SlideTransition(
+        position: animation.drive(Tween<Offset>(
+          begin: Offset(1, 0),
+          end: Offset.zero,
+        )),
+        child: ListTile(
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+                  Text(transaction.description),
+                  Text(
+                    AppLocalizations.dateFormatOf(context, transaction.date),
+                    style: Theme.of(context).textTheme.caption,
+                  )
+                ],
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+              ),
+              transaction.getAmountText(context),
+            ],
+          ),
+          trailing: Icon(Icons.navigate_next, color: Theme.of(context).textTheme.caption.color),
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute<void>(
+                builder: (BuildContext context) => TransactionDetail(store, person, transaction)));
+          },
+          onLongPress: () => _showMenu(context),
         ),
-        trailing: Icon(
-          Icons.navigate_next,
-          color: Theme.of(context).textTheme.caption.color
-        ),
-        onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute<void>(
-              builder: (BuildContext context) => TransactionDetail(store, person, transaction)
-            )
-          );
-        },
-        onLongPress: () => _showMenu(context),
-      ),
-    );
+      );
 
   void _showMenu(BuildContext context) async {
     vibrate(FeedbackType.heavy);
     final menuItems = [
-      if (!transaction.completed) ListTile(
-        title: Text(BottomSheetItems.getShared(context).completed),
-        leading: Icon(Icons.check_circle),
-        onTap: () => _menuAction(BottomSheetItems.getShared(context).completed, context),
-      ),
-      if (transaction.completed) ListTile(
-        title: Text(BottomSheetItems.getShared(context).notCompleted),
-        leading: Icon(Icons.panorama_fish_eye),
-        onTap: () => _menuAction(BottomSheetItems.getShared(context).notCompleted, context),
-      ),
+      if (!transaction.completed)
+        ListTile(
+          title: Text(BottomSheetItems.getShared(context).completed),
+          leading: Icon(Icons.check_circle),
+          onTap: () => _menuAction(BottomSheetItems.getShared(context).completed, context),
+        ),
+      if (transaction.completed)
+        ListTile(
+          title: Text(BottomSheetItems.getShared(context).notCompleted),
+          leading: Icon(Icons.panorama_fish_eye),
+          onTap: () => _menuAction(BottomSheetItems.getShared(context).notCompleted, context),
+        ),
       ListTile(
         title: Text(BottomSheetItems.getShared(context).delete, style: TextStyle(color: DarkColors.orange)),
-        leading: Icon(Icons.delete_forever, color: DarkColors.orange,),
+        leading: Icon(
+          Icons.delete_forever,
+          color: DarkColors.orange,
+        ),
         onTap: () => _menuAction(BottomSheetItems.getShared(context).delete, context),
       ),
     ];
     showModalBottomSheet(
-      context: context,
-      builder: (context) => ListView(
-        children: menuItems,
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-      )
-    );
+        context: context,
+        builder: (context) => ListView(
+              children: menuItems,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+            ));
   }
 
   void _menuAction(String action, BuildContext context) async {
@@ -94,21 +90,26 @@ class TransactionRow extends StatelessWidget {
       final List<Transaction> transactions = store.state.getTransactionsOf(person);
       final int index = transactions.indexOf(transaction);
       store.dispatch(TransactionCompletedAction(transaction));
-      transactionsListKey.currentState.removeItem(index, (context, animation) => TransactionRow(store, person, transaction, animation));
+      transactionsListKey.currentState
+          .removeItem(index, (context, animation) => TransactionRow(store, person, transaction, animation));
     } else if (action == BottomSheetItems.getShared(context).notCompleted) {
       List<Transaction> transactions = store.state.getCompletedTransactionsOf(person);
       int index = transactions.indexOf(transaction);
       store.dispatch(TransactionNotCompletedAction(transaction));
-      completedTransactionsListKey.currentState.removeItem(index, (context, animation) => TransactionRow(store, person, transaction, animation));
+      completedTransactionsListKey.currentState
+          .removeItem(index, (context, animation) => TransactionRow(store, person, transaction, animation));
       transactions = store.state.getTransactionsOf(person);
       index = transactions.indexWhere((t) => t.id == transaction.id);
       transactionsListKey?.currentState?.insertItem(index);
     } else if (action == BottomSheetItems.getShared(context).delete) {
-      final List<Transaction> transactions = transaction.completed ? store.state.getCompletedTransactionsOf(person) : store.state.getTransactionsOf(person);
+      final List<Transaction> transactions = transaction.completed
+          ? store.state.getCompletedTransactionsOf(person)
+          : store.state.getTransactionsOf(person);
       final int index = transactions.indexOf(transaction);
       store.dispatch(RemoveTransactionAction(transaction));
       GlobalKey<AnimatedListState> listKey = transaction.completed ? completedTransactionsListKey : transactionsListKey;
-      listKey.currentState.removeItem(index, (context, animation) => TransactionRow(store, person, transaction, animation));
+      listKey.currentState
+          .removeItem(index, (context, animation) => TransactionRow(store, person, transaction, animation));
     }
     Navigator.of(context).pop();
   }
