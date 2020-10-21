@@ -7,14 +7,10 @@ import 'package:redux/redux.dart';
 import 'package:redux_persist/redux_persist.dart';
 import 'package:redux_persist_flutter/redux_persist_flutter.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final persistor = Persistor<AppState>(
-    storage: FlutterStorage(
-      key: 'easyrepay_datastore.pb',
-      location: FlutterSaveLocation.documentFile
-    ),
+    storage: FlutterStorage(key: 'easyrepay_datastore.pb', location: FlutterSaveLocation.documentFile),
     serializer: ProtobufSerializer(),
   );
   final initialState = await persistor.load();

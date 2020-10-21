@@ -9,9 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-
 class PeopleList extends StatelessWidget {
-
   final Store<AppState> store;
   final TextEditingController _textFieldController = TextEditingController();
 
@@ -30,12 +28,13 @@ class PeopleList extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            SizedBox(width: 12,),
-            IconButton(
-              icon: Icon(Icons.undo),
-              tooltip: AppLocalizations.of(context).translate('Undo'),
-              onPressed: store.state.canUndo ? () => store.dispatch(UndoAction()) : null
+            SizedBox(
+              width: 12,
             ),
+            IconButton(
+                icon: Icon(Icons.undo),
+                tooltip: AppLocalizations.of(context).translate('Undo'),
+                onPressed: store.state.canUndo ? () => store.dispatch(UndoAction()) : null),
           ],
         ),
       ),
@@ -67,7 +66,8 @@ class PeopleList extends StatelessWidget {
         ),*/
       );
     } else {
-      return Center(child: Row(
+      return Center(
+          child: Row(
         children: <Widget>[
           Text(
             AppLocalizations.of(context).translate('Tap on '),
@@ -78,10 +78,8 @@ class PeopleList extends StatelessWidget {
             color: Theme.of(context).accentColor,
             size: Theme.of(context).textTheme.headline6.fontSize,
           ),
-          Text(
-            AppLocalizations.of(context).translate(' to add a person'),
-            style: Theme.of(context).textTheme.headline6.copyWith(color: Theme.of(context).textTheme.caption.color)
-          )
+          Text(AppLocalizations.of(context).translate(' to add a person'),
+              style: Theme.of(context).textTheme.headline6.copyWith(color: Theme.of(context).textTheme.caption.color))
         ],
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -91,41 +89,37 @@ class PeopleList extends StatelessWidget {
 
   void _newPersonDialog(BuildContext context) {
     showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(AppLocalizations.of(context).translate('New person')),
-          content: TextField(
-            controller: _textFieldController,
-            decoration: InputDecoration(hintText: AppLocalizations.of(context).translate('Enter name')),
-            autofocus: true,
-            keyboardType: TextInputType.text,
-            textCapitalization: TextCapitalization.words,
-            keyboardAppearance: Theme.of(context).brightness,
-            onEditingComplete: () => _saveNewPerson(context),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
-              onPressed: () {
-                _textFieldController.clear();
-                Navigator.of(context).pop();
-              }
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(AppLocalizations.of(context).translate('New person')),
+            content: TextField(
+              controller: _textFieldController,
+              decoration: InputDecoration(hintText: AppLocalizations.of(context).translate('Enter name')),
+              autofocus: true,
+              keyboardType: TextInputType.text,
+              textCapitalization: TextCapitalization.words,
+              keyboardAppearance: Theme.of(context).brightness,
+              onEditingComplete: () => _saveNewPerson(context),
             ),
-            FlatButton(
-              child: Text(
-                AppLocalizations.of(context).translate('SAVE'),
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: DarkColors.lightGreen,
-                )
+            actions: <Widget>[
+              FlatButton(
+                  child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
+                  onPressed: () {
+                    _textFieldController.clear();
+                    Navigator.of(context).pop();
+                  }),
+              FlatButton(
+                child: Text(AppLocalizations.of(context).translate('SAVE'),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: DarkColors.lightGreen,
+                    )),
+                onPressed: () => _saveNewPerson(context),
               ),
-              onPressed: () => _saveNewPerson(context),
-            ),
-          ],
-        );
-      }
-    );
+            ],
+          );
+        });
   }
 
   void _saveNewPerson(BuildContext context) {
@@ -136,5 +130,4 @@ class PeopleList extends StatelessWidget {
     peopleListKey.currentState.insertItem(index);
     Navigator.of(context).pop();
   }
-
 }

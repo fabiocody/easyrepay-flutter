@@ -21,48 +21,40 @@ class PersonRow extends StatelessWidget {
   Widget build(BuildContext context) {
     var nameSplit = person.name.split(' ');
     return SlideTransition(
-      position: animation.drive(Tween<Offset>(
-        begin: Offset(1, 0),
-        end: Offset.zero
-      )),
+      position: animation.drive(Tween<Offset>(begin: Offset(1, 0), end: Offset.zero)),
       child: Card(
         child: ListTile(
-          contentPadding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
-          leading: CircleAvatar(
-            child: Text(nameSplit.sublist(0, nameSplit.length > 3 ? 3 : nameSplit.length).map((s) => s.length > 0 ? s[0] : '').join(''))
-          ),
-          title: Row(
-            children: <Widget>[
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(person.name),
-                  Text(
-                    '$transactionCount ' + (transactionCount == 1
-                      ? AppLocalizations.of(context).translate('transaction')
-                      : AppLocalizations.of(context).translate('transactions')),
-                    style: Theme.of(context).textTheme.caption
-                  )
-                ],
-              ),
-              Spacer(),
-              if (store != null) store.state.getTotalAmountTextTile(person, context)
-            ],
-          ),
-          trailing: Icon(
-            Icons.navigate_next,
-            color: Theme.of(context).textTheme.caption.color
-          ),
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute<void>(
-                builder: (BuildContext context) => TransactionsList(store, person)
-              )
-            );
-          },
-          onLongPress: () => _showMenu(context)
-        ),
+            contentPadding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
+            leading: CircleAvatar(
+                child: Text(nameSplit
+                    .sublist(0, nameSplit.length > 3 ? 3 : nameSplit.length)
+                    .map((s) => s.length > 0 ? s[0] : '')
+                    .join(''))),
+            title: Row(
+              children: <Widget>[
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(person.name),
+                    Text(
+                        '$transactionCount ' +
+                            (transactionCount == 1
+                                ? AppLocalizations.of(context).translate('transaction')
+                                : AppLocalizations.of(context).translate('transactions')),
+                        style: Theme.of(context).textTheme.caption)
+                  ],
+                ),
+                Spacer(),
+                if (store != null) store.state.getTotalAmountTextTile(person, context)
+              ],
+            ),
+            trailing: Icon(Icons.navigate_next, color: Theme.of(context).textTheme.caption.color),
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute<void>(builder: (BuildContext context) => TransactionsList(store, person)));
+            },
+            onLongPress: () => _showMenu(context)),
       ),
     );
   }
@@ -84,22 +76,23 @@ class PersonRow extends StatelessWidget {
         title: Text(BottomSheetItems.getShared(context).removeAllCompleted),
         leading: Icon(Icons.clear_all),
         onTap: () => _menuAction(BottomSheetItems.getShared(context).removeAllCompleted, context),
-
       ),
       ListTile(
         title: Text(BottomSheetItems.getShared(context).delete, style: TextStyle(color: DarkColors.orange)),
-        leading: Icon(Icons.delete_forever, color: DarkColors.orange,),
+        leading: Icon(
+          Icons.delete_forever,
+          color: DarkColors.orange,
+        ),
         onTap: () => _menuAction(BottomSheetItems.getShared(context).delete, context),
       ),
     ];
     showModalBottomSheet(
-      context: context,
-      builder: (context) => ListView(
-        children: menuItems,
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-      )
-    );
+        context: context,
+        builder: (context) => ListView(
+              children: menuItems,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+            ));
   }
 
   void _menuAction(String action, BuildContext context) async {
@@ -120,38 +113,34 @@ class PersonRow extends StatelessWidget {
   _editPersonDialog(BuildContext context) async {
     TextEditingController controller = TextEditingController(text: person.name);
     return showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(AppLocalizations.of(context).translate('Edit name')),
-          content: TextField(
-            controller: controller,
-            decoration: InputDecoration(hintText: AppLocalizations.of(context).translate('Enter name')),
-            autofocus: true,
-            keyboardType: TextInputType.text,
-            textCapitalization: TextCapitalization.words,
-            keyboardAppearance: Theme.of(context).brightness,
-            onEditingComplete: () => _saveEditedPerson(controller, context),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
-              onPressed: () {
-                controller.clear();
-                Navigator.of(context).pop();
-              }
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(AppLocalizations.of(context).translate('Edit name')),
+            content: TextField(
+              controller: controller,
+              decoration: InputDecoration(hintText: AppLocalizations.of(context).translate('Enter name')),
+              autofocus: true,
+              keyboardType: TextInputType.text,
+              textCapitalization: TextCapitalization.words,
+              keyboardAppearance: Theme.of(context).brightness,
+              onEditingComplete: () => _saveEditedPerson(controller, context),
             ),
-            FlatButton(
-              child: Text(
-                AppLocalizations.of(context).translate('SAVE'), 
-                style: TextStyle(fontWeight: FontWeight.bold)
+            actions: <Widget>[
+              FlatButton(
+                  child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
+                  onPressed: () {
+                    controller.clear();
+                    Navigator.of(context).pop();
+                  }),
+              FlatButton(
+                child:
+                    Text(AppLocalizations.of(context).translate('SAVE'), style: TextStyle(fontWeight: FontWeight.bold)),
+                onPressed: () => _saveEditedPerson(controller, context),
               ),
-              onPressed: () => _saveEditedPerson(controller, context),
-            ),
-          ],
-        );
-      }
-    );
+            ],
+          );
+        });
   }
 
   void _saveEditedPerson(TextEditingController controller, BuildContext context) {

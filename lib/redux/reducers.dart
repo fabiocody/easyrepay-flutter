@@ -4,7 +4,6 @@ import 'package:easyrepay/redux/model/person.dart';
 import 'package:easyrepay/redux/model/transaction.dart';
 import 'package:redux/redux.dart';
 
-
 final appReducer = combineReducers<AppState>([
   TypedReducer<AppState, AddPersonAction>(_onAddPerson),
   TypedReducer<AppState, RemovePersonAction>(_onRemovePerson),
@@ -19,7 +18,6 @@ final appReducer = combineReducers<AppState>([
   TypedReducer<AppState, UndoAction>(_onUndo),
 ]);
 
-
 AppState _onAddPerson(AppState state, AddPersonAction action) {
   final List<Person> ppl = List.from(state.people)
     ..add(action.person)
@@ -27,15 +25,11 @@ AppState _onAddPerson(AppState state, AddPersonAction action) {
   return state.copyWith(people: ppl);
 }
 
-
 AppState _onRemovePerson(AppState state, RemovePersonAction action) {
-  final List<Person> ppl = List.from(state.people)
-    ..remove(action.person);
-  final List<Transaction> tt = List.from(state.transactions)
-    ..removeWhere((t) => t.personID == action.person.id);
+  final List<Person> ppl = List.from(state.people)..remove(action.person);
+  final List<Transaction> tt = List.from(state.transactions)..removeWhere((t) => t.personID == action.person.id);
   return state.copyWith(people: ppl, transactions: tt);
 }
-
 
 AppState _onEditPerson(AppState state, EditPersonAction action) {
   final List<Person> ppl = List.from(state.people)
@@ -45,7 +39,6 @@ AppState _onEditPerson(AppState state, EditPersonAction action) {
   return state.copyWith(people: ppl);
 }
 
-
 AppState _onAddTransaction(AppState state, AddTransactionAction action) {
   final List<Transaction> tt = List.from(state.transactions)
     ..add(action.transaction)
@@ -53,13 +46,10 @@ AppState _onAddTransaction(AppState state, AddTransactionAction action) {
   return state.copyWith(transactions: tt);
 }
 
-
 AppState _onRemoveTransaction(AppState state, RemoveTransactionAction action) {
-  final List<Transaction> tt = List.from(state.transactions)
-    ..remove(action.transaction);
+  final List<Transaction> tt = List.from(state.transactions)..remove(action.transaction);
   return state.copyWith(transactions: tt);
 }
-
 
 AppState _onEditTransaction(AppState state, EditTransactionAction action) {
   final List<Transaction> tt = List.from(state.transactions)
@@ -69,13 +59,11 @@ AppState _onEditTransaction(AppState state, EditTransactionAction action) {
   return state.copyWith(transactions: tt);
 }
 
-
 AppState _onAllTransactionsCompleted(AppState state, AllTransactionsCompletedAction action) {
-  final List<Transaction> tt = state.transactions
-    .map((t) => t.personID == action.person.id ? t.copyWith(completed: true) : t).toList();
+  final List<Transaction> tt =
+      state.transactions.map((t) => t.personID == action.person.id ? t.copyWith(completed: true) : t).toList();
   return state.copyWith(transactions: tt);
 }
-
 
 AppState _onTransactionCompleted(AppState state, TransactionCompletedAction action) {
   final List<Transaction> tt = List.from(state.transactions)
@@ -84,7 +72,6 @@ AppState _onTransactionCompleted(AppState state, TransactionCompletedAction acti
   return state.copyWith(transactions: tt);
 }
 
-
 AppState _onTransactionNotCompleted(AppState state, TransactionNotCompletedAction action) {
   final List<Transaction> tt = List.from(state.transactions)
     ..remove(action.transaction)
@@ -92,13 +79,11 @@ AppState _onTransactionNotCompleted(AppState state, TransactionNotCompletedActio
   return state.copyWith(transactions: tt);
 }
 
-
 AppState _onRemoveCompletedTransactions(AppState state, RemoveCompletedTransactionsAction action) {
   final List<Transaction> tt = List.from(state.transactions)
     ..removeWhere((t) => t.personID == action.person.id && t.completed);
   return state.copyWith(transactions: tt);
 }
-
 
 AppState _onUndo(AppState state, UndoAction action) {
   return state.canUndo ? state.prevState : state;

@@ -3,7 +3,6 @@ import 'package:easyrepay/proto/easyrepay.pb.dart';
 import 'package:easyrepay/views/theme.dart';
 import 'package:flutter/material.dart';
 
-
 class TransactionType {
   static final TransactionType credit = TransactionType('Credit');
   static final TransactionType debt = TransactionType('Debt');
@@ -54,16 +53,14 @@ class TransactionType {
       return DarkColors.orange;
     else if (this == TransactionType.settleCredit)
       return DarkColors.teal;
-    else if (this == TransactionType.settleDebt)
-      return DarkColors.magenta;
+    else if (this == TransactionType.settleDebt) return DarkColors.magenta;
     return null;
   }
 
   get addOrSub {
     if (this == TransactionType.credit || this == TransactionType.settleDebt)
       return (v1, v2) => v1 + v2;
-    else if (this == TransactionType.debt || this == TransactionType.settleCredit)
-      return (v1, v2) => v1 - v2;
+    else if (this == TransactionType.debt || this == TransactionType.settleCredit) return (v1, v2) => v1 - v2;
     return (v, _) => v;
   }
 

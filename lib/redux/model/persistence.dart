@@ -8,26 +8,18 @@ import 'package:fixnum/fixnum.dart';
 import 'package:flutter/foundation.dart';
 import 'package:redux_persist/redux_persist.dart';
 
-
 class ProtobufSerializer implements StateSerializer<AppState> {
   AppState decode(Uint8List data) {
-    if (data== null) return AppState.initial();
+    if (data == null) return AppState.initial();
     final pbStore = PBDataStore.fromBuffer(data);
     var ppl = [];
     var tt = [];
     for (PBPerson p in pbStore.people) {
-      ppl.add(Person(p.id,
-                     p.name,
-                     p.reminderActive,
-                     DateTime.fromMillisecondsSinceEpoch(p.reminderTimestamp.toInt() * 1000)));
+      ppl.add(Person(
+          p.id, p.name, p.reminderActive, DateTime.fromMillisecondsSinceEpoch(p.reminderTimestamp.toInt() * 1000)));
       for (PBTransaction t in p.transactions) {
-        tt.add(Transaction(t.id,
-                           p.id,
-                           TransactionType.fromPB(t.type),
-                           t.amount,
-                           t.description,
-                           t.completed,
-                           DateTime.fromMillisecondsSinceEpoch(t.timestamp.toInt() * 1000)));
+        tt.add(Transaction(t.id, p.id, TransactionType.fromPB(t.type), t.amount, t.description, t.completed,
+            DateTime.fromMillisecondsSinceEpoch(t.timestamp.toInt() * 1000)));
       }
     }
     debugPrint('Loaded state from persistent store.');

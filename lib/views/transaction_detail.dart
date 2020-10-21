@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:redux/redux.dart';
 
-
 class TransactionDetail extends StatefulWidget {
   final Store<AppState> store;
   final Transaction transaction;
@@ -18,9 +17,7 @@ class TransactionDetail extends StatefulWidget {
   State createState() => _TransactionDetailState();
 }
 
-
 class _TransactionDetailState extends State<TransactionDetail> {
-
   TransactionType _type;
   TextEditingController _amountController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
@@ -40,16 +37,15 @@ class _TransactionDetailState extends State<TransactionDetail> {
       _initialized = true;
     }
     return Scaffold(
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context).translate('Transaction')),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.save),
-        tooltip: AppLocalizations.of(context).translate('Save'),
-        onPressed: () => _save(context),
-      ),
-      body: _buildTransactionDetail(context)
-    );
+        appBar: AppBar(
+          title: Text(AppLocalizations.of(context).translate('Transaction')),
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.save),
+          tooltip: AppLocalizations.of(context).translate('Save'),
+          onPressed: () => _save(context),
+        ),
+        body: _buildTransactionDetail(context));
   }
 
   Widget _buildTransactionDetail(BuildContext context) {
@@ -57,13 +53,11 @@ class _TransactionDetailState extends State<TransactionDetail> {
       padding: EdgeInsets.symmetric(horizontal: 16),
       children: <Widget>[
         InputDecorator(
-          decoration: InputDecoration(
-            icon: Icon(Icons.account_balance_wallet),
-            labelText: AppLocalizations.of(context).translate('Type')
-          ),
-          isEmpty: _type == null,
-          child: DropdownButtonHideUnderline(
-            child: DropdownButton(
+            decoration: InputDecoration(
+                icon: Icon(Icons.account_balance_wallet), labelText: AppLocalizations.of(context).translate('Type')),
+            isEmpty: _type == null,
+            child: DropdownButtonHideUnderline(
+                child: DropdownButton(
               value: _type,
               isDense: true,
               onChanged: (TransactionType newValue) {
@@ -72,14 +66,9 @@ class _TransactionDetailState extends State<TransactionDetail> {
                 });
               },
               items: TransactionType.values.map((value) {
-                return DropdownMenuItem(
-                  value: value,
-                  child: Text(value.string(context))
-                );
+                return DropdownMenuItem(value: value, child: Text(value.string(context)));
               }).toList(),
-            )
-          )
-        ),
+            ))),
         TextFormField(
           controller: _amountController,
           decoration: InputDecoration(
@@ -89,25 +78,30 @@ class _TransactionDetailState extends State<TransactionDetail> {
           ),
           keyboardType: TextInputType.number,
           inputFormatters: [
-            WhitelistingTextInputFormatter.digitsOnly,
-            LengthLimitingTextInputFormatter(8),
+            TextInputFormatter.withFunction((oldEditingValue, editingValue) {
+              var value = AppLocalizations.of(context).amountTextFieldFormatter.parse(editingValue.text);
+              if (value != null) {
+                if (editingValue.text.length > oldEditingValue.text.length) {
+                  value *= 10;
+                } else {
+                  value /= 10;
+                }
+                final String newText = AppLocalizations.of(context).amountTextFieldFormatter.format(value);
+                return TextEditingValue(
+                    text: newText, selection: TextSelection.fromPosition(TextPosition(offset: newText.length)));
+              } else {
+                return editingValue;
+              }
+            }),
+            LengthLimitingTextInputFormatter(16),
           ],
-          onChanged: (String text) {
-            var value = AppLocalizations.of(context).amountTextFieldFormatter.parse(text);
-            if (value != null) {
-              value /= 100;
-              _amountController.text = AppLocalizations.of(context).amountTextFieldFormatter.format(value);
-              _amountController.selection = TextSelection.fromPosition(TextPosition(offset: _amountController.text.length));
-            }
-          },
         ),
         TextFormField(
           controller: _descriptionController,
           decoration: InputDecoration(
-            icon: Icon(Icons.assignment),
-            labelText: AppLocalizations.of(context).translate('Description'),
-            hintText: AppLocalizations.of(context).translate('Enter the description')
-          ),
+              icon: Icon(Icons.assignment),
+              labelText: AppLocalizations.of(context).translate('Description'),
+              hintText: AppLocalizations.of(context).translate('Enter the description')),
           textCapitalization: TextCapitalization.sentences,
         ),
         InkWell(
@@ -139,8 +133,7 @@ class _TransactionDetailState extends State<TransactionDetail> {
         initialTime: TimeOfDay.fromDateTime(_date),
         context: context,
       );
-      if (time != null)
-        setState(() => _date = DateTime(date.year, date.month, date.day, time.hour, time.minute));
+      if (time != null) setState(() => _date = DateTime(date.year, date.month, date.day, time.hour, time.minute));
     }
   }
 

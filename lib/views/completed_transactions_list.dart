@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-
 class CompletedTransactionsList extends StatelessWidget {
   final Store<AppState> store;
   final Person person;
@@ -25,7 +24,9 @@ class CompletedTransactionsList extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            SizedBox(width: 12,),
+            SizedBox(
+              width: 12,
+            ),
             IconButton(
               icon: Icon(Icons.undo),
               tooltip: AppLocalizations.of(context).translate('Undo'),
@@ -40,27 +41,25 @@ class CompletedTransactionsList extends StatelessWidget {
 
   Widget _buildTransactionsList(BuildContext context) {
     return StoreConnector<AppState, List<Transaction>>(
-      converter: (store) => store.state.getCompletedTransactionsOf(person),
-      builder: (context, transactions) {
-        Future.delayed(Duration(milliseconds: 1)).then((value) {
-          if (store.state.getCompletedTransactionsCountOf(person) <= 0) 
-            Navigator.of(context).pop();
-        });
-        return ListView(
-          padding: const EdgeInsets.only(top: 4),
-          children: [
-            Card(
-              child: AnimatedList(
+        converter: (store) => store.state.getCompletedTransactionsOf(person),
+        builder: (context, transactions) {
+          Future.delayed(Duration(milliseconds: 1)).then((value) {
+            if (store.state.getCompletedTransactionsCountOf(person) <= 0) Navigator.of(context).pop();
+          });
+          return ListView(
+            padding: const EdgeInsets.only(top: 4),
+            children: [
+              Card(
+                  child: AnimatedList(
                 key: completedTransactionsListKey,
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 initialItemCount: transactions.length,
-                itemBuilder: (context, index, animation) => TransactionRow(store, person, transactions[index], animation),
-              )
-            ),
-          ],
-        );
-      }
-    );
+                itemBuilder: (context, index, animation) =>
+                    TransactionRow(store, person, transactions[index], animation),
+              )),
+            ],
+          );
+        });
   }
 }
