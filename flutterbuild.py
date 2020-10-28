@@ -19,8 +19,9 @@ with open(BACKUP_FILENAME, 'w') as f:
 for i in range(len(lines)):
     if lines[i].startswith('version'):
         split = lines[i].split('+')
-        build_number = int(split[1]) + 1
-        lines[i] = split[0] + '+' + str(build_number) + '\n'
+        build_number = run('git rev-list --all --count'.split(), capture_output=True).stdout.decode('utf8').strip()
+        print('BUILD NUMBER', build_number)
+        lines[i] = split[0] + '+' + build_number + '\n'
         break
 
 with open(FILENAME, 'w') as f:
