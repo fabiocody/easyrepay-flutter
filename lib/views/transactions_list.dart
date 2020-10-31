@@ -48,7 +48,7 @@ class TransactionsList extends StatelessWidget {
                     : null,
               ),
             ),
-            IconButton(
+            /*IconButton(
                 icon: Icon(Icons.add_alert),
                 tooltip: AppLocalizations.of(context).translate('Reminder'),
                 onPressed: () {
@@ -60,7 +60,7 @@ class TransactionsList extends StatelessWidget {
                             content:
                                 Text(AppLocalizations.of(context).translate('This feature is not implemented yet.')),
                           ));
-                }),
+                }),*/
             SizedBox(
               width: 12,
             ),
