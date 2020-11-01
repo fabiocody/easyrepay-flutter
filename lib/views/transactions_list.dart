@@ -146,28 +146,41 @@ class TransactionsList extends StatelessWidget {
               ],
             );
           } else {
-            return Center(
-                child: Row(
-              children: <Widget>[
-                Text(
-                  AppLocalizations.of(context).translate('Tap on '),
-                  style:
-                      Theme.of(context).textTheme.headline6.copyWith(color: Theme.of(context).textTheme.caption.color),
-                ),
-                Icon(
-                  Icons.add_circle,
-                  color: Theme.of(context).accentColor,
-                  size: Theme.of(context).textTheme.headline6.fontSize,
-                ),
-                Text(AppLocalizations.of(context).translate(' to add a transaction'),
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline6
-                        .copyWith(color: Theme.of(context).textTheme.caption.color))
-              ],
+            return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
-            ));
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context).translate('Tap on '),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline6
+                          .copyWith(color: Theme.of(context).textTheme.caption.color),
+                    ),
+                    Icon(
+                      Icons.add_circle,
+                      color: Theme.of(context).accentColor,
+                      size: Theme.of(context).textTheme.headline6.fontSize,
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(AppLocalizations.of(context).translate(' to add a transaction'),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline6
+                            .copyWith(color: Theme.of(context).textTheme.caption.color))
+                  ],
+                )
+              ],
+            );
           }
         });
   }
