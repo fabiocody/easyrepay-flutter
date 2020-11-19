@@ -1,6 +1,6 @@
 
-# Created by https://www.toptal.com/developers/gitignore/api/windows,macos,linux,flutter,dart,visualstudiocode,androidstudio,intellij+all,android,xcode,swift,gradle,kotlin,java,objective-c
-# Edit at https://www.toptal.com/developers/gitignore?templates=windows,macos,linux,flutter,dart,visualstudiocode,androidstudio,intellij+all,android,xcode,swift,gradle,kotlin,java,objective-c
+# Created by https://www.toptal.com/developers/gitignore/api/windows,macos,linux,flutter,dart,visualstudiocode,androidstudio,intellij+all,android,xcode,swift,gradle,kotlin,java,objective-c,fastlane
+# Edit at https://www.toptal.com/developers/gitignore?templates=windows,macos,linux,flutter,dart,visualstudiocode,androidstudio,intellij+all,android,xcode,swift,gradle,kotlin,java,objective-c,fastlane
 
 ### Android ###
 # Built application files
@@ -118,11 +118,33 @@ doc/api/
 *.js.deps
 *.js.map
 
+### fastlane ###
+# fastlane - A streamlined workflow tool for Cocoa deployment
+#
+# It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
+# screenshots whenever they are needed.
+# For more information about the recommended setup visit:
+# https://docs.fastlane.tools/best-practices/source-control/#source-control
+
+# fastlane specific
+
+# deliver temporary files
+
+# snapshot generated screenshots
+fastlane/screenshots/**/*.png
+fastlane/screenshots/screenshots.html
+
+# scan temporary files
+
+# Fastlane.swift runner binary
+fastlane/FastlaneRunner
+
 ### Flutter ###
 # Flutter/Dart/Pub related
 **/doc/api/
 .flutter-plugins
 .flutter-plugins-dependencies
+.fvm/
 .pub-cache/
 .pub/
 lib/generated_plugin_registrant.dart
@@ -318,7 +340,7 @@ hs_err_pid*
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
 
 # Thumbnails
 ._*
@@ -341,7 +363,6 @@ Temporary Items
 
 ### Objective-C ###
 # Xcode
-#
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
 
 ## User settings
@@ -391,7 +412,6 @@ Carthage/Build/
 # For more information about the recommended setup visit:
 # https://docs.fastlane.tools/best-practices/source-control/#source-control
 
-fastlane/screenshots/**/*.png
 
 # Code Injection
 # After new code Injection tools there's a generated folder /iOSInjectionProject
@@ -457,10 +477,8 @@ Dependencies/
 
 ### VisualStudioCode ###
 .vscode/*
-!.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
-!.vscode/extensions.json
 *.code-workspace
 
 ### VisualStudioCode Patch ###
@@ -624,6 +642,7 @@ obj/
 
 !/gradle/wrapper/gradle-wrapper.jar
 
-# End of https://www.toptal.com/developers/gitignore/api/windows,macos,linux,flutter,dart,visualstudiocode,androidstudio,intellij+all,android,xcode,swift,gradle,kotlin,java,objective-c
+# End of https://www.toptal.com/developers/gitignore/api/windows,macos,linux,flutter,dart,visualstudiocode,androidstudio,intellij+all,android,xcode,swift,gradle,kotlin,java,objective-c,fastlane
 
 .pubspec.old.yaml
+
