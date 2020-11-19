@@ -1,0 +1,8 @@
+app_identifier("it.fabiocodiglioni.easyrepay") # The bundle identifier of your app
+apple_id("cody.guitar.96@icloud.com") # Your Apple email address
+itc_team_id("SM32T6M59X")
+team_id("SM32T6M59X")
+
+
+# For more information about the Appfile, see:
+#     https://docs.fastlane.tools/advanced/#appfile
